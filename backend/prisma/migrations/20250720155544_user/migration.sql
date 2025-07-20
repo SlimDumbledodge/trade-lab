@@ -9,7 +9,7 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password_hash" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "role" "RoleUser" NOT NULL DEFAULT 'admin',
     "subscription" "SubscriptionUser" NOT NULL DEFAULT 'free',
     "balance" DOUBLE PRECISION NOT NULL DEFAULT 100000,

@@ -27,7 +27,7 @@ model User {
   id Int @default(autoincrement()) @id
   username String @unique
   email String @unique
-  password_hash String
+  password String
   role RoleUser @default(admin)
   subscription SubscriptionUser @default(free)
   balance Float @default(100000)
