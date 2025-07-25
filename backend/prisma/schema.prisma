@@ -60,4 +60,18 @@ model Portfolio {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model PortfolioActif {
+  id           Int     @default(autoincrement()) @id
+  portfolio    Portfolio  @relation(fields: [portfolioId], references: [id])
+  portfolioId  Int
+  actif        Actif      @relation(fields: [actifId], references: [id])
+  actifId      Int
+  quantity     Float
+  averagePrice Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([portfolioId, actifId])
 }
