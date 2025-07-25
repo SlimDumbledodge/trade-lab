@@ -31,3 +31,31 @@ export class PortfoliosService {
         if (!actif) {
             throw new NotFoundException(`Actif ID ${actifId} not found`);
         }
+
+        const actifPrice = actif.price;
+        const totalCost = quantity * actifPrice;
+
+        if (portfolio.balance < totalCost) {
+            throw new BadRequestException(
+                `Insufficient funds: need ${totalCost}, available ${portfolio.balance}`,
+            );
+        }
+
+        await this.prisma.portfolioActif.upsert({
+            where: {
+                portfolioId_actifId: {
+                    portfolioId,
+                    actifId,
+                },
+            },
+            update: {
+                quantity: { increment: quantity },
+                averagePrice: actifPrice,
+            },
+            create: {
+                portfolioId,
+                actifId,
+                quantity,
+                averagePrice: totalCost,
+            },
+        });
