@@ -59,3 +59,14 @@ export class PortfoliosService {
                 averagePrice: totalCost,
             },
         });
+
+        await this.prisma.portfolio.update({
+            where: {
+                id: portfolioId,
+            },
+            data: {
+                balance: {
+                    decrement: totalCost,
+                },
+            },
+        });
