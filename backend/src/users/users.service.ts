@@ -12,7 +12,21 @@ export class UsersService {
     async create(createUserDto: CreateUserDto) {
         const hashedPassword = await bcrypt.hash(createUserDto.password, roundsOfHashing);
         createUserDto.password = hashedPassword;
-        return this.prisma.user.create({ data: createUserDto });
+        return this.prisma.user.create({
+            data: {
+                ...createUserDto,
+                portfolio: {
+                    create: {},
+                },
+            },
+            include: {
+                portfolio: {
+                    include: {
+                        actifs: true,
+                    },
+                },
+            },
+        });
     }
 
     findAll() {
