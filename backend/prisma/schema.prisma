@@ -28,9 +28,50 @@ model User {
   username String @unique
   email String @unique
   password String
+
   role RoleUser @default(admin)
   subscription SubscriptionUser @default(free)
+
+  portfolio Portfolio? @relation("UserPortfolio")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Actif {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  symbol String @unique
+  price Float
+  portfolios PortfolioActif[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Portfolio {
+  id Int @default(autoincrement()) @id
+
+  userId Int @unique
+  user User @relation("UserPortfolio", fields: [userId], references: [id])
   balance Float @default(100000)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  actifs PortfolioActif[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PortfolioActif {
+  id           Int     @default(autoincrement()) @id
+  portfolio    Portfolio  @relation(fields: [portfolioId], references: [id])
+  portfolioId  Int
+  actif        Actif      @relation(fields: [actifId], references: [id])
+  actifId      Int
+  quantity     Float
+  averagePrice Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([portfolioId, actifId])
 }

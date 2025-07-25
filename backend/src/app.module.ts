@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ActifsModule } from './actifs/actifs.module';
+import { PortfoliosModule } from './portfolios/portfolios.module';
 
 @Module({
     imports: [
@@ -13,10 +14,12 @@ import { ActifsModule } from './actifs/actifs.module';
         UsersModule,
         AuthModule,
         ActifsModule,
+        PortfoliosModule,
         ConfigModule.forRoot({
             isGlobal: true,
         }),
         ActifsModule,
+        PortfoliosModule,
     ],
     controllers: [AppController],
     providers: [AppService],
