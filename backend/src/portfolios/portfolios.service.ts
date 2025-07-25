@@ -18,3 +18,16 @@ export class PortfoliosService {
             },
         });
     }
+    async buy(portfolioId: number, buyActifDto: BuyActifDto) {
+        const { actifId, quantity } = buyActifDto;
+
+        const portfolio = await this.prisma.portfolio.findUnique({ where: { id: portfolioId } });
+
+        if (!portfolio) {
+            throw new NotFoundException(`Portfolio ID ${portfolioId} not found`);
+        }
+
+        const actif = await this.prisma.actif.findUnique({ where: { id: actifId } });
+        if (!actif) {
+            throw new NotFoundException(`Actif ID ${actifId} not found`);
+        }
