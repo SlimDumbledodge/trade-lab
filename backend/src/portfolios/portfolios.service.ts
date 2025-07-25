@@ -70,3 +70,13 @@ export class PortfoliosService {
                 },
             },
         });
+
+        return {
+            actifId,
+            quantity,
+            unitPrice: actifPrice,
+            totalCost,
+            newBalance: portfolio.balance - totalCost,
+        };
+    }
+}
