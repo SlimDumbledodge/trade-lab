@@ -1,17 +1,23 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { actifs } from '../src/utils/seed-actifs';
 
 const prisma = new PrismaClient();
 
 async function main() {
-    await prisma.actif.createMany({
-        data: [
-            { name: 'Bitcoin', symbol: 'BTC', price: 60000 },
-            { name: 'Ethereum', symbol: 'ETH', price: 3200 },
-            { name: 'Solana', symbol: 'SOL', price: 150 },
-            { name: 'Ripple', symbol: 'XRP', price: 0.75 },
-        ],
-    });
+    console.log('🟢 Insertion des actifs de départ...');
+    for (const actif of actifs) {
+        await prisma.actif.upsert({
+            where: { symbol: actif.symbol },
+            update: {},
+            create: {
+                symbol: actif.symbol,
+                name: actif.name,
+                price: 0,
+            },
+        });
+        console.log(`✅ ${actif.symbol} inséré`);
+    }
 
     const password = await bcrypt.hash('12345678', 10);
 
