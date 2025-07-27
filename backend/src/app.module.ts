@@ -16,8 +16,6 @@ import { PortfoliosModule } from './portfolios/portfolios.module';
         ConfigModule.forRoot({
             isGlobal: true,
         }),
-        ActifsModule,
-        PortfoliosModule,
     ],
 })
 export class AppModule {}
