@@ -40,9 +40,16 @@ model User {
 
 model Actif {
   id Int @default(autoincrement()) @id
-  name String @unique
+  description String @unique
   symbol String @unique
-  price Float
+  type String
+  current_price Float
+  highest_price_day Float
+  lowest_price_day Float
+  opening_price_day Float
+  previous_close_price_day Float
+  percent_change Float
+  change Float
   portfolios PortfolioActif[]
 
   createdAt DateTime @default(now())

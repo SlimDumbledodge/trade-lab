@@ -32,7 +32,7 @@ export class PortfoliosService {
             throw new NotFoundException(`Actif ID ${actifId} not found`);
         }
 
-        const actifPrice = actif.price;
+        const actifPrice = actif.current_price;
         const totalCost = quantity * actifPrice;
 
         if (portfolio.balance < totalCost) {

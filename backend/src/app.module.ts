@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ActifsModule } from './actifs/actifs.module';
 import { PortfoliosModule } from './portfolios/portfolios.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import { PortfoliosModule } from './portfolios/portfolios.module';
         ConfigModule.forRoot({
             isGlobal: true,
         }),
+        ScheduleModule.forRoot(),
     ],
 })
 export class AppModule {}
