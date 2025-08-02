@@ -19,3 +19,8 @@ export class FinnhubService {
     ) {
         this.token = this.configService.get<string>('FINNHUB_API_KEY') ?? '';
     }
+
+    private get getTokenQueryString(): string {
+        return `&token=${this.token}`;
+    }
+
