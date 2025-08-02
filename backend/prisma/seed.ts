@@ -5,15 +5,22 @@ import { actifs } from '../src/utils/seed-actifs';
 const prisma = new PrismaClient();
 
 async function main() {
+    console.log('🟢 FETCH API...');
+
     console.log('🟢 Insertion des actifs de départ...');
     for (const actif of actifs) {
-        await prisma.actif.upsert({
-            where: { symbol: actif.symbol },
-            update: {},
-            create: {
+        await prisma.actif.create({
+            data: {
+                description: actif.description,
                 symbol: actif.symbol,
-                name: actif.name,
-                price: 0,
+                type: '',
+                current_price: 0,
+                highest_price_day: 0,
+                lowest_price_day: 0,
+                opening_price_day: 0,
+                previous_close_price_day: 0,
+                percent_change: 0,
+                change: 0,
             },
         });
         console.log(`✅ ${actif.symbol} inséré`);
