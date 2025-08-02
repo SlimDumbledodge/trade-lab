@@ -1,6 +1,6 @@
 import { IsInt, IsPositive } from 'class-validator';
 
-export class BuyActifDto {
+export class TransferActifDto {
     @IsInt()
     @IsPositive()
     actifId: number;
