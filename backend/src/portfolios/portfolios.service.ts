@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { BuyActifDto } from './dto/buy-actif.dto';
+import { TransferActifDto } from './dto/transfer-actif-dto';
 
 @Injectable()
 export class PortfoliosService {
@@ -18,7 +18,7 @@ export class PortfoliosService {
             },
         });
     }
-    async buy(portfolioId: number, buyActifDto: BuyActifDto) {
+    async buy(portfolioId: number, buyActifDto: TransferActifDto) {
         const { actifId, quantity } = buyActifDto;
 
         const portfolio = await this.prisma.portfolio.findUnique({ where: { id: portfolioId } });
@@ -78,5 +78,52 @@ export class PortfoliosService {
             totalCost,
             newBalance: portfolio.balance - totalCost,
         };
+    }
+
+    async sell(portfolioId: number, sellActifDto: TransferActifDto) {
+        const { actifId, quantity } = sellActifDto;
+
+        const portfolio = await this.prisma.portfolio.findUnique({
+            where: { id: portfolioId },
+            include: {
+                actifs: true,
+            },
+        });
+
+        if (!portfolio) {
+            throw new NotFoundException(`Portfolio ID ${portfolioId} not found`);
+        }
+
+        const actif = await this.prisma.actif.findUnique({ where: { id: actifId } });
+        if (!actif) {
+            throw new NotFoundException(`Actif ID ${actifId} not found`);
+        }
+
+        const actifInPortfolio = portfolio.actifs.find((act) => act.actifId === actifId);
+
+        if (!actifInPortfolio) {
+            throw new NotFoundException(`You can't sell an actif you do not own`);
+        }
+
+        if (quantity > actifInPortfolio.quantity) {
+            throw new BadRequestException(`You can't sell more than you own`);
+        }
+
+        if (quantity === actifInPortfolio.quantity) {
+            return await this.prisma.portfolioActif.delete({
+                where: {
+                    id: actifInPortfolio.id,
+                },
+            });
+        } else {
+            return await this.prisma.portfolioActif.update({
+                where: {
+                    id: actifInPortfolio.id,
+                },
+                data: {
+                    quantity: actifInPortfolio.quantity - quantity,
+                },
+            });
+        }
     }
 }
