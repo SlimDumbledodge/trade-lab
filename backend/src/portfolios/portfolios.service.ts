@@ -34,6 +34,11 @@ export class PortfoliosService {
         if (!portfolio) {
             throw new NotFoundException(`Portfolio ID ${portfolioId} not found`);
         }
+
+        const totalValueActifs = portfolio.actifs.reduce((sum, ptfActif) => {
+            const currentPrice = ptfActif.actif.current_price;
+            return sum + ptfActif.quantity * currentPrice;
+        }, 0);
     async buy(portfolioId: number, buyActifDto: TransferActifDto) {
         const { actifId, quantity } = buyActifDto;
 
