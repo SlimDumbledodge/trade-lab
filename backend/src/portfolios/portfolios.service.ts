@@ -18,6 +18,35 @@ export class PortfoliosService {
             },
         });
     }
+
+    async getInfo(portfolioId: number) {
+        const portfolio = await this.prisma.portfolio.findUnique({
+            where: { id: portfolioId },
+            include: {
+                actifs: {
+                    include: {
+                        actif: true,
+                    },
+                },
+            },
+        });
+
+        if (!portfolio) {
+            throw new NotFoundException(`Portfolio ID ${portfolioId} not found`);
+        }
+
+        const totalValueActifs = portfolio.actifs.reduce((sum, ptfActif) => {
+            const currentPrice = ptfActif.actif.current_price;
+            return sum + ptfActif.quantity * currentPrice;
+        }, 0);
+        return {
+            balance: portfolio.balance,
+            totalActifsValue: totalValueActifs,
+            totalPortfolioValue: portfolio.balance + totalValueActifs,
+            portfolio,
+        };
+    }
+
     async buy(portfolioId: number, buyActifDto: TransferActifDto) {
         const { actifId, quantity } = buyActifDto;
 
