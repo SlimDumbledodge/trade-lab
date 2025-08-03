@@ -39,6 +39,14 @@ export class PortfoliosService {
             const currentPrice = ptfActif.actif.current_price;
             return sum + ptfActif.quantity * currentPrice;
         }, 0);
+        return {
+            balance: portfolio.balance,
+            totalActifsValue: totalValueActifs,
+            totalPortfolioValue: portfolio.balance + totalValueActifs,
+            portfolio,
+        };
+    }
+
     async buy(portfolioId: number, buyActifDto: TransferActifDto) {
         const { actifId, quantity } = buyActifDto;
 
