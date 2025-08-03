@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { ResponseInterceptor } from './common/interceptors/response.interceptors';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -15,6 +16,7 @@ async function bootstrap() {
             transformOptions: { enableImplicitConversion: true },
         }),
     );
+    app.useGlobalInterceptors(new ResponseInterceptor());
     const config = new DocumentBuilder().setTitle('TradeLab API').setVersion('0.1').build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
