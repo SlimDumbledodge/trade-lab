@@ -23,6 +23,11 @@ enum SubscriptionUser {
   premium
 }
 
+enum TransactionType {
+  BUY
+  SELL
+}
+
 model User {
   id Int @default(autoincrement()) @id
   username String @unique
@@ -51,6 +56,7 @@ model Actif {
   percent_change Float
   change Float
   portfolios PortfolioActif[]
+  transactions Transaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,6 +69,7 @@ model Portfolio {
   user User @relation("UserPortfolio", fields: [userId], references: [id])
   balance Float @default(100000)
   actifs PortfolioActif[]
+  transactions Transaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -81,4 +88,19 @@ model PortfolioActif {
   updatedAt DateTime @updatedAt
 
   @@unique([portfolioId, actifId])
+}
+
+model Transaction {
+  id Int @default(autoincrement()) @id
+  type TransactionType
+  quantity Float
+  priceAtExecution Float
+  actif Actif @relation(fields: [actifId], references: [id])
+  actifId Int
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+  portfolioId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
 }
