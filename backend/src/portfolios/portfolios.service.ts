@@ -73,14 +73,20 @@ export class PortfoliosService {
             actifId,
             portfolioId,
         });
+
+        const updatedPortfolio = await this.prisma.portfolio.findUnique({
+            where: { id: portfolioId },
+            include: { actifs: true },
         });
+
+        if (!updatedPortfolio) throw new NotFoundException(`Portfolio ID ${portfolioId} not found after update`);
 
         return {
             actifId,
             quantity,
             unitPrice: actifPrice,
             totalCost,
-            newBalance: portfolio.balance - totalCost,
+            portfolio: updatedPortfolio,
         };
     }
 
@@ -125,5 +131,22 @@ export class PortfoliosService {
             actifId,
             portfolioId,
         });
+
+        const updatedPortfolio = await this.prisma.portfolio.findUnique({
+            where: { id: portfolioId },
+            include: { actifs: true },
+        });
+
+        if (!updatedPortfolio) {
+            throw new NotFoundException(`Portfolio ID ${portfolioId} not found after update`);
+        }
+
+        return {
+            actifId,
+            quantity,
+            unitPrice: actif.current_price,
+            totalRevenue: totalValue,
+            portfolio: updatedPortfolio,
+        };
     }
 }
