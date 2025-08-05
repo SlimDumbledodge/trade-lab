@@ -117,5 +117,13 @@ export class PortfoliosService {
                 data: { quantity: actifInPortfolio.quantity - quantity },
             });
         }
+
+        await this.transactionsService.createTransaction({
+            type: TransactionType.SELL,
+            quantity,
+            priceAtExecution: actif.current_price,
+            actifId,
+            portfolioId,
+        });
     }
 }
