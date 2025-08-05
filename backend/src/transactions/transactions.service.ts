@@ -18,3 +18,10 @@ export class TransactionsService {
             },
         });
     }
+
+    createTransaction(transaction: TransactionPublic) {
+        return this.prisma.transaction.create({
+            data: transaction,
+        });
+    }
+}
