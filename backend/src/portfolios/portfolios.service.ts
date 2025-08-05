@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TransferActifDto } from './dto/transfer-actif-dto';
+import { TransactionsService } from 'src/transactions/transactions.service';
+import { TransactionType } from '@prisma/client';
 
 @Injectable()
 export class PortfoliosService {
@@ -62,6 +64,14 @@ export class PortfoliosService {
         await this.prisma.portfolio.update({
             where: { id: portfolioId },
             data: { balance: { decrement: totalCost } },
+        });
+
+        await this.transactionsService.createTransaction({
+            type: TransactionType.BUY,
+            quantity,
+            priceAtExecution: actifPrice,
+            actifId,
+            portfolioId,
         });
         });
 
