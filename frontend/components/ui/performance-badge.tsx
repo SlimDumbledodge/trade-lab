@@ -4,8 +4,8 @@ import { IconTrendingUp, IconTrendingDown } from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
 
 type PerformanceBadgeProps = {
-    change: number; // en pourcentage
-    className?: string; // pour override
+    change: number;
+    className?: string;
 };
 
 export function PerformanceBadge({ change, className }: PerformanceBadgeProps) {

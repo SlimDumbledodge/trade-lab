@@ -52,16 +52,6 @@ const data = {
             url: '#',
             icon: IconChartLine,
         },
-        {
-            title: 'Statistiques',
-            url: '#',
-            icon: IconChartHistogram,
-        },
-        {
-            title: 'Paramètres',
-            url: '#',
-            icon: IconSettings,
-        },
     ],
     navClouds: [
         {
