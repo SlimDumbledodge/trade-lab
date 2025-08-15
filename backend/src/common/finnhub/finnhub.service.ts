@@ -43,8 +43,6 @@ export class FinnhubService {
             }
 
             const symbolInfo = dataSymbol.result[0];
-            console.log(symbolInfo);
-            console.log(quoteInfo);
 
             return {
                 description: symbolInfo.description ?? 'Description not available',
