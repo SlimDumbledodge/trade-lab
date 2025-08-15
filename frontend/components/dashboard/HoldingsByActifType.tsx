@@ -8,7 +8,7 @@ import { PerformanceBadge } from '../ui/performance-badge';
 type AssetType = {
     name: string;
     amount: number;
-    change: number; // % variation
+    change: number;
 };
 
 const assetData: AssetType[] = [

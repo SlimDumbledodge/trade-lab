@@ -20,7 +20,6 @@ function generatePortfolioData(): { date: string; value: number }[] {
         const date = new Date(startDate);
         date.setDate(startDate.getDate() + i);
 
-        // Simule une variation journalière entre -2% et +2%
         const changePercent = (Math.random() * 4 - 2) / 100;
         value *= 1 + changePercent;
 
