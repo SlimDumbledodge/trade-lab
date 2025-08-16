@@ -1,3 +1,13 @@
+'use client';
+
+import { useState } from 'react';
+import { HomeLayout } from '@/components/layouts/HomeLayout';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { IconArrowUp, IconArrowDown } from '@tabler/icons-react';
+import Image from 'next/image';
+import { PerformanceBadge } from '@/components/ui/performance-badge';
+
 interface Asset {
     symbol: string;
     name: string;
@@ -102,3 +112,84 @@ const assets: Asset[] = [
         type: 'crypto',
     },
 ];
+
+function Market() {
+    const [tab, setTab] = useState<'stock' | 'etf' | 'crypto'>('stock');
+    const filteredAssets = assets.filter((asset) => asset.type === tab);
+
+    return (
+        <HomeLayout>
+            <div className="flex flex-col gap-2 px-4 py-4 lg:px-6">
+                <h1 className="text-2xl font-semibold tracking-tight">Tous les produits</h1>
+            </div>
+
+            {/* Table */}
+            <Tabs value={tab} onValueChange={(value: any) => setTab(value)}>
+                <TabsList className="text-foreground h-auto gap-2 rounded-none border-b bg-transparent px-0 pb-1 mb-2">
+                    <TabsTrigger
+                        value="stock"
+                        className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
+                    >
+                        Actions
+                    </TabsTrigger>
+                    <TabsTrigger
+                        value="crypto"
+                        className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
+                    >
+                        Crypto
+                    </TabsTrigger>
+                    <TabsTrigger
+                        value="etf"
+                        className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
+                    >
+                        ETF
+                    </TabsTrigger>
+                </TabsList>
+            </Tabs>
+            <Table>
+                <TableCaption>Marché en temps réel basé sur l'API Finnhub.io</TableCaption>
+
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className="font-bold">Titre</TableHead>
+                        <TableHead className="font-bold">Dernier prix</TableHead>
+                        <TableHead className="font-bold">Bid</TableHead>
+                        <TableHead className="font-bold">Ask</TableHead>
+                        <TableHead className="font-bold">Volume</TableHead>
+                        <TableHead className="font-bold">Horodatage</TableHead>
+                        <TableHead className="font-bold">Aujourd&apos;hui</TableHead>
+                    </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                    {filteredAssets.map((asset) => (
+                        <TableRow key={asset.symbol} className="cursor-pointer">
+                            <TableCell>
+                                <div className="flex items-center gap-3">
+                                    <Image src="/apple.png" alt={asset.name} width={28} height={28} />
+                                    <div className="flex flex-col">
+                                        <span className="font-bold">
+                                            {asset.name} ({asset.symbol})
+                                        </span>
+                                        <span className="text-xs text-muted-foreground">{asset.isin}</span>
+                                    </div>
+                                </div>
+                            </TableCell>
+
+                            <TableCell>${asset.lastPrice.toFixed(2)}</TableCell>
+                            <TableCell>${asset.bid.toFixed(2)}</TableCell>
+                            <TableCell>${asset.ask.toFixed(2)}</TableCell>
+                            <TableCell>{asset.volume.toLocaleString()}</TableCell>
+                            <TableCell>{asset.timestamp}</TableCell>
+                            <TableCell>
+                                <PerformanceBadge change={asset.changePercent} />
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </HomeLayout>
+    );
+}
+
+export default Market;
