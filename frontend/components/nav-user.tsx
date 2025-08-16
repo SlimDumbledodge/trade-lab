@@ -65,17 +65,18 @@ export function NavUser({
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer">
                                 <IconUserCircle />
                                 Mon compte
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer">
                                 <IconNotification />
                                 Notifications
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="cursor-pointer"
                             <IconLogout />
                             Déconnexion
                         </DropdownMenuItem>
