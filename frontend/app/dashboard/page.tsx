@@ -5,7 +5,7 @@ import { HomeLayout } from '@/components/layouts/HomeLayout';
 
 export default function DashboardPage() {
     return (
-        <HomeLayout>
+        <HomeLayout headerTitle="Dashboard">
             <SectionCards />
             <div className="px-4 lg:px-6">
                 <PortfolioPerformanceChart />
