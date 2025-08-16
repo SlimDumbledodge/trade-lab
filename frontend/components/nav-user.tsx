@@ -13,6 +13,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import { signOut } from 'next-auth/react';
 
 export function NavUser({
     user,
@@ -77,6 +78,10 @@ export function NavUser({
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             className="cursor-pointer"
+                            onClick={() => {
+                                signOut({ callbackUrl: '/login' });
+                            }}
+                        >
                             <IconLogout />
                             Déconnexion
                         </DropdownMenuItem>
