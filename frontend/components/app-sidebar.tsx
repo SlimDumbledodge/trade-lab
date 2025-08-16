@@ -39,17 +39,17 @@ const data = {
     navMain: [
         {
             title: 'Portefeuille',
-            url: '#',
+            url: 'portfolio',
             icon: IconWallet,
         },
         {
             title: 'Transactions',
-            url: '#',
+            url: 'transactions',
             icon: IconChartBar,
         },
         {
             title: 'Marché',
-            url: '#',
+            url: 'market',
             icon: IconChartLine,
         },
     ],
