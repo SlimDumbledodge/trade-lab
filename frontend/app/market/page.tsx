@@ -118,7 +118,7 @@ function Market() {
     const filteredAssets = assets.filter((asset) => asset.type === tab);
 
     return (
-        <HomeLayout>
+        <HomeLayout headerTitle="Marché">
             <div className="flex flex-col gap-2 px-4 py-4 lg:px-6">
                 <h1 className="text-2xl font-semibold tracking-tight">Tous les produits</h1>
             </div>

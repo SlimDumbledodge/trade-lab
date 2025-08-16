@@ -5,9 +5,10 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 interface HomeLayoutProps {
     children: ReactNode;
+    headerTitle?: ReactNode;
 }
 
-export function HomeLayout({ children }: HomeLayoutProps) {
+export function HomeLayout({ children, headerTitle }: HomeLayoutProps) {
     return (
         <SidebarProvider
             style={
@@ -19,7 +20,7 @@ export function HomeLayout({ children }: HomeLayoutProps) {
         >
             <AppSidebar variant="inset" />
             <SidebarInset>
-                <SiteHeader />
+                <SiteHeader headerTitle={headerTitle} />
                 <div className="flex flex-1 flex-col p-4 md:p-6 lg:p-8">
                     {' '}
                     {/* <- padding global */}
