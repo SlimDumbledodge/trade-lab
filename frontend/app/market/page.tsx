@@ -4,185 +4,131 @@ import { useState } from 'react';
 import { HomeLayout } from '@/components/layouts/HomeLayout';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { IconArrowUp, IconArrowDown } from '@tabler/icons-react';
 import Image from 'next/image';
 import { PerformanceBadge } from '@/components/ui/performance-badge';
+import useSWR from 'swr';
+import { useSession } from 'next-auth/react';
 
-interface Asset {
+interface Actif {
+    id: number;
     symbol: string;
-    name: string;
-    isin: string;
-    lastPrice: number;
-    changePercent: number;
-    bid: number;
-    ask: number;
-    volume: number;
-    timestamp: string;
-    type: 'stock' | 'etf' | 'crypto';
+    sectorActivity: string;
+    logo: string;
+    description: string;
+    type: 'Common Stock' | 'ETP' | 'CRYPTO';
+    current_price: number;
+    percent_change: number;
+    opening_price_day: number;
+    highest_price_day: number;
+    lowest_price_day: number;
+    previous_close_price_day: number;
+    createdAt: string;
+    updatedAt: string;
 }
 
-const assets: Asset[] = [
-    // Actions
-    {
-        symbol: 'AAPL',
-        name: 'Apple Inc.',
-        isin: 'US0378331005',
-        lastPrice: 175.12,
-        changePercent: 1.2,
-        bid: 175.0,
-        ask: 175.5,
-        volume: 32000000,
-        timestamp: '2025-08-15 10:45',
-        type: 'stock',
-    },
-    {
-        symbol: 'TSLA',
-        name: 'Tesla Inc.',
-        isin: 'US88160R1014',
-        lastPrice: 720.45,
-        changePercent: -0.8,
-        bid: 719.8,
-        ask: 721.0,
-        volume: 28000000,
-        timestamp: '2025-08-15 10:46',
-        type: 'stock',
-    },
-    {
-        symbol: 'MSFT',
-        name: 'Microsoft Corp.',
-        isin: 'US5949181045',
-        lastPrice: 305.7,
-        changePercent: 2.1,
-        bid: 305.5,
-        ask: 306.0,
-        volume: 19000000,
-        timestamp: '2025-08-15 10:49',
-        type: 'stock',
-    },
-
-    // ETF
-    {
-        symbol: 'SPY',
-        name: 'SPDR S&P 500 ETF',
-        isin: 'US78462F1030',
-        lastPrice: 445.32,
-        changePercent: 0.5,
-        bid: 445.0,
-        ask: 445.5,
-        volume: 12000000,
-        timestamp: '2025-08-15 10:50',
-        type: 'etf',
-    },
-    {
-        symbol: 'QQQ',
-        name: 'Invesco QQQ Trust',
-        isin: 'US46090E1038',
-        lastPrice: 370.25,
-        changePercent: -0.3,
-        bid: 370.0,
-        ask: 370.5,
-        volume: 8000000,
-        timestamp: '2025-08-15 10:51',
-        type: 'etf',
-    },
-
-    // Crypto
-    {
-        symbol: 'BTC',
-        name: 'Bitcoin',
-        isin: 'CRYPTO-BTC',
-        lastPrice: 64000,
-        changePercent: 3.1,
-        bid: 63900,
-        ask: 64100,
-        volume: 900000,
-        timestamp: '2025-08-15 10:52',
-        type: 'crypto',
-    },
-    {
-        symbol: 'ETH',
-        name: 'Ethereum',
-        isin: 'CRYPTO-ETH',
-        lastPrice: 3250,
-        changePercent: -1.5,
-        bid: 3245,
-        ask: 3255,
-        volume: 600000,
-        timestamp: '2025-08-15 10:53',
-        type: 'crypto',
-    },
-];
-
 function Market() {
-    const [tab, setTab] = useState<'stock' | 'etf' | 'crypto'>('stock');
-    const filteredAssets = assets.filter((asset) => asset.type === tab);
+    const [tab, setTab] = useState<'Common Stock' | 'ETP' | 'CRYPTO'>('Common Stock');
+    const { data: session } = useSession();
+    const url = process.env.NEXT_PUBLIC_NEST_API_URL + '/actifs';
+
+    const fetcher = async (url: string) => {
+        const res = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${session?.accessToken}`,
+            },
+        });
+
+        if (!res.ok) {
+            throw new Error(`Erreur API ${res.status}`);
+        }
+
+        const json = await res.json();
+        return json.data;
+    };
+
+    const shouldFetch = !!session?.accessToken;
+
+    const { data, error, isLoading } = useSWR<Actif[]>(shouldFetch ? url : null, fetcher, {
+        refreshInterval: 30000,
+        revalidateOnFocus: false,
+        dedupingInterval: 30000,
+    });
+
+    if (isLoading) return <p>Chargement...</p>;
+    if (error) return <p>Erreur: {error.message}</p>;
+
+    const filteredActifs = (data ?? []).filter((actif) => actif.type === tab);
+    console.log(data);
 
     return (
         <HomeLayout headerTitle="Marché">
             <div className="flex flex-col gap-2 px-4 py-4 lg:px-6">
-                <h1 className="text-2xl font-semibold tracking-tight">Tous les produits</h1>
+                <h1 className="text-2xl font-semibold tracking-tight">Tous les actifs</h1>
             </div>
 
-            {/* Table */}
+            {/* Onglets */}
             <Tabs value={tab} onValueChange={(value: any) => setTab(value)}>
                 <TabsList className="text-foreground h-auto gap-2 rounded-none border-b bg-transparent px-0 pb-1 mb-2">
                     <TabsTrigger
-                        value="stock"
+                        value="Common Stock"
                         className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
                     >
                         Actions
                     </TabsTrigger>
                     <TabsTrigger
-                        value="crypto"
+                        value="CRYPTO"
                         className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
                     >
                         Crypto
                     </TabsTrigger>
                     <TabsTrigger
-                        value="etf"
+                        value="ETP"
                         className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
                     >
                         ETF
                     </TabsTrigger>
                 </TabsList>
             </Tabs>
+
+            {/* Table des actifs */}
             <Table>
-                <TableCaption>Marché en temps réel basé sur l'API Finnhub.io</TableCaption>
+                <TableCaption>Marché en temps réel basé sur ton backend</TableCaption>
 
                 <TableHeader>
                     <TableRow>
                         <TableHead className="font-bold">Titre</TableHead>
                         <TableHead className="font-bold">Dernier prix</TableHead>
-                        <TableHead className="font-bold">Bid</TableHead>
-                        <TableHead className="font-bold">Ask</TableHead>
-                        <TableHead className="font-bold">Volume</TableHead>
-                        <TableHead className="font-bold">Horodatage</TableHead>
+                        <TableHead className="font-bold">Ouverture</TableHead>
+                        <TableHead className="font-bold">Plus haut</TableHead>
+                        <TableHead className="font-bold">Plus bas</TableHead>
+                        <TableHead className="font-bold">Clôture préc.</TableHead>
                         <TableHead className="font-bold">Aujourd&apos;hui</TableHead>
                     </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                    {filteredAssets.map((asset) => (
-                        <TableRow key={asset.symbol} className="cursor-pointer">
+                    {filteredActifs.map((actif) => (
+                        <TableRow key={actif.id} className="cursor-pointer">
                             <TableCell>
                                 <div className="flex items-center gap-3">
-                                    <Image src="/apple.png" alt={asset.name} width={28} height={28} />
+                                    {/* ✅ logo par défaut si pas d'images */}
+                                    <Image src={actif.logo} alt={actif.symbol} width={28} height={28} />
                                     <div className="flex flex-col">
                                         <span className="font-bold">
-                                            {asset.name} ({asset.symbol})
+                                            {actif.description} ({actif.symbol})
                                         </span>
-                                        <span className="text-xs text-muted-foreground">{asset.isin}</span>
+                                        <span className="text-xs text-muted-foreground">#{actif.id}</span>
                                     </div>
                                 </div>
                             </TableCell>
 
-                            <TableCell>${asset.lastPrice.toFixed(2)}</TableCell>
-                            <TableCell>${asset.bid.toFixed(2)}</TableCell>
-                            <TableCell>${asset.ask.toFixed(2)}</TableCell>
-                            <TableCell>{asset.volume.toLocaleString()}</TableCell>
-                            <TableCell>{asset.timestamp}</TableCell>
+                            <TableCell>${actif.current_price.toFixed(2)}</TableCell>
+                            <TableCell>${actif.opening_price_day.toFixed(2)}</TableCell>
+                            <TableCell>${actif.highest_price_day.toFixed(2)}</TableCell>
+                            <TableCell>${actif.lowest_price_day.toFixed(2)}</TableCell>
+                            <TableCell>${actif.previous_close_price_day.toFixed(2)}</TableCell>
                             <TableCell>
-                                <PerformanceBadge change={asset.changePercent} />
+                                <PerformanceBadge change={actif.percent_change} round={2} />
                             </TableCell>
                         </TableRow>
                     ))}

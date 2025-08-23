@@ -11,16 +11,18 @@ async function main() {
     for (const actif of actifs) {
         await prisma.actif.create({
             data: {
-                description: actif.description,
+                description: actif.description || 'No description',
+                logo: actif.logo || 'default-logo.png',
+                sectorActivity: actif.sectorActivity || 'Unknown',
                 symbol: actif.symbol,
-                type: '',
-                current_price: 0,
-                highest_price_day: 0,
-                lowest_price_day: 0,
-                opening_price_day: 0,
-                previous_close_price_day: 0,
-                percent_change: 0,
-                change: 0,
+                type: actif.type || 'Unknown',
+                current_price: actif.current_price || 0,
+                highest_price_day: actif.highest_price_day || 0,
+                lowest_price_day: actif.lowest_price_day || 0,
+                opening_price_day: actif.opening_price_day || 0,
+                previous_close_price_day: actif.previous_close_price_day || 0,
+                percent_change: actif.percent_change || 0,
+                change: actif.change || 0,
             },
         });
         console.log(`✅ ${actif.symbol} inséré`);
