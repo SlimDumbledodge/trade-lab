@@ -46,6 +46,8 @@ model User {
 model Actif {
   id Int @default(autoincrement()) @id
   description String @unique
+  sectorActivity String
+  logo String
   symbol String @unique
   type String
   current_price Float
