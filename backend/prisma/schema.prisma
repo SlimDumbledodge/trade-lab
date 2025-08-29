@@ -59,6 +59,24 @@ model Actif {
   change Float
   portfolios PortfolioActif[]
   transactions Transaction[]
+model Company {
+  id                   Int      @id @default(autoincrement())
+  ticker               String   @unique
+  name                 String
+  country              String 
+  currency             String
+  exchange             String
+  marketEntryDate      DateTime
+  marketCapitalization Float?
+  sharesOutstanding    Float?
+  phone                String?
+  webUrl               String?
+  logo                 String?
+  industry             String?
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
