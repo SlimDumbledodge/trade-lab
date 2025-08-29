@@ -24,6 +24,12 @@ export function useFetch<T>({ url, token, ...options }: FetchOptions) {
                         ...(options.headers || {}),
                     },
                 });
+                if (res.status === 401) {
+                    if (typeof window !== 'undefined') {
+                        window.location.href = '/login';
+                    }
+                    return;
+                }
 
                 if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
 
