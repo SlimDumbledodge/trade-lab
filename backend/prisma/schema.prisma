@@ -59,6 +59,12 @@ model Actif {
   change Float
   portfolios PortfolioActif[]
   transactions Transaction[]
+  metrics     Metrics?       @relation("ActifMetrics")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Company {
   id                   Int      @id @default(autoincrement())
   ticker               String   @unique
@@ -77,6 +83,18 @@ model Company {
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }
+
+model Metrics {
+  id                          Int      @id @default(autoincrement())
+  tenDayAverageTradingVolume  Float
+  fiftyTwoWeekHigh            Float
+  fiftyTwoWeekLow             Float
+  fiftyTwoWeekLowDate         DateTime
+  fiftyTwoWeekPriceReturnDaily Float
+  beta                        Float
+
+  actifId Int     @unique
+  actif   Actif   @relation("ActifMetrics", fields: [actifId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
