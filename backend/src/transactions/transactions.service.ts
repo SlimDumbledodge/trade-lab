@@ -1,11 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Transaction } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-
-type TransactionPublic = Pick<
-    Transaction,
-    'type' | 'quantity' | 'priceAtExecution' | 'actifId' | 'portfolioId'
->;
+import { TransactionPublic } from 'src/types/public.types';
 
 @Injectable()
 export class TransactionsService {
@@ -15,6 +10,12 @@ export class TransactionsService {
         return this.prisma.transaction.findMany({
             where: {
                 portfolioId: portfolioId,
+            },
+            include: {
+                actif: true,
+            },
+            orderBy: {
+                createdAt: 'desc',
             },
         });
     }
