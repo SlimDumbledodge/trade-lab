@@ -16,4 +16,10 @@ export class ActifsController {
     async getProfile(@Param('symbol') symbol: string) {
         return this.actifsService.getCompanyProfile(symbol);
     }
+
+    @Get(':symbol')
+    @UseGuards(JwtAuthGuard)
+    async getActif(@Param('symbol') symbol: string) {
+        return this.actifsService.findActif(symbol);
+    }
 }

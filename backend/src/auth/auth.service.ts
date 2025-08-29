@@ -12,7 +12,7 @@ export class AuthService {
     ) {}
 
     async login(email: string, password: string): Promise<AuthEntity> {
-        const user = await this.prisma.user.findUnique({ where: { email: email } });
+        const user = await this.prisma.user.findUnique({ where: { email: email }, include: { portfolio: true } });
 
         if (!user) {
             throw new NotFoundException(`No user found for email: ${email}`);
@@ -26,7 +26,10 @@ export class AuthService {
 
         return {
             accessToken: this.jwtService.sign({ userId: user.id }),
-            user,
+            user: {
+                ...user,
+                portfolioId: user.portfolio?.id ?? null,
+            },
         };
     }
 }

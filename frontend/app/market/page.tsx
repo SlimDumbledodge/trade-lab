@@ -8,27 +8,13 @@ import Image from 'next/image';
 import { PerformanceBadge } from '@/components/ui/performance-badge';
 import useSWR from 'swr';
 import { useSession } from 'next-auth/react';
-
-interface Actif {
-    id: number;
-    symbol: string;
-    sectorActivity: string;
-    logo: string;
-    description: string;
-    type: 'Common Stock' | 'ETP' | 'CRYPTO';
-    current_price: number;
-    percent_change: number;
-    opening_price_day: number;
-    highest_price_day: number;
-    lowest_price_day: number;
-    previous_close_price_day: number;
-    createdAt: string;
-    updatedAt: string;
-}
+import { useRouter } from 'next/navigation';
+import { Actif, ActifType } from '@/types/types';
 
 function Market() {
-    const [tab, setTab] = useState<'Common Stock' | 'ETP' | 'CRYPTO'>('Common Stock');
+    const [tab, setTab] = useState<ActifType>(ActifType.CommonStock);
     const { data: session } = useSession();
+    const router = useRouter();
     const url = process.env.NEXT_PUBLIC_NEST_API_URL + '/actifs';
 
     const fetcher = async (url: string) => {
@@ -67,22 +53,22 @@ function Market() {
             </div>
 
             {/* Onglets */}
-            <Tabs value={tab} onValueChange={(value: any) => setTab(value)}>
+            <Tabs value={tab} onValueChange={(value) => setTab(value as ActifType)}>
                 <TabsList className="text-foreground h-auto gap-2 rounded-none border-b bg-transparent px-0 pb-1 mb-2">
                     <TabsTrigger
-                        value="Common Stock"
+                        value={ActifType.CommonStock}
                         className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
                     >
                         Actions
                     </TabsTrigger>
                     <TabsTrigger
-                        value="CRYPTO"
+                        value={ActifType.CRYPTO}
                         className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
                     >
                         Crypto
                     </TabsTrigger>
                     <TabsTrigger
-                        value="ETP"
+                        value={ActifType.ETP}
                         className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5"
                     >
                         ETF
@@ -105,14 +91,22 @@ function Market() {
                         <TableHead className="font-bold">Aujourd&apos;hui</TableHead>
                     </TableRow>
                 </TableHeader>
-
                 <TableBody>
                     {filteredActifs.map((actif) => (
-                        <TableRow key={actif.id} className="cursor-pointer">
+                        <TableRow
+                            key={actif.id}
+                            className="cursor-pointer hover:bg-muted/50 transition"
+                            onClick={() => router.push(`/market/${actif.symbol}`)}
+                        >
                             <TableCell>
                                 <div className="flex items-center gap-3">
-                                    {/* ✅ logo par défaut si pas d'images */}
-                                    <Image src={actif.logo} alt={actif.symbol} width={28} height={28} />
+                                    <Image
+                                        className="rounded-xl shadow"
+                                        src={actif.logo}
+                                        alt={actif.symbol}
+                                        width={28}
+                                        height={28}
+                                    />
                                     <div className="flex flex-col">
                                         <span className="font-bold">
                                             {actif.description} ({actif.symbol})

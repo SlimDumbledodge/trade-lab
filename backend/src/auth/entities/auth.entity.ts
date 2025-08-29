@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '@prisma/client';
+import { UserDto } from 'src/users/dto/user.dto';
 
 export class AuthEntity {
     @ApiProperty()
     accessToken: string;
-    user: User;
+
+    @ApiProperty({ type: UserDto })
+    user: UserDto;
 }

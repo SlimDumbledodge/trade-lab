@@ -4,6 +4,7 @@ declare module 'next-auth' {
     interface User extends DefaultUser {
         role?: string;
         subscription?: string;
+        portfolioId?: string | null;
         accessToken?: string;
     }
 
