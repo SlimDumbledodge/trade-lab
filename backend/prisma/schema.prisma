@@ -100,26 +100,6 @@ model Metrics {
   updatedAt DateTime @updatedAt
 }
 
-model Company {
-  id                   Int      @id @default(autoincrement()) // identifiant interne
-  ticker               String   @unique                     // ex: AAPL
-  name                 String                                // Apple Inc
-  country              String                                // US
-  currency             String                                // USD
-  exchange             String                                // NASDAQ/NMS (GLOBAL MARKET)
-  marketEntryDate      DateTime                              // IPO date (ex: 1980-12-12)
-  marketCapitalization Float?                               // en millions USD
-  sharesOutstanding    Float?                               // nombre d’actions en millions
-  phone                String?                               // numéro de téléphone
-  webUrl               String?                               // site officiel
-  logo                 String?                               // URL du logo
-  industry             String?                               // secteur (ex: Technology)
-
-  createdAt            DateTime @default(now())              // suivi interne
-  updatedAt            DateTime @updatedAt
-}
-
-
 model Portfolio {
   id Int @default(autoincrement()) @id
 
