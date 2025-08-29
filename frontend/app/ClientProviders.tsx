@@ -1,5 +1,6 @@
 'use client';
 
+import { Toaster } from 'react-hot-toast';
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from '@/components/theme-provider';
 
@@ -8,6 +9,7 @@ export default function ClientProviders({ children }: { children: React.ReactNod
         <SessionProvider>
             <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
                 {children}
+                <Toaster />
             </ThemeProvider>
         </SessionProvider>
     );
