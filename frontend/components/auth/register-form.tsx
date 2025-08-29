@@ -7,10 +7,10 @@ import { Label } from '@/components/ui/label';
 import Image from 'next/image';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation'; // ✅ nouveau hook
+import { useRouter } from 'next/navigation';
 
 export function SignupForm({ className, ...props }: React.ComponentProps<'div'>) {
-    const router = useRouter(); // ✅ router côté client
+    const router = useRouter();
     const [signupForm, setSignupForm] = useState({
         username: '',
         email: '',
@@ -32,11 +32,11 @@ export function SignupForm({ className, ...props }: React.ComponentProps<'div'>)
             const loginRes = await signIn('credentials', {
                 email: signupForm.email,
                 password: signupForm.password,
-                redirect: false, // on gère nous-mêmes
+                redirect: false,
             });
 
             if (!loginRes?.error) {
-                router.push('/dashboard'); // ✅ redirection côté client
+                router.push('/dashboard');
             } else {
                 console.error('Erreur de connexion :', loginRes.error);
             }
