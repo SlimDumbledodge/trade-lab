@@ -1,90 +1,101 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { HomeLayout } from '@/components/layouts/HomeLayout';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { ExternalLink, Phone, Globe, Star } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogTrigger,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogDescription,
-    DialogFooter,
-} from '@/components/animate-ui/radix/dialog';
-import { IconButton } from '@/components/animate-ui/buttons/icon';
-
-interface CompanyProfile {
-    id: number;
-    ticker: string;
-    name: string;
-    logo: string;
-    industry: string;
-    exchange: string;
-    marketEntryDate: string;
-    marketCapitalization?: number;
-    sharesOutstanding?: number;
-    webUrl?: string;
-    phone?: string;
-    country?: string;
-    currency?: string;
-    createdAt?: string;
-    updatedAt?: string;
-}
+import { Actif, Company, TransactionType } from '@/types/types';
+import toast from 'react-hot-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useFetch } from '@/hooks/use-fetch';
 
 export default function CompanyPage() {
+    const { data: session } = useSession();
     const params = useParams();
     const symbol = params?.symbol as string;
-    const { data: session } = useSession();
 
-    const [profile, setProfile] = useState<CompanyProfile | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [quantity, setQuantity] = useState<number>(0);
-    const [active, setActive] = useState(false);
+    const [quantity, setQuantity] = useState<string>('');
+    const [transactionType, setTransactionType] = useState<TransactionType>(TransactionType.BUY);
 
-    useEffect(() => {
-        if (!symbol || !session?.accessToken) return;
+    const {
+        data: actif,
+        loading: actifLoading,
+        error: actifError,
+    } = useFetch<Actif>({
+        url: `${process.env.NEXT_PUBLIC_NEST_API_URL}/actifs/${symbol}`,
+        token: session?.accessToken,
+    });
 
-        const fetchProfile = async () => {
-            setLoading(true);
-            try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_NEST_API_URL}/actifs/${symbol}/profile`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${session.accessToken}`,
-                    },
-                });
+    const {
+        data: profile,
+        loading: profileLoading,
+        error: profileError,
+    } = useFetch<Company>({
+        url: `${process.env.NEXT_PUBLIC_NEST_API_URL}/actifs/${symbol}/profile`,
+        token: session?.accessToken,
+    });
 
-                if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
+    const handleTransferActif = async () => {
+        if (!session?.accessToken) return;
 
-                const data = await res.json();
-                setProfile(data.data);
-            } catch (err: any) {
-                console.error(err);
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+        await toast.promise(
+            new Promise(async (resolve, reject) => {
+                try {
+                    await new Promise((r) => setTimeout(r, 800));
 
-        fetchProfile();
-    }, [symbol, session?.accessToken]);
+                    const res = await fetch(
+                        `${process.env.NEXT_PUBLIC_NEST_API_URL}/portfolios/${session.user?.portfolioId}/${transactionType?.toLowerCase()}`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${session.accessToken}`,
+                            },
+                            method: 'POST',
+                            body: JSON.stringify({ actifId: actif?.id, quantity: Number(quantity) }),
+                        },
+                    );
 
-    if (loading) return <p className="p-6 text-center">Chargement...</p>;
-    if (error) return <p className="p-6 text-red-600">Erreur : {error}</p>;
-    if (!profile) return <p className="p-6">Profil introuvable</p>;
+                    if (!res.ok) {
+                        throw new Error(`API request failed with status ${res.status}`);
+                    }
+
+                    const data = await res.json();
+                    setQuantity('');
+                    resolve(data);
+                } catch (err) {
+                    reject(err);
+                }
+            }),
+            {
+                loading: 'Transfert en cours...',
+                success: 'Transfert réussi',
+                error: 'Échec du transfert',
+            },
+        );
+    };
+
+    if (actifLoading || profileLoading) return <p>Chargement...</p>;
+    if (actifError || profileError) return <p className="text-red-600">{actifError || profileError}</p>;
+    if (!actif || !profile) return <p>Introuvable</p>;
 
     return (
         <HomeLayout headerTitle={profile.name}>
-            <div className="p-6 max-w-6xl mx-auto grid grid-cols-4 gap-6">
-                {/* Main Content */}
+            <div className="p-6 grid grid-cols-4 gap-6">
+                {/* Colonne principale */}
                 <div className="col-span-3 space-y-6">
+                    {/* Bouton retour */}
+                    <Link href="/market">
+                        <Button variant="ghost" className="flex items-center gap-2 mb-4">
+                            <ArrowLeft className="h-4 w-4" />
+                            Retour au marché
+                        </Button>
+                    </Link>
+
                     {/* Header */}
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-4">
@@ -103,61 +114,39 @@ export default function CompanyPage() {
                                 <p className="text-sm text-gray-500">{profile.industry}</p>
                             </div>
                         </div>
-                        <IconButton icon={Star} active={active} onClick={() => setActive(!active)} />
                     </div>
 
                     {/* Metrics */}
-                    <Card className=" text-white rounded-2xl ">
+                    <Card className="text-white rounded-2xl">
                         <CardTitle className="px-6">Métriques</CardTitle>
                         <CardContent className="p-6 grid grid-cols-2 gap-6">
                             {/* Left column */}
-
                             <div className="space-y-4">
-                                {/* Pér. 1J */}
-                                <div>
-                                    <p className="text-xs font-medium text-gray-400">Pér. 1J</p>
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <span>193,08</span>
-                                        <div className="flex-1 h-1 bg-gray-700 rounded-full relative">
-                                            <div className="absolute left-0 h-1 bg-green-500 rounded-full w-1/3"></div>
-                                        </div>
-                                        <span>195,54</span>
-                                    </div>
-                                </div>
-
-                                {/* Pér. 52S */}
-                                <div>
-                                    <p className="text-xs font-medium text-gray-400">Pér. 52S</p>
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <span>152,00</span>
-                                        <div className="flex-1 h-1 bg-gray-700 rounded-full relative">
-                                            <div className="absolute left-0 h-1 bg-green-500 rounded-full w-1/2"></div>
-                                        </div>
-                                        <span>248,70</span>
-                                    </div>
-                                </div>
-
-                                {/* Ouverture / Clôture */}
+                                {/* 52 Week High / Low */}
                                 <div className="flex justify-between text-sm">
                                     <div>
-                                        <p className="text-xs font-medium text-gray-400">Ouverture</p>
-                                        <p>193,98</p>
+                                        <p className="text-xs font-medium text-gray-400">52W High</p>
+                                        <p>{actif.metrics?.fiftyTwoWeekHigh?.toFixed(2) ?? '-'}</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-medium text-gray-400">Clôture</p>
-                                        <p>193,78</p>
+                                        <p className="text-xs font-medium text-gray-400">52W Low</p>
+                                        <p>{actif.metrics?.fiftyTwoWeekLow?.toFixed(2) ?? '-'}</p>
                                     </div>
                                 </div>
 
-                                {/* Bid / Ask */}
+                                {/* Date du plus bas / Vol. moyen 10j */}
                                 <div className="flex justify-between text-sm">
                                     <div>
-                                        <p className="text-xs font-medium text-gray-400">Bid</p>
-                                        <p>194,32</p>
+                                        <p className="text-xs font-medium text-gray-400">52W Low Date</p>
+                                        <p>
+                                            {actif.metrics?.fiftyTwoWeekLowDate
+                                                ? new Date(actif.metrics.fiftyTwoWeekLowDate).toLocaleDateString()
+                                                : '-'}
+                                        </p>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-medium text-gray-400">Ask</p>
-                                        <p>194,52</p>
+                                        <p className="text-xs font-medium text-gray-400">Vol. moy. 10j</p>
+                                        <p>{actif.metrics?.tenDayAverageTradingVolume?.toFixed(2) ?? '-'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -165,117 +154,116 @@ export default function CompanyPage() {
                             {/* Right column */}
                             <div className="space-y-4">
                                 <div>
-                                    <p className="text-xs font-medium text-gray-400">Cap. Bours.</p>
-                                    <p className="text-sm font-semibold">2,912 T</p>
+                                    <p className="text-xs font-medium text-gray-400">Beta</p>
+                                    <p className="text-sm font-semibold">{actif.metrics?.beta?.toFixed(2) ?? '-'}</p>
                                 </div>
                                 <div>
-                                    <p className="text-xs font-medium text-gray-400">P/E</p>
-                                    <p className="text-sm font-semibold">31,41</p>
-                                </div>
-                                <div>
-                                    <p className="text-xs font-medium text-gray-400">Beta 52S</p>
-                                    <p className="text-sm font-semibold">1,11</p>
-                                </div>
-                                <div>
-                                    <p className="text-xs font-medium text-gray-400">Rend. div.</p>
-                                    <p className="text-sm font-semibold">0,46 %</p>
+                                    <p className="text-xs font-medium text-gray-400">Perf. 1 an</p>
+                                    <p className="text-sm font-semibold">
+                                        {actif.metrics?.fiftyTwoWeekPriceReturnDaily?.toFixed(2) ?? '-'} %
+                                    </p>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
-
-                    <p className="text-xs text-gray-400 text-right">
-                        Dernière mise à jour : {new Date(profile.updatedAt ?? '').toLocaleString()}
-                    </p>
                 </div>
 
                 {/* Side Menu */}
-                <div className="col-span-1 space-y-6">
+                <div className="col-span-1 space-y-6 text-left">
                     <h2 className="font-semibold text-lg">Trader</h2>
-                    <p className="text-gray-600">Achetez cette action</p>
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button variant="outline">Acheter</Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]" from="left">
-                            <DialogHeader>
-                                <DialogTitle>Achat d’action</DialogTitle>
-                                <DialogDescription>
-                                    Sélectionnez la quantité à acheter pour <span className="font-semibold">{profile.name}</span>{' '}
-                                    ({profile.ticker}).
-                                </DialogDescription>
-                            </DialogHeader>
+                    <Tabs defaultValue={TransactionType.BUY}>
+                        <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger value={TransactionType.BUY} onClick={() => setTransactionType(TransactionType.BUY)}>
+                                Acheter
+                            </TabsTrigger>
+                            <TabsTrigger value={TransactionType.SELL} onClick={() => setTransactionType(TransactionType.SELL)}>
+                                Vendre
+                            </TabsTrigger>
+                        </TabsList>
 
-                            {/* Form */}
-                            <div className="grid gap-4 py-4">
-                                <div className="flex justify-between text-sm">
-                                    <span>Prix unitaire</span>
-                                    <span className="font-medium">
-                                        {(profile as any).current_price ?? 194.32} {profile.currency}
-                                    </span>
-                                </div>
-                                <div>
-                                    <label htmlFor="quantity" className="text-sm font-medium">
-                                        Quantité
-                                    </label>
-                                    <input
-                                        id="quantity"
-                                        type="number"
-                                        min={1}
-                                        value={quantity}
-                                        onChange={(e) => setQuantity(Number(e.target.value))}
-                                        className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-                                    />
-                                </div>
-                                <div className="flex justify-between text-sm">
-                                    <span>Coût total</span>
-                                    <span className="font-medium">
-                                        {((profile as any).current_price ?? 194.32) * quantity} {profile.currency}
-                                    </span>
-                                </div>
-                            </div>
+                        <TabsContent value={TransactionType.BUY}>
+                            <TradeForm
+                                profile={profile}
+                                actif={actif}
+                                quantity={quantity}
+                                setQuantity={setQuantity}
+                                transactionType={TransactionType.BUY}
+                                handleTransfer={handleTransferActif}
+                            />
+                        </TabsContent>
 
-                            <DialogFooter>
-                                <Button variant="outline" onClick={() => setQuantity(1)}>
-                                    Annuler
-                                </Button>
-                                <Button
-                                    type="button"
-                                    // onClick={async () => {
-                                    //     try {
-                                    //         const res = await fetch(
-                                    //             `${process.env.NEXT_PUBLIC_NEST_API_URL}/portfolio/${portfolioId}/buy`,
-                                    //             {
-                                    //                 method: 'POST',
-                                    //                 headers: {
-                                    //                     'Content-Type': 'application/json',
-                                    //                     Authorization: `Bearer ${session?.accessToken}`,
-                                    //                 },
-                                    //                 body: JSON.stringify({
-                                    //                     actifId: profile.id,
-                                    //                     quantity,
-                                    //                 }),
-                                    //             },
-                                    //         );
-                                    //         if (!res.ok) {
-                                    //             const err = await res.json();
-                                    //             throw new Error(err.message || "Erreur lors de l'achat");
-                                    //         }
-                                    //         const data = await res.json();
-                                    //         console.log('Achat confirmé :', data);
-                                    //         // tu peux afficher une notif ou fermer le dialog ici
-                                    //     } catch (err) {
-                                    //         console.error(err);
-                                    //     }
-                                    // }}
-                                >
-                                    Confirmer l’achat
-                                </Button>
-                            </DialogFooter>
-                        </DialogContent>
-                    </Dialog>
+                        <TabsContent value={TransactionType.SELL}>
+                            <TradeForm
+                                profile={profile}
+                                actif={actif}
+                                quantity={quantity}
+                                setQuantity={setQuantity}
+                                transactionType={TransactionType.SELL}
+                                handleTransfer={handleTransferActif}
+                            />
+                        </TabsContent>
+                    </Tabs>
                 </div>
             </div>
         </HomeLayout>
+    );
+}
+
+function TradeForm({
+    profile,
+    actif,
+    quantity,
+    setQuantity,
+    transactionType,
+    handleTransfer,
+}: {
+    profile: Company;
+    actif: Actif;
+    quantity: string;
+    setQuantity: (q: string) => void;
+    transactionType: TransactionType;
+    handleTransfer: () => Promise<void>;
+}) {
+    const orderLabel = transactionType === TransactionType.BUY ? 'Acheter' : 'Vendre';
+
+    return (
+        <div className="grid gap-4 py-4">
+            <div className="flex justify-between text-sm">
+                <span>Prix unitaire</span>
+                <span className="font-medium">
+                    {actif.current_price} {profile.currency}
+                </span>
+            </div>
+
+            <div>
+                <label htmlFor="quantity" className="text-sm font-medium">
+                    Nombre de titres
+                </label>
+                <input
+                    id="quantity"
+                    type="number"
+                    min={1}
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+                />
+            </div>
+
+            <div className="flex justify-between text-sm">
+                <span>Totale de l’ordre</span>
+                <span className="font-medium">
+                    {actif.current_price * Number(quantity)} {profile.currency}
+                </span>
+            </div>
+
+            <div className="flex gap-2">
+                <Button variant="outline" onClick={() => setQuantity('')}>
+                    Annuler
+                </Button>
+                <Button type="button" onClick={handleTransfer}>
+                    {orderLabel}
+                </Button>
+            </div>
+        </div>
     );
 }
