@@ -8,6 +8,6 @@ export class ActifsCron {
 
     @Cron(CronExpression.EVERY_30_SECONDS)
     async updateActifsPrices() {
-        await this.actifsService.getActif();
+        await this.actifsService.updateAllActifs();
     }
 }
