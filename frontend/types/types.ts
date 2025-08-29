@@ -126,3 +126,14 @@ export type Transaction = {
     actif?: Actif;
     createdAt: Date;
 };
+
+export type PaginationMeta = {
+    total: number;
+    page: number;
+    lastPage: number;
+};
+
+export type PaginatedTransactions = {
+    items: Transaction[];
+    meta: PaginationMeta;
+};
