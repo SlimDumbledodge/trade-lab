@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
-import { Actif, Company } from '@prisma/client';
-
-type ActifPublic = Omit<Actif, 'id' | 'createdAt' | 'updatedAt' | 'portfolios'>;
-type CompanyPublic = Omit<Company, 'id' | 'createdAt' | 'updatedAt'>;
+import { ActifPublic, CompanyPublic, MetricsPublic } from 'src/types/public.types';
 
 @Injectable()
 export class FinnhubService {
@@ -51,7 +48,6 @@ export class FinnhubService {
             if (!companyProfilInfo) {
                 throw new Error(`No company profil data found for ${symbol}`);
             }
-            console.log(companyProfilInfo);
 
             const symbolInfo = dataSymbol.result[0];
 
@@ -80,7 +76,6 @@ export class FinnhubService {
             const { data } = await firstValueFrom(
                 this.httpService.get(`${this.companyProfileEndpoint}${symbol}${this.getTokenQueryString}`),
             );
-            console.log(data);
 
             if (!data) throw new Error(`No profile found for ${symbol}`);
 
@@ -101,5 +96,22 @@ export class FinnhubService {
         } catch (err) {
             throw new Error(`Failed to get company profile for ${symbol}: ${err.message}`);
         }
+    }
+
+    async getMetrics(symbol: string): Promise<MetricsPublic> {
+        const { data } = await firstValueFrom(
+            this.httpService.get(`https://finnhub.io/api/v1/stock/metric?symbol=${symbol}&metric=all${this.getTokenQueryString}`),
+        );
+
+        if (!data?.metric) throw new Error(`No metrics found for ${symbol}`);
+
+        return {
+            tenDayAverageTradingVolume: data.metric['10DayAverageTradingVolume'],
+            fiftyTwoWeekHigh: data.metric['52WeekHigh'],
+            fiftyTwoWeekLow: data.metric['52WeekLow'],
+            fiftyTwoWeekLowDate: new Date(data.metric['52WeekLowDate'] as string),
+            fiftyTwoWeekPriceReturnDaily: data.metric['52WeekPriceReturnDaily'],
+            beta: data.metric.beta,
+        };
     }
 }
