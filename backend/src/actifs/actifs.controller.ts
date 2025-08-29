@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ActifsService } from './actifs.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
@@ -9,5 +9,11 @@ export class ActifsController {
     @UseGuards(JwtAuthGuard)
     findAll() {
         return this.actifsService.findAll();
+    }
+
+    @Get(':symbol/profile')
+    @UseGuards(JwtAuthGuard)
+    async getProfile(@Param('symbol') symbol: string) {
+        return this.actifsService.getCompanyProfile(symbol);
     }
 }

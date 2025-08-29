@@ -26,4 +26,23 @@ export class ActifsService {
             }
         }
     }
+
+    async getCompanyProfile(symbol: string) {
+        const data = await this.finnhub.getCompanyProfile(symbol);
+
+        if (!data) {
+            throw new Error(`No company profile found for ${symbol}`);
+        }
+
+        const company = await this.prisma.company.upsert({
+            where: { ticker: symbol },
+            create: {
+                ...data,
+                marketEntryDate: new Date(data.marketEntryDate),
+            },
+            update: { ...data, marketEntryDate: new Date(data.marketEntryDate) },
+        });
+
+        return company;
+    }
 }
