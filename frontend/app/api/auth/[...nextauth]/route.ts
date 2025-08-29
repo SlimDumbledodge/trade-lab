@@ -27,7 +27,6 @@ export const authOptions = {
 
                     const data = await res.json();
 
-                    // Vérifier la structure exacte
                     if (data.success && data.data?.accessToken && data.data?.user) {
                         const user = data.data.user;
                         return {
@@ -36,6 +35,7 @@ export const authOptions = {
                             email: user.email,
                             role: user.role,
                             subscription: user.subscription,
+                            portfolioId: user.portfolioId,
                             accessToken: data.data.accessToken,
                         };
                     }
@@ -65,7 +65,7 @@ export const authOptions = {
     },
 
     pages: {
-        signIn: '/connexion',
+        signIn: '/login',
     },
 
     secret: process.env.NEXTAUTH_SECRET,
