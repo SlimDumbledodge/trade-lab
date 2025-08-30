@@ -35,9 +35,9 @@ export function SiteHeader({ headerTitle }: { headerTitle: ReactNode }) {
         error,
         isLoading,
     } = useSWR(shouldFetch ? url : null, fetcher, {
-        refreshInterval: 1000,
+        refreshInterval: 50000,
         revalidateOnFocus: false,
-        dedupingInterval: 1000,
+        dedupingInterval: 50000,
     });
 
     if (isLoading) return <p>Chargement...</p>;
