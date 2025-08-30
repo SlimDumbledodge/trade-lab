@@ -1,6 +1,8 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import React from 'react';
-import { Transaction } from '@/types/types';
+import { Transaction, TransactionType } from '@/types/types';
 import { TransactionTypeBadge } from './ui/transaction-type-badge';
 import Image from 'next/image';
 
@@ -15,7 +17,6 @@ export function TransactionCard({ transaction, className }: TransactionCardProps
     const assetLogo = actif?.logo;
 
     const total = quantity * priceAtExecution;
-    const typeLower = type.toLowerCase();
 
     const formattedDate = new Date(createdAt).toLocaleDateString('fr-FR', {
         day: '2-digit',
@@ -25,8 +26,10 @@ export function TransactionCard({ transaction, className }: TransactionCardProps
         minute: '2-digit',
     });
 
+    const isBuy = type === TransactionType.BUY;
+
     return (
-        <div className={cn('flex justify-between items-center gap-3 rounded-xl p-3 shadow-sm border ', className)}>
+        <div className={cn('flex justify-between items-center gap-3 rounded-xl p-3 shadow-2xs border ', className)}>
             {/* Left : Asset logo + infos */}
             <div className="flex items-center gap-3">
                 <Image
@@ -40,7 +43,7 @@ export function TransactionCard({ transaction, className }: TransactionCardProps
                 <div className="flex flex-col">
                     <div className="text-sm font-semibold flex items-center ">
                         {assetName}
-                        <span className="ml-4">
+                        <span className="ml-2">
                             <TransactionTypeBadge type={type} />
                         </span>
                     </div>
@@ -52,13 +55,16 @@ export function TransactionCard({ transaction, className }: TransactionCardProps
             {/* Right : Transaction details */}
             <div className="flex flex-col text-right">
                 <div className="text-xs font-medium text-neutral-600 dark:text-neutral-300">
-                    Qté : <span className="font-semibold">{quantity}</span>
+                    Quantité : <span className="font-semibold">{quantity}</span>
                 </div>
                 <div className="text-xs font-medium text-neutral-600 dark:text-neutral-300">
-                    Prix : <span className="font-semibold">{priceAtExecution.toFixed(2)} $</span>
+                    Prix unitaire : <span className="font-semibold">{priceAtExecution.toFixed(2)} $</span>
                 </div>
-                <div className={cn('text-sm font-bold mt-0.5', typeLower === 'buy' ? 'text-green-500' : 'text-red-500')}>
-                    Total : {total.toFixed(2)} $
+                <div className="text-sm font-bold mt-0.5">
+                    Total :{' '}
+                    <span className={isBuy ? 'text-red-500' : 'text-green-500'}>
+                        {isBuy ? `-${total.toFixed(2)} $` : `+${total.toFixed(2)} $`}
+                    </span>
                 </div>
             </div>
         </div>
