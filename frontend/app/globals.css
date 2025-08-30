@@ -152,6 +152,39 @@
     --shadow-2xl: var(--shadow-2xl);
 }
 
+@keyframes pulse-green {
+    0% {
+      background-color: color-mix(in oklab, var(--color-emerald-600) 20%, transparent);
+    }
+    50% {
+      background-color: transparent;
+    }
+    100% {
+      background-color: color-mix(in oklab, var(--color-emerald-600) 20%, transparent);
+    }
+  }
+  
+  @keyframes pulse-red {
+    0% {
+      background-color: color-mix(in oklab, var(--color-red-600) 20%, transparent);
+    }
+    50% {
+      background-color: transparent;
+    }
+    100% {
+      background-color: color-mix(in oklab, var(--color-red-600) 20%, transparent);
+    }
+  }
+  
+  .animate-pulse-green {
+    animation: pulse-green 1.2s ease-in-out;
+  }
+  
+  .animate-pulse-red {
+    animation: pulse-red 1.2s ease-in-out;
+  }
+  
+
 @layer base {
     * {
         @apply border-border outline-ring/50;
