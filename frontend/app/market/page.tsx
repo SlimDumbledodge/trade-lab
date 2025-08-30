@@ -122,7 +122,7 @@ function Market() {
                             <TableCell>${actif.lowest_price_day.toFixed(2)}</TableCell>
                             <TableCell>${actif.previous_close_price_day.toFixed(2)}</TableCell>
                             <TableCell>
-                                <PerformanceBadge change={actif.percent_change} round={2} />
+                                <PerformanceBadge change={actif.percent_change} round={2} animated />
                             </TableCell>
                         </TableRow>
                     ))}
