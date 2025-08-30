@@ -7,6 +7,7 @@ import { ActifsModule } from './actifs/actifs.module';
 import { PortfoliosModule } from './portfolios/portfolios.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TransactionsModule } from './transactions/transactions.module';
+import { MarketStatusModule } from './market-status/market-status.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { TransactionsModule } from './transactions/transactions.module';
         }),
         ScheduleModule.forRoot(),
         TransactionsModule,
+        MarketStatusModule,
     ],
 })
 export class AppModule {}
