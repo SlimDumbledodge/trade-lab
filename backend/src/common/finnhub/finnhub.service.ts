@@ -11,6 +11,7 @@ export class FinnhubService {
     private readonly symbolEndpoint = this.baseUrl + 'search?q=';
     private readonly quoteEndpoint = this.baseUrl + 'quote?symbol=';
     private readonly companyProfileEndpoint = this.baseUrl + 'stock/profile2?symbol=';
+    private readonly marketStatusEndpoint = this.baseUrl + 'stock/market-status?exchange=US';
 
     constructor(
         private readonly httpService: HttpService,
@@ -113,5 +114,19 @@ export class FinnhubService {
             fiftyTwoWeekPriceReturnDaily: data.metric['52WeekPriceReturnDaily'],
             beta: data.metric.beta,
         };
+    }
+
+    async getMarketStatus(): Promise<boolean> {
+        try {
+            const { data } = await firstValueFrom(
+                this.httpService.get(`${this.marketStatusEndpoint}${this.getTokenQueryString}`),
+            );
+
+            if (!data) throw new Error(`Cannot get market status`);
+
+            return data.isOpen as boolean;
+        } catch (err) {
+            throw new Error(`Failed to get market status: ${err.message}`);
+        }
     }
 }
