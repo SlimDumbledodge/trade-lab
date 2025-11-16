@@ -1,5 +1,3 @@
-// ...existing code...
-
 # 🧠 TradeLab
 
 Trading simulation platform for buying/selling financial assets (full‑stack: NestJS + Prisma backend, Next.js + React frontend).
