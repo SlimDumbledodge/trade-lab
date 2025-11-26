@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { PortfoliosService } from './portfolios.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { TransferActifDto } from './dto/transfer-actif-dto';
+import { TransferAssetDto } from './dto/transfer-asset-dto';
 
 @Controller('portfolios')
 export class PortfoliosController {
@@ -9,19 +9,19 @@ export class PortfoliosController {
 
     @Get(':id/info')
     @UseGuards(JwtAuthGuard)
-    info(@Param('id', ParseIntPipe) portfolioId: number) {
+    info(@Param('id') portfolioId: string) {
         return this.portfoliosService.getInfo(portfolioId);
     }
 
     @Post(':id/buy')
     @UseGuards(JwtAuthGuard)
-    buy(@Param('id', ParseIntPipe) portfolioId: number, @Body() buyActifDto: TransferActifDto) {
-        return this.portfoliosService.buy(portfolioId, buyActifDto);
+    buy(@Param('id') portfolioId: string, @Body() buyAssetDto: TransferAssetDto) {
+        return this.portfoliosService.buy(portfolioId, buyAssetDto);
     }
 
     @Post(':id/sell')
     @UseGuards(JwtAuthGuard)
-    sell(@Param('id', ParseIntPipe) portfolioId: number, @Body() sellActifDto: TransferActifDto) {
-        return this.portfoliosService.sell(portfolioId, sellActifDto);
+    sell(@Param('id') portfolioId: string, @Body() sellAssetDto: TransferAssetDto) {
+        return this.portfoliosService.sell(portfolioId, sellAssetDto);
     }
 }

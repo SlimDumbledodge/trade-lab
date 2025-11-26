@@ -1,15 +1,16 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { GetUser } from 'src/common/decorators/user.decorator';
 
-@Controller()
+@Controller("transactions")
+@UseGuards(JwtAuthGuard)
 export class TransactionsController {
     constructor(private readonly transactionsService: TransactionsService) {}
 
-    @Get('portfolios/:id/transactions')
-    @UseGuards(JwtAuthGuard)
+    @Get()
     getTransactions(
-        @Param('id', ParseIntPipe) portfolioId: number,
+        @GetUser('portfolioId') portfolioId: string,
         @Query('page') page: string = '1',
         @Query('limit') limit: string = '10',
     ) {

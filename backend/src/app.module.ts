@@ -3,18 +3,17 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { ActifsModule } from './actifs/actifs.module';
+import { AssetsModule } from './assets/assets.module';
 import { PortfoliosModule } from './portfolios/portfolios.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TransactionsModule } from './transactions/transactions.module';
-import { MarketStatusModule } from './market-status/market-status.module';
 
 @Module({
     imports: [
         PrismaModule,
         UsersModule,
         AuthModule,
-        ActifsModule,
+        AssetsModule,
         PortfoliosModule,
         TransactionsModule,
         ConfigModule.forRoot({
@@ -22,7 +21,6 @@ import { MarketStatusModule } from './market-status/market-status.module';
         }),
         ScheduleModule.forRoot(),
         TransactionsModule,
-        MarketStatusModule,
     ],
 })
 export class AppModule {}
