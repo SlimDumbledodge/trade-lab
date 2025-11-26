@@ -5,140 +5,92 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "./generated"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-enum RoleUser {
-  user
-  admin
-}
-
-enum SubscriptionUser {
-  free
-  premium
-}
-
-enum TransactionType {
-  BUY
-  SELL
 }
 
 model User {
-  id Int @default(autoincrement()) @id
-  username String @unique
-  email String @unique
-  password String
-
-  role RoleUser @default(admin)
-  subscription SubscriptionUser @default(free)
-
-  portfolio Portfolio? @relation("UserPortfolio")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Actif {
-  id Int @default(autoincrement()) @id
-  description String @unique
-  sectorActivity String
-  logo String
-  symbol String @unique
-  type String
-  current_price Float
-  highest_price_day Float
-  lowest_price_day Float
-  opening_price_day Float
-  previous_close_price_day Float
-  percent_change Float
-  change Float
-  portfolios PortfolioActif[]
-  transactions Transaction[]
-  metrics     Metrics?       @relation("ActifMetrics")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Company {
-  id                   Int      @id @default(autoincrement())
-  ticker               String   @unique
-  name                 String
-  country              String 
-  currency             String
-  exchange             String
-  marketEntryDate      DateTime
-  marketCapitalization Float?
-  sharesOutstanding    Float?
-  phone                String?
-  webUrl               String?
-  logo                 String?
-  industry             String?
-
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-}
-
-model Metrics {
-  id                          Int      @id @default(autoincrement())
-  tenDayAverageTradingVolume  Float
-  fiftyTwoWeekHigh            Float
-  fiftyTwoWeekLow             Float
-  fiftyTwoWeekLowDate         DateTime
-  fiftyTwoWeekPriceReturnDaily Float
-  beta                        Float
-
-  actifId Int     @unique
-  actif   Actif   @relation("ActifMetrics", fields: [actifId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String     @id @default(uuid())
+  email       String     @unique
+  username    String     @unique
+  passwordHash String
+  createdAt   DateTime   @default(now())
+  portfolio   Portfolio?
 }
 
 model Portfolio {
-  id Int @default(autoincrement()) @id
-
-  userId Int @unique
-  user User @relation("UserPortfolio", fields: [userId], references: [id])
-  balance Float @default(100000)
-  actifs PortfolioActif[]
+  id           String              @id @default(uuid())
+  userId       String              @unique
+  cashBalance  Decimal             @default(10000.00)
+  createdAt    DateTime            @default(now())
+  user         User                @relation(fields: [userId], references: [id])
   transactions Transaction[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  assets       PortfolioAsset[]
+  history      PortfolioHistory[]
 }
 
-model PortfolioActif {
-  id           Int     @default(autoincrement()) @id
-  portfolio    Portfolio  @relation(fields: [portfolioId], references: [id])
-  portfolioId  Int
-  actif        Actif      @relation(fields: [actifId], references: [id])
-  actifId      Int
-  quantity     Float
-  averagePrice Float
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([portfolioId, actifId])
+model Asset {
+  id          String           @id @default(uuid())
+  symbol      String           @unique
+  name        String
+  description String?
+  lastPrice   Decimal
+  updatedAt   DateTime         @default(now())
+  prices      AssetPrice[]
+  transactions Transaction[]
+  portfolioAssets PortfolioAsset[]
 }
 
 model Transaction {
-  id Int @default(autoincrement()) @id
-  type TransactionType
-  quantity Float
-  priceAtExecution Float
-  actif Actif @relation(fields: [actifId], references: [id])
-  actifId Int
-  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
-  portfolioId Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id           String     @id @default(uuid())
+  portfolioId  String
+  assetId      String
+  type         TransactionType
+  quantity     Decimal
+  price        Decimal
+  createdAt    DateTime @default(now())
+  portfolio    Portfolio @relation(fields: [portfolioId], references: [id])
+  asset        Asset     @relation(fields: [assetId], references: [id])
 }
+
+enum TransactionType {
+  buy
+  sell
+}
+
+model PortfolioAsset {
+  id              String    @id @default(uuid())
+  portfolioId     String
+  assetId         String
+  quantity        Decimal
+  averageBuyPrice Decimal
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  portfolio       Portfolio @relation(fields: [portfolioId], references: [id])
+  asset           Asset     @relation(fields: [assetId], references: [id])
+  @@unique([portfolioId, assetId])
+}
+
+model AssetPrice {
+  id          String   @id @default(uuid())
+  assetId     String
+  price       Decimal
+  recordedAt  DateTime @default(now())
+  asset       Asset    @relation(fields: [assetId], references: [id])
+  @@unique([assetId, recordedAt])
+}
+
+model PortfolioHistory {
+  id           String    @id @default(uuid())
+  portfolioId  String
+  totalValue   Decimal
+  cashBalance  Decimal
+  recordedAt   DateTime  @default(now())
+  portfolio    Portfolio @relation(fields: [portfolioId], references: [id])
+  @@unique([portfolioId, recordedAt])
+}
+
