@@ -1,0 +1,101 @@
+@startuml trading-virtual-erd
+
+title Application de Trading Virtuel - ERD (MVP)
+caption Dernière modification : 24/11/2025
+
+entity "User" as user {
+  *user_id : uuid <<generated>> <<PK>>
+  ---
+  email : text <<unique>>
+  username : text <<unique>>
+  password_hash : text
+  created_at : timestamp <<default(now())>>
+}
+
+entity "Portfolio" as portfolio {
+  *portfolio_id : uuid <<generated>> <<PK>>
+  ---
+  user_id : uuid <<FK>>
+  cash_balance : decimal(15,2) <<default(10000.00)>>
+  created_at : timestamp <<default(now())>>
+}
+
+entity "Asset" as asset {
+  *asset_id : uuid <<generated>> <<PK>>
+  ---
+  symbol : text <<unique>>
+  name : text
+  description? : text
+  last_price : decimal(15,2)
+  updated_at : timestamp <<default(now())>>
+}
+
+entity "Transaction" as transaction {
+  *transaction_id : uuid <<generated>> <<PK>>
+  ---
+  portfolio_id : uuid <<FK>>
+  asset_id : uuid <<FK>>
+  type : enum("buy","sell")
+  quantity : decimal(15,4)
+  price : decimal(15,2)
+  total : decimal(15,2) <<computed(quantity*price)>>
+  created_at : timestamp <<default(now())>>
+}
+
+entity "PortfolioAsset" as portfolio_asset {
+  *portfolio_asset_id : uuid <<generated>> <<PK>>
+  ---
+  portfolio_id : uuid <<FK>>
+  asset_id : uuid <<FK>>
+  quantity : decimal(15,4)
+  average_buy_price : decimal(15,2)
+  created_at : timestamp <<default(now())>>
+  updated_at : timestamp <<default(now())>>
+  UNIQUE(portfolio_id, asset_id)
+}
+
+entity "AssetPrice" as asset_price {
+  *asset_price_id : uuid <<generated>> <<PK>>
+  ---
+  asset_id : uuid <<FK>>
+  price : decimal(15,2)
+  recorded_at : timestamp <<default(now())>>
+  UNIQUE(asset_id, recorded_at)
+}
+
+entity "PortfolioHistory" as portfolio_history {
+  *portfolio_history_id : uuid <<generated>> <<PK>>
+  ---
+  portfolio_id : uuid <<FK>>
+  total_value : decimal(15,2)
+  cash_balance : decimal(15,2)
+  recorded_at : timestamp <<default(now())>>
+  UNIQUE(portfolio_id, recorded_at)
+}
+
+' ────────────────────────────────
+' RELATIONS
+' ────────────────────────────────
+
+' Un utilisateur possède un portefeuille
+user ||--|| portfolio : "1-1"
+
+' Un portefeuille a plusieurs transactions
+portfolio ||--o{ transaction : "1-N"
+
+' Un portefeuille a plusieurs positions (PortfolioAsset)
+portfolio ||--o{ portfolio_asset : "1-N"
+
+' Un portefeuille a un historique de valeur (PortfolioHistory)
+portfolio ||--o{ portfolio_history : "1-N"
+
+' Un actif peut apparaître dans plusieurs transactions
+asset ||--o{ transaction : "1-N"
+
+' Un actif peut être détenu dans plusieurs portefeuilles
+asset ||--o{ portfolio_asset : "1-N"
+
+' Un actif a plusieurs enregistrements de prix historiques
+asset ||--o{ asset_price : "1-N"
+
+@enduml
