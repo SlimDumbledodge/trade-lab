@@ -6,13 +6,13 @@ import { TransactionPublic } from 'src/types/public.types';
 export class TransactionsService {
     constructor(private readonly prisma: PrismaService) {}
 
-    async getTransactions(portfolioId: number, page: number = 1, limit: number = 10) {
+    async getTransactions(portfolioId: string, page: number = 1, limit: number = 10) {
         const nbTransactionsToSkip = (page - 1) * limit;
 
         const [items, total] = await this.prisma.$transaction([
             this.prisma.transaction.findMany({
                 where: { portfolioId: portfolioId },
-                include: { actif: true },
+                include: { asset: true },
                 orderBy: { createdAt: 'desc' },
                 skip: nbTransactionsToSkip,
                 take: limit,
@@ -23,7 +23,7 @@ export class TransactionsService {
 
         return {
             data: {
-                items, // tableau des transactions
+                items,
                 meta: {
                     total,
                     page,
