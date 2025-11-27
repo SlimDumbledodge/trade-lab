@@ -1,25 +1,33 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { TransactionPublic } from 'src/types/public.types';
+import { BadRequestException, Injectable } from "@nestjs/common"
+import { Prisma, TransactionType } from "prisma/generated/client"
+import { PortfoliosAssetsService } from "src/portfolios-assets/portfolios-assets.service"
+import { AssetOperationDto } from "src/portfolios/dto/asset-operation-dto"
+import { PortfoliosService } from "src/portfolios/portfolios.service"
+import { PrismaService } from "src/prisma/prisma.service"
+import { TransactionPublic } from "src/types/public.types"
 
 @Injectable()
 export class TransactionsService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly portfoliosService: PortfoliosService,
+        private readonly portfoliosAssetsService: PortfoliosAssetsService,
+    ) {}
 
-    async getTransactions(portfolioId: string, page: number = 1, limit: number = 10) {
-        const nbTransactionsToSkip = (page - 1) * limit;
+    async getTransactions(portfolioId: number, page: number = 1, limit: number = 10) {
+        const nbTransactionsToSkip = (page - 1) * limit
 
         const [items, total] = await this.prisma.$transaction([
             this.prisma.transaction.findMany({
                 where: { portfolioId: portfolioId },
                 include: { asset: true },
-                orderBy: { createdAt: 'desc' },
+                orderBy: { createdAt: "desc" },
                 skip: nbTransactionsToSkip,
                 take: limit,
             }),
 
             this.prisma.transaction.count({ where: { portfolioId } }),
-        ]);
+        ])
 
         return {
             data: {
@@ -30,12 +38,33 @@ export class TransactionsService {
                     lastPage: Math.ceil(total / limit),
                 },
             },
-        };
+        }
+    }
+
+    async buyAsset(portfolioId: number, buyAssetDto: AssetOperationDto) {
+        const { assetId, quantity } = buyAssetDto
+        const asset = await this.prisma.asset.findUnique({ where: { id: assetId } })
+        if (!asset) throw new BadRequestException(`L'asset avec l'ID ${assetId} n'existe pas`)
+
+        const totalCost = asset.lastPrice.mul(quantity)
+
+        await this.portfoliosService.checkSufficientFunds(portfolioId, totalCost)
+        await this.portfoliosService.updatePortfolioValue(portfolioId, totalCost, TransactionType.buy)
+        await this.portfoliosAssetsService.createPortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity), asset.lastPrice)
+
+        const transaction: TransactionPublic = {
+            portfolioId,
+            assetId: asset.id,
+            price: asset.lastPrice,
+            quantity: new Prisma.Decimal(quantity),
+            type: TransactionType.buy,
+        }
+        return this.createTransaction(transaction)
     }
 
     createTransaction(transaction: TransactionPublic) {
         return this.prisma.transaction.create({
             data: transaction,
-        });
+        })
     }
 }

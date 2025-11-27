@@ -7,6 +7,7 @@ import { AssetsModule } from './assets/assets.module';
 import { PortfoliosModule } from './portfolios/portfolios.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TransactionsModule } from './transactions/transactions.module';
+import { PortfoliosAssetsModule } from './portfolios-assets/portfolios-assets.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { TransactionsModule } from './transactions/transactions.module';
         }),
         ScheduleModule.forRoot(),
         TransactionsModule,
+        PortfoliosAssetsModule,
     ],
 })
 export class AppModule {}

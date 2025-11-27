@@ -27,23 +27,27 @@ export type AggregatePortfolio = {
 }
 
 export type PortfolioAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
   cashBalance: runtime.Decimal | null
 }
 
 export type PortfolioSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
   cashBalance: runtime.Decimal | null
 }
 
 export type PortfolioMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   cashBalance: runtime.Decimal | null
   createdAt: Date | null
 }
 
 export type PortfolioMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   cashBalance: runtime.Decimal | null
   createdAt: Date | null
 }
@@ -58,10 +62,14 @@ export type PortfolioCountAggregateOutputType = {
 
 
 export type PortfolioAvgAggregateInputType = {
+  id?: true
+  userId?: true
   cashBalance?: true
 }
 
 export type PortfolioSumAggregateInputType = {
+  id?: true
+  userId?: true
   cashBalance?: true
 }
 
@@ -174,8 +182,8 @@ export type PortfolioGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 export type PortfolioGroupByOutputType = {
-  id: string
-  userId: string
+  id: number
+  userId: number
   cashBalance: runtime.Decimal
   createdAt: Date
   _count: PortfolioCountAggregateOutputType | null
@@ -204,14 +212,14 @@ export type PortfolioWhereInput = {
   AND?: Prisma.PortfolioWhereInput | Prisma.PortfolioWhereInput[]
   OR?: Prisma.PortfolioWhereInput[]
   NOT?: Prisma.PortfolioWhereInput | Prisma.PortfolioWhereInput[]
-  id?: Prisma.StringFilter<"Portfolio"> | string
-  userId?: Prisma.StringFilter<"Portfolio"> | string
+  id?: Prisma.IntFilter<"Portfolio"> | number
+  userId?: Prisma.IntFilter<"Portfolio"> | number
   cashBalance?: Prisma.DecimalFilter<"Portfolio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  transactions?: Prisma.TransactionListRelationFilter
   assets?: Prisma.PortfolioAssetListRelationFilter
   history?: Prisma.PortfolioHistoryListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }
 
 export type PortfolioOrderByWithRelationInput = {
@@ -220,23 +228,23 @@ export type PortfolioOrderByWithRelationInput = {
   cashBalance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  transactions?: Prisma.TransactionOrderByRelationAggregateInput
   assets?: Prisma.PortfolioAssetOrderByRelationAggregateInput
   history?: Prisma.PortfolioHistoryOrderByRelationAggregateInput
+  transactions?: Prisma.TransactionOrderByRelationAggregateInput
 }
 
 export type PortfolioWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
-  userId?: string
+  id?: number
+  userId?: number
   AND?: Prisma.PortfolioWhereInput | Prisma.PortfolioWhereInput[]
   OR?: Prisma.PortfolioWhereInput[]
   NOT?: Prisma.PortfolioWhereInput | Prisma.PortfolioWhereInput[]
   cashBalance?: Prisma.DecimalFilter<"Portfolio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  transactions?: Prisma.TransactionListRelationFilter
   assets?: Prisma.PortfolioAssetListRelationFilter
   history?: Prisma.PortfolioHistoryListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }, "id" | "userId">
 
 export type PortfolioOrderByWithAggregationInput = {
@@ -255,68 +263,65 @@ export type PortfolioScalarWhereWithAggregatesInput = {
   AND?: Prisma.PortfolioScalarWhereWithAggregatesInput | Prisma.PortfolioScalarWhereWithAggregatesInput[]
   OR?: Prisma.PortfolioScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PortfolioScalarWhereWithAggregatesInput | Prisma.PortfolioScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Portfolio"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"Portfolio"> | number
   cashBalance?: Prisma.DecimalWithAggregatesFilter<"Portfolio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Portfolio"> | Date | string
 }
 
 export type PortfolioCreateInput = {
-  id?: string
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPortfolioInput
-  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
   assets?: Prisma.PortfolioAssetCreateNestedManyWithoutPortfolioInput
   history?: Prisma.PortfolioHistoryCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioUncheckedCreateInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
-  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
   assets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput
   history?: Prisma.PortfolioHistoryUncheckedCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPortfolioNestedInput
-  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
   assets?: Prisma.PortfolioAssetUpdateManyWithoutPortfolioNestedInput
   history?: Prisma.PortfolioHistoryUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
 }
 
 export type PortfolioUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
   assets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput
   history?: Prisma.PortfolioHistoryUncheckedUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
 }
 
 export type PortfolioCreateManyInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
 
 export type PortfolioUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PortfolioUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -334,6 +339,8 @@ export type PortfolioCountOrderByAggregateInput = {
 }
 
 export type PortfolioAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
 }
 
@@ -352,6 +359,8 @@ export type PortfolioMinOrderByAggregateInput = {
 }
 
 export type PortfolioSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
 }
 
@@ -443,21 +452,20 @@ export type PortfolioUpdateOneRequiredWithoutHistoryNestedInput = {
 }
 
 export type PortfolioCreateWithoutUserInput = {
-  id?: string
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
-  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
   assets?: Prisma.PortfolioAssetCreateNestedManyWithoutPortfolioInput
   history?: Prisma.PortfolioHistoryCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioUncheckedCreateWithoutUserInput = {
-  id?: string
+  id?: number
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
-  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
   assets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput
   history?: Prisma.PortfolioHistoryUncheckedCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioCreateOrConnectWithoutUserInput = {
@@ -477,25 +485,23 @@ export type PortfolioUpdateToOneWithWhereWithoutUserInput = {
 }
 
 export type PortfolioUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
   assets?: Prisma.PortfolioAssetUpdateManyWithoutPortfolioNestedInput
   history?: Prisma.PortfolioHistoryUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
 }
 
 export type PortfolioUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
   assets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput
   history?: Prisma.PortfolioHistoryUncheckedUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
 }
 
 export type PortfolioCreateWithoutTransactionsInput = {
-  id?: string
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPortfolioInput
@@ -504,8 +510,8 @@ export type PortfolioCreateWithoutTransactionsInput = {
 }
 
 export type PortfolioUncheckedCreateWithoutTransactionsInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   assets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput
@@ -529,7 +535,6 @@ export type PortfolioUpdateToOneWithWhereWithoutTransactionsInput = {
 }
 
 export type PortfolioUpdateWithoutTransactionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPortfolioNestedInput
@@ -538,8 +543,8 @@ export type PortfolioUpdateWithoutTransactionsInput = {
 }
 
 export type PortfolioUncheckedUpdateWithoutTransactionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput
@@ -547,21 +552,20 @@ export type PortfolioUncheckedUpdateWithoutTransactionsInput = {
 }
 
 export type PortfolioCreateWithoutAssetsInput = {
-  id?: string
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPortfolioInput
-  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
   history?: Prisma.PortfolioHistoryCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioUncheckedCreateWithoutAssetsInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
-  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
   history?: Prisma.PortfolioHistoryUncheckedCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioCreateOrConnectWithoutAssetsInput = {
@@ -581,39 +585,37 @@ export type PortfolioUpdateToOneWithWhereWithoutAssetsInput = {
 }
 
 export type PortfolioUpdateWithoutAssetsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPortfolioNestedInput
-  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
   history?: Prisma.PortfolioHistoryUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
 }
 
 export type PortfolioUncheckedUpdateWithoutAssetsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
   history?: Prisma.PortfolioHistoryUncheckedUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
 }
 
 export type PortfolioCreateWithoutHistoryInput = {
-  id?: string
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPortfolioInput
-  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
   assets?: Prisma.PortfolioAssetCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioUncheckedCreateWithoutHistoryInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
-  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
   assets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPortfolioInput
 }
 
 export type PortfolioCreateOrConnectWithoutHistoryInput = {
@@ -633,21 +635,20 @@ export type PortfolioUpdateToOneWithWhereWithoutHistoryInput = {
 }
 
 export type PortfolioUpdateWithoutHistoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPortfolioNestedInput
-  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
   assets?: Prisma.PortfolioAssetUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutPortfolioNestedInput
 }
 
 export type PortfolioUncheckedUpdateWithoutHistoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
   assets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPortfolioNestedInput
 }
 
 
@@ -656,15 +657,15 @@ export type PortfolioUncheckedUpdateWithoutHistoryInput = {
  */
 
 export type PortfolioCountOutputType = {
-  transactions: number
   assets: number
   history: number
+  transactions: number
 }
 
 export type PortfolioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transactions?: boolean | PortfolioCountOutputTypeCountTransactionsArgs
   assets?: boolean | PortfolioCountOutputTypeCountAssetsArgs
   history?: boolean | PortfolioCountOutputTypeCountHistoryArgs
+  transactions?: boolean | PortfolioCountOutputTypeCountTransactionsArgs
 }
 
 /**
@@ -675,13 +676,6 @@ export type PortfolioCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
    * Select specific fields to fetch from the PortfolioCountOutputType
    */
   select?: Prisma.PortfolioCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * PortfolioCountOutputType without action
- */
-export type PortfolioCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TransactionWhereInput
 }
 
 /**
@@ -698,6 +692,13 @@ export type PortfolioCountOutputTypeCountHistoryArgs<ExtArgs extends runtime.Typ
   where?: Prisma.PortfolioHistoryWhereInput
 }
 
+/**
+ * PortfolioCountOutputType without action
+ */
+export type PortfolioCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionWhereInput
+}
+
 
 export type PortfolioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -705,9 +706,9 @@ export type PortfolioSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   cashBalance?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  transactions?: boolean | Prisma.Portfolio$transactionsArgs<ExtArgs>
   assets?: boolean | Prisma.Portfolio$assetsArgs<ExtArgs>
   history?: boolean | Prisma.Portfolio$historyArgs<ExtArgs>
+  transactions?: boolean | Prisma.Portfolio$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.PortfolioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["portfolio"]>
 
@@ -737,9 +738,9 @@ export type PortfolioSelectScalar = {
 export type PortfolioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "cashBalance" | "createdAt", ExtArgs["result"]["portfolio"]>
 export type PortfolioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  transactions?: boolean | Prisma.Portfolio$transactionsArgs<ExtArgs>
   assets?: boolean | Prisma.Portfolio$assetsArgs<ExtArgs>
   history?: boolean | Prisma.Portfolio$historyArgs<ExtArgs>
+  transactions?: boolean | Prisma.Portfolio$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.PortfolioCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PortfolioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -753,13 +754,13 @@ export type $PortfolioPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Portfolio"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    transactions: Prisma.$TransactionPayload<ExtArgs>[]
     assets: Prisma.$PortfolioAssetPayload<ExtArgs>[]
     history: Prisma.$PortfolioHistoryPayload<ExtArgs>[]
+    transactions: Prisma.$TransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
+    id: number
+    userId: number
     cashBalance: runtime.Decimal
     createdAt: Date
   }, ExtArgs["result"]["portfolio"]>
@@ -1157,9 +1158,9 @@ readonly fields: PortfolioFieldRefs;
 export interface Prisma__PortfolioClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  transactions<T extends Prisma.Portfolio$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Portfolio$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assets<T extends Prisma.Portfolio$assetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Portfolio$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   history<T extends Prisma.Portfolio$historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Portfolio$historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PortfolioHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transactions<T extends Prisma.Portfolio$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Portfolio$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1189,8 +1190,8 @@ export interface Prisma__PortfolioClient<T, Null = never, ExtArgs extends runtim
  * Fields of the Portfolio model
  */
 export interface PortfolioFieldRefs {
-  readonly id: Prisma.FieldRef<"Portfolio", 'String'>
-  readonly userId: Prisma.FieldRef<"Portfolio", 'String'>
+  readonly id: Prisma.FieldRef<"Portfolio", 'Int'>
+  readonly userId: Prisma.FieldRef<"Portfolio", 'Int'>
   readonly cashBalance: Prisma.FieldRef<"Portfolio", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"Portfolio", 'DateTime'>
 }
@@ -1589,30 +1590,6 @@ export type PortfolioDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * Portfolio.transactions
- */
-export type Portfolio$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Transaction
-   */
-  select?: Prisma.TransactionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Transaction
-   */
-  omit?: Prisma.TransactionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TransactionInclude<ExtArgs> | null
-  where?: Prisma.TransactionWhereInput
-  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
-  cursor?: Prisma.TransactionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
-}
-
-/**
  * Portfolio.assets
  */
 export type Portfolio$assetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1658,6 +1635,30 @@ export type Portfolio$historyArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.PortfolioHistoryScalarFieldEnum | Prisma.PortfolioHistoryScalarFieldEnum[]
+}
+
+/**
+ * Portfolio.transactions
+ */
+export type Portfolio$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Transaction
+   */
+  select?: Prisma.TransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Transaction
+   */
+  omit?: Prisma.TransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransactionInclude<ExtArgs> | null
+  where?: Prisma.TransactionWhereInput
+  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
 }
 
 /**

@@ -27,19 +27,25 @@ export type AggregatePortfolioAsset = {
 }
 
 export type PortfolioAssetAvgAggregateOutputType = {
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   quantity: runtime.Decimal | null
   averageBuyPrice: runtime.Decimal | null
 }
 
 export type PortfolioAssetSumAggregateOutputType = {
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   quantity: runtime.Decimal | null
   averageBuyPrice: runtime.Decimal | null
 }
 
 export type PortfolioAssetMinAggregateOutputType = {
-  id: string | null
-  portfolioId: string | null
-  assetId: string | null
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   quantity: runtime.Decimal | null
   averageBuyPrice: runtime.Decimal | null
   createdAt: Date | null
@@ -47,9 +53,9 @@ export type PortfolioAssetMinAggregateOutputType = {
 }
 
 export type PortfolioAssetMaxAggregateOutputType = {
-  id: string | null
-  portfolioId: string | null
-  assetId: string | null
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   quantity: runtime.Decimal | null
   averageBuyPrice: runtime.Decimal | null
   createdAt: Date | null
@@ -69,11 +75,17 @@ export type PortfolioAssetCountAggregateOutputType = {
 
 
 export type PortfolioAssetAvgAggregateInputType = {
+  id?: true
+  portfolioId?: true
+  assetId?: true
   quantity?: true
   averageBuyPrice?: true
 }
 
 export type PortfolioAssetSumAggregateInputType = {
+  id?: true
+  portfolioId?: true
+  assetId?: true
   quantity?: true
   averageBuyPrice?: true
 }
@@ -196,9 +208,9 @@ export type PortfolioAssetGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type PortfolioAssetGroupByOutputType = {
-  id: string
-  portfolioId: string
-  assetId: string
+  id: number
+  portfolioId: number
+  assetId: number
   quantity: runtime.Decimal
   averageBuyPrice: runtime.Decimal
   createdAt: Date
@@ -229,15 +241,15 @@ export type PortfolioAssetWhereInput = {
   AND?: Prisma.PortfolioAssetWhereInput | Prisma.PortfolioAssetWhereInput[]
   OR?: Prisma.PortfolioAssetWhereInput[]
   NOT?: Prisma.PortfolioAssetWhereInput | Prisma.PortfolioAssetWhereInput[]
-  id?: Prisma.StringFilter<"PortfolioAsset"> | string
-  portfolioId?: Prisma.StringFilter<"PortfolioAsset"> | string
-  assetId?: Prisma.StringFilter<"PortfolioAsset"> | string
+  id?: Prisma.IntFilter<"PortfolioAsset"> | number
+  portfolioId?: Prisma.IntFilter<"PortfolioAsset"> | number
+  assetId?: Prisma.IntFilter<"PortfolioAsset"> | number
   quantity?: Prisma.DecimalFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PortfolioAsset"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PortfolioAsset"> | Date | string
-  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
+  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
 }
 
 export type PortfolioAssetOrderByWithRelationInput = {
@@ -248,24 +260,24 @@ export type PortfolioAssetOrderByWithRelationInput = {
   averageBuyPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  portfolio?: Prisma.PortfolioOrderByWithRelationInput
   asset?: Prisma.AssetOrderByWithRelationInput
+  portfolio?: Prisma.PortfolioOrderByWithRelationInput
 }
 
 export type PortfolioAssetWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   portfolioId_assetId?: Prisma.PortfolioAssetPortfolioIdAssetIdCompoundUniqueInput
   AND?: Prisma.PortfolioAssetWhereInput | Prisma.PortfolioAssetWhereInput[]
   OR?: Prisma.PortfolioAssetWhereInput[]
   NOT?: Prisma.PortfolioAssetWhereInput | Prisma.PortfolioAssetWhereInput[]
-  portfolioId?: Prisma.StringFilter<"PortfolioAsset"> | string
-  assetId?: Prisma.StringFilter<"PortfolioAsset"> | string
+  portfolioId?: Prisma.IntFilter<"PortfolioAsset"> | number
+  assetId?: Prisma.IntFilter<"PortfolioAsset"> | number
   quantity?: Prisma.DecimalFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PortfolioAsset"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PortfolioAsset"> | Date | string
-  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
+  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
 }, "id" | "portfolioId_assetId">
 
 export type PortfolioAssetOrderByWithAggregationInput = {
@@ -287,9 +299,9 @@ export type PortfolioAssetScalarWhereWithAggregatesInput = {
   AND?: Prisma.PortfolioAssetScalarWhereWithAggregatesInput | Prisma.PortfolioAssetScalarWhereWithAggregatesInput[]
   OR?: Prisma.PortfolioAssetScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PortfolioAssetScalarWhereWithAggregatesInput | Prisma.PortfolioAssetScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"PortfolioAsset"> | string
-  portfolioId?: Prisma.StringWithAggregatesFilter<"PortfolioAsset"> | string
-  assetId?: Prisma.StringWithAggregatesFilter<"PortfolioAsset"> | string
+  id?: Prisma.IntWithAggregatesFilter<"PortfolioAsset"> | number
+  portfolioId?: Prisma.IntWithAggregatesFilter<"PortfolioAsset"> | number
+  assetId?: Prisma.IntWithAggregatesFilter<"PortfolioAsset"> | number
   quantity?: Prisma.DecimalWithAggregatesFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalWithAggregatesFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PortfolioAsset"> | Date | string
@@ -297,19 +309,18 @@ export type PortfolioAssetScalarWhereWithAggregatesInput = {
 }
 
 export type PortfolioAssetCreateInput = {
-  id?: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  portfolio: Prisma.PortfolioCreateNestedOneWithoutAssetsInput
   asset: Prisma.AssetCreateNestedOneWithoutPortfolioAssetsInput
+  portfolio: Prisma.PortfolioCreateNestedOneWithoutAssetsInput
 }
 
 export type PortfolioAssetUncheckedCreateInput = {
-  id?: string
-  portfolioId: string
-  assetId: string
+  id?: number
+  portfolioId: number
+  assetId: number
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -317,19 +328,18 @@ export type PortfolioAssetUncheckedCreateInput = {
 }
 
 export type PortfolioAssetUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutAssetsNestedInput
   asset?: Prisma.AssetUpdateOneRequiredWithoutPortfolioAssetsNestedInput
+  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutAssetsNestedInput
 }
 
 export type PortfolioAssetUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -337,9 +347,9 @@ export type PortfolioAssetUncheckedUpdateInput = {
 }
 
 export type PortfolioAssetCreateManyInput = {
-  id?: string
-  portfolioId: string
-  assetId: string
+  id?: number
+  portfolioId: number
+  assetId: number
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -347,7 +357,6 @@ export type PortfolioAssetCreateManyInput = {
 }
 
 export type PortfolioAssetUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -355,9 +364,9 @@ export type PortfolioAssetUpdateManyMutationInput = {
 }
 
 export type PortfolioAssetUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,8 +384,8 @@ export type PortfolioAssetOrderByRelationAggregateInput = {
 }
 
 export type PortfolioAssetPortfolioIdAssetIdCompoundUniqueInput = {
-  portfolioId: string
-  assetId: string
+  portfolioId: number
+  assetId: number
 }
 
 export type PortfolioAssetCountOrderByAggregateInput = {
@@ -390,6 +399,9 @@ export type PortfolioAssetCountOrderByAggregateInput = {
 }
 
 export type PortfolioAssetAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  portfolioId?: Prisma.SortOrder
+  assetId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   averageBuyPrice?: Prisma.SortOrder
 }
@@ -415,6 +427,9 @@ export type PortfolioAssetMinOrderByAggregateInput = {
 }
 
 export type PortfolioAssetSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  portfolioId?: Prisma.SortOrder
+  assetId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   averageBuyPrice?: Prisma.SortOrder
 }
@@ -504,7 +519,6 @@ export type PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput = {
 }
 
 export type PortfolioAssetCreateWithoutPortfolioInput = {
-  id?: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -513,8 +527,8 @@ export type PortfolioAssetCreateWithoutPortfolioInput = {
 }
 
 export type PortfolioAssetUncheckedCreateWithoutPortfolioInput = {
-  id?: string
-  assetId: string
+  id?: number
+  assetId: number
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -551,9 +565,9 @@ export type PortfolioAssetScalarWhereInput = {
   AND?: Prisma.PortfolioAssetScalarWhereInput | Prisma.PortfolioAssetScalarWhereInput[]
   OR?: Prisma.PortfolioAssetScalarWhereInput[]
   NOT?: Prisma.PortfolioAssetScalarWhereInput | Prisma.PortfolioAssetScalarWhereInput[]
-  id?: Prisma.StringFilter<"PortfolioAsset"> | string
-  portfolioId?: Prisma.StringFilter<"PortfolioAsset"> | string
-  assetId?: Prisma.StringFilter<"PortfolioAsset"> | string
+  id?: Prisma.IntFilter<"PortfolioAsset"> | number
+  portfolioId?: Prisma.IntFilter<"PortfolioAsset"> | number
+  assetId?: Prisma.IntFilter<"PortfolioAsset"> | number
   quantity?: Prisma.DecimalFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFilter<"PortfolioAsset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PortfolioAsset"> | Date | string
@@ -561,7 +575,6 @@ export type PortfolioAssetScalarWhereInput = {
 }
 
 export type PortfolioAssetCreateWithoutAssetInput = {
-  id?: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -570,8 +583,8 @@ export type PortfolioAssetCreateWithoutAssetInput = {
 }
 
 export type PortfolioAssetUncheckedCreateWithoutAssetInput = {
-  id?: string
-  portfolioId: string
+  id?: number
+  portfolioId: number
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -605,8 +618,8 @@ export type PortfolioAssetUpdateManyWithWhereWithoutAssetInput = {
 }
 
 export type PortfolioAssetCreateManyPortfolioInput = {
-  id?: string
-  assetId: string
+  id?: number
+  assetId: number
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -614,7 +627,6 @@ export type PortfolioAssetCreateManyPortfolioInput = {
 }
 
 export type PortfolioAssetUpdateWithoutPortfolioInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -623,8 +635,8 @@ export type PortfolioAssetUpdateWithoutPortfolioInput = {
 }
 
 export type PortfolioAssetUncheckedUpdateWithoutPortfolioInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -632,8 +644,8 @@ export type PortfolioAssetUncheckedUpdateWithoutPortfolioInput = {
 }
 
 export type PortfolioAssetUncheckedUpdateManyWithoutPortfolioInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -641,8 +653,8 @@ export type PortfolioAssetUncheckedUpdateManyWithoutPortfolioInput = {
 }
 
 export type PortfolioAssetCreateManyAssetInput = {
-  id?: string
-  portfolioId: string
+  id?: number
+  portfolioId: number
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -650,7 +662,6 @@ export type PortfolioAssetCreateManyAssetInput = {
 }
 
 export type PortfolioAssetUpdateWithoutAssetInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -659,8 +670,8 @@ export type PortfolioAssetUpdateWithoutAssetInput = {
 }
 
 export type PortfolioAssetUncheckedUpdateWithoutAssetInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -668,8 +679,8 @@ export type PortfolioAssetUncheckedUpdateWithoutAssetInput = {
 }
 
 export type PortfolioAssetUncheckedUpdateManyWithoutAssetInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -686,8 +697,8 @@ export type PortfolioAssetSelect<ExtArgs extends runtime.Types.Extensions.Intern
   averageBuyPrice?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["portfolioAsset"]>
 
 export type PortfolioAssetSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -698,8 +709,8 @@ export type PortfolioAssetSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   averageBuyPrice?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["portfolioAsset"]>
 
 export type PortfolioAssetSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -710,8 +721,8 @@ export type PortfolioAssetSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   averageBuyPrice?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["portfolioAsset"]>
 
 export type PortfolioAssetSelectScalar = {
@@ -726,28 +737,28 @@ export type PortfolioAssetSelectScalar = {
 
 export type PortfolioAssetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "portfolioId" | "assetId" | "quantity" | "averageBuyPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["portfolioAsset"]>
 export type PortfolioAssetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }
 export type PortfolioAssetIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }
 export type PortfolioAssetIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }
 
 export type $PortfolioAssetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PortfolioAsset"
   objects: {
-    portfolio: Prisma.$PortfolioPayload<ExtArgs>
     asset: Prisma.$AssetPayload<ExtArgs>
+    portfolio: Prisma.$PortfolioPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    portfolioId: string
-    assetId: string
+    id: number
+    portfolioId: number
+    assetId: number
     quantity: runtime.Decimal
     averageBuyPrice: runtime.Decimal
     createdAt: Date
@@ -1146,8 +1157,8 @@ readonly fields: PortfolioAssetFieldRefs;
  */
 export interface Prisma__PortfolioAssetClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  portfolio<T extends Prisma.PortfolioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PortfolioDefaultArgs<ExtArgs>>): Prisma.Prisma__PortfolioClient<runtime.Types.Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   asset<T extends Prisma.AssetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssetDefaultArgs<ExtArgs>>): Prisma.Prisma__AssetClient<runtime.Types.Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  portfolio<T extends Prisma.PortfolioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PortfolioDefaultArgs<ExtArgs>>): Prisma.Prisma__PortfolioClient<runtime.Types.Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1177,9 +1188,9 @@ export interface Prisma__PortfolioAssetClient<T, Null = never, ExtArgs extends r
  * Fields of the PortfolioAsset model
  */
 export interface PortfolioAssetFieldRefs {
-  readonly id: Prisma.FieldRef<"PortfolioAsset", 'String'>
-  readonly portfolioId: Prisma.FieldRef<"PortfolioAsset", 'String'>
-  readonly assetId: Prisma.FieldRef<"PortfolioAsset", 'String'>
+  readonly id: Prisma.FieldRef<"PortfolioAsset", 'Int'>
+  readonly portfolioId: Prisma.FieldRef<"PortfolioAsset", 'Int'>
+  readonly assetId: Prisma.FieldRef<"PortfolioAsset", 'Int'>
   readonly quantity: Prisma.FieldRef<"PortfolioAsset", 'Decimal'>
   readonly averageBuyPrice: Prisma.FieldRef<"PortfolioAsset", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"PortfolioAsset", 'DateTime'>
