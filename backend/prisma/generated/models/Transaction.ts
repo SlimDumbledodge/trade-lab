@@ -27,19 +27,25 @@ export type AggregateTransaction = {
 }
 
 export type TransactionAvgAggregateOutputType = {
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   quantity: runtime.Decimal | null
   price: runtime.Decimal | null
 }
 
 export type TransactionSumAggregateOutputType = {
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   quantity: runtime.Decimal | null
   price: runtime.Decimal | null
 }
 
 export type TransactionMinAggregateOutputType = {
-  id: string | null
-  portfolioId: string | null
-  assetId: string | null
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   type: $Enums.TransactionType | null
   quantity: runtime.Decimal | null
   price: runtime.Decimal | null
@@ -47,9 +53,9 @@ export type TransactionMinAggregateOutputType = {
 }
 
 export type TransactionMaxAggregateOutputType = {
-  id: string | null
-  portfolioId: string | null
-  assetId: string | null
+  id: number | null
+  portfolioId: number | null
+  assetId: number | null
   type: $Enums.TransactionType | null
   quantity: runtime.Decimal | null
   price: runtime.Decimal | null
@@ -69,11 +75,17 @@ export type TransactionCountAggregateOutputType = {
 
 
 export type TransactionAvgAggregateInputType = {
+  id?: true
+  portfolioId?: true
+  assetId?: true
   quantity?: true
   price?: true
 }
 
 export type TransactionSumAggregateInputType = {
+  id?: true
+  portfolioId?: true
+  assetId?: true
   quantity?: true
   price?: true
 }
@@ -196,9 +208,9 @@ export type TransactionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type TransactionGroupByOutputType = {
-  id: string
-  portfolioId: string
-  assetId: string
+  id: number
+  portfolioId: number
+  assetId: number
   type: $Enums.TransactionType
   quantity: runtime.Decimal
   price: runtime.Decimal
@@ -229,15 +241,15 @@ export type TransactionWhereInput = {
   AND?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
   OR?: Prisma.TransactionWhereInput[]
   NOT?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
-  id?: Prisma.StringFilter<"Transaction"> | string
-  portfolioId?: Prisma.StringFilter<"Transaction"> | string
-  assetId?: Prisma.StringFilter<"Transaction"> | string
+  id?: Prisma.IntFilter<"Transaction"> | number
+  portfolioId?: Prisma.IntFilter<"Transaction"> | number
+  assetId?: Prisma.IntFilter<"Transaction"> | number
   type?: Prisma.EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
   quantity?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
-  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
+  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
 }
 
 export type TransactionOrderByWithRelationInput = {
@@ -248,23 +260,23 @@ export type TransactionOrderByWithRelationInput = {
   quantity?: Prisma.SortOrder
   price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  portfolio?: Prisma.PortfolioOrderByWithRelationInput
   asset?: Prisma.AssetOrderByWithRelationInput
+  portfolio?: Prisma.PortfolioOrderByWithRelationInput
 }
 
 export type TransactionWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
   OR?: Prisma.TransactionWhereInput[]
   NOT?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
-  portfolioId?: Prisma.StringFilter<"Transaction"> | string
-  assetId?: Prisma.StringFilter<"Transaction"> | string
+  portfolioId?: Prisma.IntFilter<"Transaction"> | number
+  assetId?: Prisma.IntFilter<"Transaction"> | number
   type?: Prisma.EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
   quantity?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
-  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
+  portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
 }, "id">
 
 export type TransactionOrderByWithAggregationInput = {
@@ -286,9 +298,9 @@ export type TransactionScalarWhereWithAggregatesInput = {
   AND?: Prisma.TransactionScalarWhereWithAggregatesInput | Prisma.TransactionScalarWhereWithAggregatesInput[]
   OR?: Prisma.TransactionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TransactionScalarWhereWithAggregatesInput | Prisma.TransactionScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
-  portfolioId?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
-  assetId?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Transaction"> | number
+  portfolioId?: Prisma.IntWithAggregatesFilter<"Transaction"> | number
+  assetId?: Prisma.IntWithAggregatesFilter<"Transaction"> | number
   type?: Prisma.EnumTransactionTypeWithAggregatesFilter<"Transaction"> | $Enums.TransactionType
   quantity?: Prisma.DecimalWithAggregatesFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalWithAggregatesFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -296,19 +308,18 @@ export type TransactionScalarWhereWithAggregatesInput = {
 }
 
 export type TransactionCreateInput = {
-  id?: string
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
-  portfolio: Prisma.PortfolioCreateNestedOneWithoutTransactionsInput
   asset: Prisma.AssetCreateNestedOneWithoutTransactionsInput
+  portfolio: Prisma.PortfolioCreateNestedOneWithoutTransactionsInput
 }
 
 export type TransactionUncheckedCreateInput = {
-  id?: string
-  portfolioId: string
-  assetId: string
+  id?: number
+  portfolioId: number
+  assetId: number
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -316,19 +327,18 @@ export type TransactionUncheckedCreateInput = {
 }
 
 export type TransactionUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutTransactionsNestedInput
   asset?: Prisma.AssetUpdateOneRequiredWithoutTransactionsNestedInput
+  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -336,9 +346,9 @@ export type TransactionUncheckedUpdateInput = {
 }
 
 export type TransactionCreateManyInput = {
-  id?: string
-  portfolioId: string
-  assetId: string
+  id?: number
+  portfolioId: number
+  assetId: number
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -346,7 +356,6 @@ export type TransactionCreateManyInput = {
 }
 
 export type TransactionUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -354,9 +363,9 @@ export type TransactionUpdateManyMutationInput = {
 }
 
 export type TransactionUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -384,6 +393,9 @@ export type TransactionCountOrderByAggregateInput = {
 }
 
 export type TransactionAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  portfolioId?: Prisma.SortOrder
+  assetId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   price?: Prisma.SortOrder
 }
@@ -409,6 +421,9 @@ export type TransactionMinOrderByAggregateInput = {
 }
 
 export type TransactionSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  portfolioId?: Prisma.SortOrder
+  assetId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   price?: Prisma.SortOrder
 }
@@ -502,7 +517,6 @@ export type EnumTransactionTypeFieldUpdateOperationsInput = {
 }
 
 export type TransactionCreateWithoutPortfolioInput = {
-  id?: string
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -511,8 +525,8 @@ export type TransactionCreateWithoutPortfolioInput = {
 }
 
 export type TransactionUncheckedCreateWithoutPortfolioInput = {
-  id?: string
-  assetId: string
+  id?: number
+  assetId: number
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -549,9 +563,9 @@ export type TransactionScalarWhereInput = {
   AND?: Prisma.TransactionScalarWhereInput | Prisma.TransactionScalarWhereInput[]
   OR?: Prisma.TransactionScalarWhereInput[]
   NOT?: Prisma.TransactionScalarWhereInput | Prisma.TransactionScalarWhereInput[]
-  id?: Prisma.StringFilter<"Transaction"> | string
-  portfolioId?: Prisma.StringFilter<"Transaction"> | string
-  assetId?: Prisma.StringFilter<"Transaction"> | string
+  id?: Prisma.IntFilter<"Transaction"> | number
+  portfolioId?: Prisma.IntFilter<"Transaction"> | number
+  assetId?: Prisma.IntFilter<"Transaction"> | number
   type?: Prisma.EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
   quantity?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -559,7 +573,6 @@ export type TransactionScalarWhereInput = {
 }
 
 export type TransactionCreateWithoutAssetInput = {
-  id?: string
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -568,8 +581,8 @@ export type TransactionCreateWithoutAssetInput = {
 }
 
 export type TransactionUncheckedCreateWithoutAssetInput = {
-  id?: string
-  portfolioId: string
+  id?: number
+  portfolioId: number
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -603,8 +616,8 @@ export type TransactionUpdateManyWithWhereWithoutAssetInput = {
 }
 
 export type TransactionCreateManyPortfolioInput = {
-  id?: string
-  assetId: string
+  id?: number
+  assetId: number
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -612,7 +625,6 @@ export type TransactionCreateManyPortfolioInput = {
 }
 
 export type TransactionUpdateWithoutPortfolioInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -621,8 +633,8 @@ export type TransactionUpdateWithoutPortfolioInput = {
 }
 
 export type TransactionUncheckedUpdateWithoutPortfolioInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -630,8 +642,8 @@ export type TransactionUncheckedUpdateWithoutPortfolioInput = {
 }
 
 export type TransactionUncheckedUpdateManyWithoutPortfolioInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  assetId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -639,8 +651,8 @@ export type TransactionUncheckedUpdateManyWithoutPortfolioInput = {
 }
 
 export type TransactionCreateManyAssetInput = {
-  id?: string
-  portfolioId: string
+  id?: number
+  portfolioId: number
   type: $Enums.TransactionType
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -648,7 +660,6 @@ export type TransactionCreateManyAssetInput = {
 }
 
 export type TransactionUpdateWithoutAssetInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -657,8 +668,8 @@ export type TransactionUpdateWithoutAssetInput = {
 }
 
 export type TransactionUncheckedUpdateWithoutAssetInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -666,8 +677,8 @@ export type TransactionUncheckedUpdateWithoutAssetInput = {
 }
 
 export type TransactionUncheckedUpdateManyWithoutAssetInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  portfolioId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -684,8 +695,8 @@ export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   quantity?: boolean
   price?: boolean
   createdAt?: boolean
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -696,8 +707,8 @@ export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   quantity?: boolean
   price?: boolean
   createdAt?: boolean
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -708,8 +719,8 @@ export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   quantity?: boolean
   price?: boolean
   createdAt?: boolean
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectScalar = {
@@ -724,28 +735,28 @@ export type TransactionSelectScalar = {
 
 export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "portfolioId" | "assetId" | "type" | "quantity" | "price" | "createdAt", ExtArgs["result"]["transaction"]>
 export type TransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }
 export type TransactionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }
 export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
+  portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }
 
 export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Transaction"
   objects: {
-    portfolio: Prisma.$PortfolioPayload<ExtArgs>
     asset: Prisma.$AssetPayload<ExtArgs>
+    portfolio: Prisma.$PortfolioPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    portfolioId: string
-    assetId: string
+    id: number
+    portfolioId: number
+    assetId: number
     type: $Enums.TransactionType
     quantity: runtime.Decimal
     price: runtime.Decimal
@@ -1144,8 +1155,8 @@ readonly fields: TransactionFieldRefs;
  */
 export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  portfolio<T extends Prisma.PortfolioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PortfolioDefaultArgs<ExtArgs>>): Prisma.Prisma__PortfolioClient<runtime.Types.Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   asset<T extends Prisma.AssetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssetDefaultArgs<ExtArgs>>): Prisma.Prisma__AssetClient<runtime.Types.Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  portfolio<T extends Prisma.PortfolioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PortfolioDefaultArgs<ExtArgs>>): Prisma.Prisma__PortfolioClient<runtime.Types.Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1175,9 +1186,9 @@ export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends runt
  * Fields of the Transaction model
  */
 export interface TransactionFieldRefs {
-  readonly id: Prisma.FieldRef<"Transaction", 'String'>
-  readonly portfolioId: Prisma.FieldRef<"Transaction", 'String'>
-  readonly assetId: Prisma.FieldRef<"Transaction", 'String'>
+  readonly id: Prisma.FieldRef<"Transaction", 'Int'>
+  readonly portfolioId: Prisma.FieldRef<"Transaction", 'Int'>
+  readonly assetId: Prisma.FieldRef<"Transaction", 'Int'>
   readonly type: Prisma.FieldRef<"Transaction", 'TransactionType'>
   readonly quantity: Prisma.FieldRef<"Transaction", 'Decimal'>
   readonly price: Prisma.FieldRef<"Transaction", 'Decimal'>

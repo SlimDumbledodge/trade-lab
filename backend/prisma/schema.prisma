@@ -1,12 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
-  output   = "./generated"
+  output = "./generated"
 }
 
 datasource db {
@@ -14,83 +8,85 @@ datasource db {
 }
 
 model User {
-  id          String     @id @default(uuid())
-  email       String     @unique
-  username    String     @unique
+  id           Int        @id @default(autoincrement())
+  email        String     @unique
+  username     String     @unique
   passwordHash String
-  createdAt   DateTime   @default(now())
-  portfolio   Portfolio?
+  createdAt    DateTime   @default(now())
+  portfolio    Portfolio?
 }
 
 model Portfolio {
-  id           String              @id @default(uuid())
-  userId       String              @unique
-  cashBalance  Decimal             @default(10000.00)
-  createdAt    DateTime            @default(now())
-  user         User                @relation(fields: [userId], references: [id])
-  transactions Transaction[]
+  id           Int                @id @default(autoincrement())
+  userId       Int                @unique
+  cashBalance  Decimal            @default(10000.00)
+  createdAt    DateTime           @default(now())
+  user         User               @relation(fields: [userId], references: [id])
   assets       PortfolioAsset[]
   history      PortfolioHistory[]
+  transactions Transaction[]
 }
 
 model Asset {
-  id          String           @id @default(uuid())
-  symbol      String           @unique
-  name        String
-  description String?
-  lastPrice   Decimal
-  updatedAt   DateTime         @default(now())
-  prices      AssetPrice[]
-  transactions Transaction[]
+  id              Int              @id @default(autoincrement())
+  symbol          String           @unique
+  name            String
+  description     String?
+  lastPrice       Decimal
+  updatedAt       DateTime         @default(now())
+  prices          AssetPrice[]
   portfolioAssets PortfolioAsset[]
+  transactions    Transaction[]
 }
 
 model Transaction {
-  id           String     @id @default(uuid())
-  portfolioId  String
-  assetId      String
-  type         TransactionType
-  quantity     Decimal
-  price        Decimal
-  createdAt    DateTime @default(now())
-  portfolio    Portfolio @relation(fields: [portfolioId], references: [id])
-  asset        Asset     @relation(fields: [assetId], references: [id])
+  id          Int             @id @default(autoincrement())
+  portfolioId Int
+  assetId     Int
+  type        TransactionType
+  quantity    Decimal
+  price       Decimal
+  createdAt   DateTime        @default(now())
+  asset       Asset           @relation(fields: [assetId], references: [id])
+  portfolio   Portfolio       @relation(fields: [portfolioId], references: [id])
+}
+
+model PortfolioAsset {
+  id              Int       @id @default(autoincrement())
+  portfolioId     Int
+  assetId         Int
+  quantity        Decimal
+  averageBuyPrice Decimal
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  asset           Asset     @relation(fields: [assetId], references: [id])
+  portfolio       Portfolio @relation(fields: [portfolioId], references: [id])
+
+  @@unique([portfolioId, assetId])
+}
+
+model AssetPrice {
+  id         Int      @id @default(autoincrement())
+  assetId    Int
+  price      Decimal
+  recordedAt DateTime @default(now())
+  asset      Asset    @relation(fields: [assetId], references: [id])
+
+  @@unique([assetId, recordedAt])
+}
+
+model PortfolioHistory {
+  id          Int       @id @default(autoincrement())
+  portfolioId Int
+  totalValue  Decimal
+  cashBalance Decimal
+  recordedAt  DateTime  @default(now())
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+
+  @@unique([portfolioId, recordedAt])
 }
 
 enum TransactionType {
   buy
   sell
 }
-
-model PortfolioAsset {
-  id              String    @id @default(uuid())
-  portfolioId     String
-  assetId         String
-  quantity        Decimal
-  averageBuyPrice Decimal
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @default(now())
-  portfolio       Portfolio @relation(fields: [portfolioId], references: [id])
-  asset           Asset     @relation(fields: [assetId], references: [id])
-  @@unique([portfolioId, assetId])
-}
-
-model AssetPrice {
-  id          String   @id @default(uuid())
-  assetId     String
-  price       Decimal
-  recordedAt  DateTime @default(now())
-  asset       Asset    @relation(fields: [assetId], references: [id])
-  @@unique([assetId, recordedAt])
-}
-
-model PortfolioHistory {
-  id           String    @id @default(uuid())
-  portfolioId  String
-  totalValue   Decimal
-  cashBalance  Decimal
-  recordedAt   DateTime  @default(now())
-  portfolio    Portfolio @relation(fields: [portfolioId], references: [id])
-  @@unique([portfolioId, recordedAt])
-}
-
