@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common"
 import { Prisma, TransactionType } from "prisma/generated/client"
 import { PortfoliosAssetsService } from "src/portfolios-assets/portfolios-assets.service"
+import { PortfoliosHistoryService } from "src/portfolios-history/portfolios-history.service"
 import { AssetOperationDto } from "src/portfolios/dto/asset-operation-dto"
 import { PortfoliosService } from "src/portfolios/portfolios.service"
 import { PrismaService } from "src/prisma/prisma.service"
@@ -12,6 +13,7 @@ export class TransactionsService {
         private readonly prisma: PrismaService,
         private readonly portfoliosService: PortfoliosService,
         private readonly portfoliosAssetsService: PortfoliosAssetsService,
+        private readonly portfoliosHistoryService: PortfoliosHistoryService,
     ) {}
 
     async getTransactions(portfolioId: number, page: number = 1, limit: number = 10) {
@@ -49,9 +51,10 @@ export class TransactionsService {
         const totalCost = asset.lastPrice.mul(quantity)
 
         await this.portfoliosService.checkSufficientFunds(portfolioId, totalCost)
-        await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalCost, TransactionType.buy)
         await this.portfoliosAssetsService.createPortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity), asset.lastPrice)
+        await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalCost, TransactionType.buy)
         await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
+        await this.portfoliosHistoryService.capturePortfolioSnapshot(portfolioId)
 
         const transaction: TransactionPublic = {
             portfolioId,

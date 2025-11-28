@@ -77,12 +77,12 @@ model AssetPrice {
 }
 
 model PortfolioHistory {
-  id          Int       @id @default(autoincrement())
-  portfolioId Int
-  totalValue  Decimal
-  cashBalance Decimal
-  recordedAt  DateTime  @default(now())
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+  id            Int       @id @default(autoincrement())
+  portfolioId   Int
+  unrealizedPnL Decimal   @default(0)
+  cashBalance   Decimal
+  recordedAt    DateTime  @default(now())
+  portfolio     Portfolio @relation(fields: [portfolioId], references: [id])
 
   @@unique([portfolioId, recordedAt])
 }

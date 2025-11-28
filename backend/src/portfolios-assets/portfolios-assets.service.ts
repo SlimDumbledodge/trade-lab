@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common"
+import { BadRequestException, Injectable } from "@nestjs/common"
 import { PortfolioAsset, Prisma } from "prisma/generated/client"
 import { PrismaService } from "src/prisma/prisma.service"
 
@@ -13,7 +13,7 @@ export class PortfoliosAssetsService {
         buyPrice: Prisma.Decimal,
     ): Promise<PortfolioAsset> {
         // On calcule le nouveau prix moyen avant de passer à Prisma
-        const newAverageBuyPrice = await this.calculateNewAverageBuyPrice(portfolioId, assetId, quantity, buyPrice)
+        const newAverageBuyPrice = await this.getNewAverageBuyPrice(portfolioId, assetId, quantity, buyPrice)
         return this.prisma.portfolioAsset.upsert({
             where: { portfolioId_assetId: { portfolioId, assetId } },
             create: {
@@ -30,7 +30,7 @@ export class PortfoliosAssetsService {
         })
     }
 
-    async calculateNewAverageBuyPrice(portfolioId: number, assetId: number, quantity: Prisma.Decimal, buyPrice: Prisma.Decimal) {
+    async getNewAverageBuyPrice(portfolioId: number, assetId: number, quantity: Prisma.Decimal, buyPrice: Prisma.Decimal) {
         const existingPortfolioAsset = await this.prisma.portfolioAsset.findUnique({
             where: { portfolioId_assetId: { portfolioId, assetId } },
         })
@@ -44,5 +44,17 @@ export class PortfoliosAssetsService {
         const newAverageBuyPrice = totalValue.div(newQuantity)
 
         return newAverageBuyPrice
+    }
+
+    async getTotalUnrealizedPnL(portfolioId: number) {
+        const holdings = await this.prisma.portfolioAsset.findMany({
+            where: { portfolioId },
+            include: { asset: true },
+        })
+
+        return holdings.reduce((acc, holding) => {
+            const pnl = holding.asset.lastPrice.sub(holding.averageBuyPrice).mul(holding.quantity)
+            return acc.add(pnl)
+        }, new Prisma.Decimal(0))
     }
 }

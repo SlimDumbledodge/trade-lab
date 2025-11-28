@@ -8,6 +8,7 @@ import { PortfoliosModule } from './portfolios/portfolios.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TransactionsModule } from './transactions/transactions.module';
 import { PortfoliosAssetsModule } from './portfolios-assets/portfolios-assets.module';
+import { PortfoliosHistoryModule } from './portfolios-history/portfolios-history.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { PortfoliosAssetsModule } from './portfolios-assets/portfolios-assets.mo
         ScheduleModule.forRoot(),
         TransactionsModule,
         PortfoliosAssetsModule,
+        PortfoliosHistoryModule,
     ],
 })
 export class AppModule {}
