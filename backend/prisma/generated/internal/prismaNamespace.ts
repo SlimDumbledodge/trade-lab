@@ -982,6 +982,7 @@ export const PortfolioScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   cashBalance: 'cashBalance',
+  holdingsValue: 'holdingsValue',
   createdAt: 'createdAt'
 } as const
 
