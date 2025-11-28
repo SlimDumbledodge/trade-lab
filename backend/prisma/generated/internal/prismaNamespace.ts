@@ -1040,7 +1040,7 @@ export type AssetPriceScalarFieldEnum = (typeof AssetPriceScalarFieldEnum)[keyof
 export const PortfolioHistoryScalarFieldEnum = {
   id: 'id',
   portfolioId: 'portfolioId',
-  totalValue: 'totalValue',
+  unrealizedPnL: 'unrealizedPnL',
   cashBalance: 'cashBalance',
   recordedAt: 'recordedAt'
 } as const

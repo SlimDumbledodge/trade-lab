@@ -29,21 +29,21 @@ export type AggregatePortfolioHistory = {
 export type PortfolioHistoryAvgAggregateOutputType = {
   id: number | null
   portfolioId: number | null
-  totalValue: runtime.Decimal | null
+  unrealizedPnL: runtime.Decimal | null
   cashBalance: runtime.Decimal | null
 }
 
 export type PortfolioHistorySumAggregateOutputType = {
   id: number | null
   portfolioId: number | null
-  totalValue: runtime.Decimal | null
+  unrealizedPnL: runtime.Decimal | null
   cashBalance: runtime.Decimal | null
 }
 
 export type PortfolioHistoryMinAggregateOutputType = {
   id: number | null
   portfolioId: number | null
-  totalValue: runtime.Decimal | null
+  unrealizedPnL: runtime.Decimal | null
   cashBalance: runtime.Decimal | null
   recordedAt: Date | null
 }
@@ -51,7 +51,7 @@ export type PortfolioHistoryMinAggregateOutputType = {
 export type PortfolioHistoryMaxAggregateOutputType = {
   id: number | null
   portfolioId: number | null
-  totalValue: runtime.Decimal | null
+  unrealizedPnL: runtime.Decimal | null
   cashBalance: runtime.Decimal | null
   recordedAt: Date | null
 }
@@ -59,7 +59,7 @@ export type PortfolioHistoryMaxAggregateOutputType = {
 export type PortfolioHistoryCountAggregateOutputType = {
   id: number
   portfolioId: number
-  totalValue: number
+  unrealizedPnL: number
   cashBalance: number
   recordedAt: number
   _all: number
@@ -69,21 +69,21 @@ export type PortfolioHistoryCountAggregateOutputType = {
 export type PortfolioHistoryAvgAggregateInputType = {
   id?: true
   portfolioId?: true
-  totalValue?: true
+  unrealizedPnL?: true
   cashBalance?: true
 }
 
 export type PortfolioHistorySumAggregateInputType = {
   id?: true
   portfolioId?: true
-  totalValue?: true
+  unrealizedPnL?: true
   cashBalance?: true
 }
 
 export type PortfolioHistoryMinAggregateInputType = {
   id?: true
   portfolioId?: true
-  totalValue?: true
+  unrealizedPnL?: true
   cashBalance?: true
   recordedAt?: true
 }
@@ -91,7 +91,7 @@ export type PortfolioHistoryMinAggregateInputType = {
 export type PortfolioHistoryMaxAggregateInputType = {
   id?: true
   portfolioId?: true
-  totalValue?: true
+  unrealizedPnL?: true
   cashBalance?: true
   recordedAt?: true
 }
@@ -99,7 +99,7 @@ export type PortfolioHistoryMaxAggregateInputType = {
 export type PortfolioHistoryCountAggregateInputType = {
   id?: true
   portfolioId?: true
-  totalValue?: true
+  unrealizedPnL?: true
   cashBalance?: true
   recordedAt?: true
   _all?: true
@@ -194,7 +194,7 @@ export type PortfolioHistoryGroupByArgs<ExtArgs extends runtime.Types.Extensions
 export type PortfolioHistoryGroupByOutputType = {
   id: number
   portfolioId: number
-  totalValue: runtime.Decimal
+  unrealizedPnL: runtime.Decimal
   cashBalance: runtime.Decimal
   recordedAt: Date
   _count: PortfolioHistoryCountAggregateOutputType | null
@@ -225,7 +225,7 @@ export type PortfolioHistoryWhereInput = {
   NOT?: Prisma.PortfolioHistoryWhereInput | Prisma.PortfolioHistoryWhereInput[]
   id?: Prisma.IntFilter<"PortfolioHistory"> | number
   portfolioId?: Prisma.IntFilter<"PortfolioHistory"> | number
-  totalValue?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFilter<"PortfolioHistory"> | Date | string
   portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
@@ -234,7 +234,7 @@ export type PortfolioHistoryWhereInput = {
 export type PortfolioHistoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   portfolioId?: Prisma.SortOrder
-  totalValue?: Prisma.SortOrder
+  unrealizedPnL?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
   portfolio?: Prisma.PortfolioOrderByWithRelationInput
@@ -247,7 +247,7 @@ export type PortfolioHistoryWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PortfolioHistoryWhereInput[]
   NOT?: Prisma.PortfolioHistoryWhereInput | Prisma.PortfolioHistoryWhereInput[]
   portfolioId?: Prisma.IntFilter<"PortfolioHistory"> | number
-  totalValue?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFilter<"PortfolioHistory"> | Date | string
   portfolio?: Prisma.XOR<Prisma.PortfolioScalarRelationFilter, Prisma.PortfolioWhereInput>
@@ -256,7 +256,7 @@ export type PortfolioHistoryWhereUniqueInput = Prisma.AtLeast<{
 export type PortfolioHistoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   portfolioId?: Prisma.SortOrder
-  totalValue?: Prisma.SortOrder
+  unrealizedPnL?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
   _count?: Prisma.PortfolioHistoryCountOrderByAggregateInput
@@ -272,13 +272,13 @@ export type PortfolioHistoryScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PortfolioHistoryScalarWhereWithAggregatesInput | Prisma.PortfolioHistoryScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"PortfolioHistory"> | number
   portfolioId?: Prisma.IntWithAggregatesFilter<"PortfolioHistory"> | number
-  totalValue?: Prisma.DecimalWithAggregatesFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalWithAggregatesFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalWithAggregatesFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeWithAggregatesFilter<"PortfolioHistory"> | Date | string
 }
 
 export type PortfolioHistoryCreateInput = {
-  totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Date | string
   portfolio: Prisma.PortfolioCreateNestedOneWithoutHistoryInput
@@ -287,13 +287,13 @@ export type PortfolioHistoryCreateInput = {
 export type PortfolioHistoryUncheckedCreateInput = {
   id?: number
   portfolioId: number
-  totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Date | string
 }
 
 export type PortfolioHistoryUpdateInput = {
-  totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutHistoryNestedInput
@@ -302,7 +302,7 @@ export type PortfolioHistoryUpdateInput = {
 export type PortfolioHistoryUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
-  totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -310,13 +310,13 @@ export type PortfolioHistoryUncheckedUpdateInput = {
 export type PortfolioHistoryCreateManyInput = {
   id?: number
   portfolioId: number
-  totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Date | string
 }
 
 export type PortfolioHistoryUpdateManyMutationInput = {
-  totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -324,7 +324,7 @@ export type PortfolioHistoryUpdateManyMutationInput = {
 export type PortfolioHistoryUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   portfolioId?: Prisma.IntFieldUpdateOperationsInput | number
-  totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -347,7 +347,7 @@ export type PortfolioHistoryPortfolioIdRecordedAtCompoundUniqueInput = {
 export type PortfolioHistoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   portfolioId?: Prisma.SortOrder
-  totalValue?: Prisma.SortOrder
+  unrealizedPnL?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
 }
@@ -355,14 +355,14 @@ export type PortfolioHistoryCountOrderByAggregateInput = {
 export type PortfolioHistoryAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   portfolioId?: Prisma.SortOrder
-  totalValue?: Prisma.SortOrder
+  unrealizedPnL?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
 }
 
 export type PortfolioHistoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   portfolioId?: Prisma.SortOrder
-  totalValue?: Prisma.SortOrder
+  unrealizedPnL?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
 }
@@ -370,7 +370,7 @@ export type PortfolioHistoryMaxOrderByAggregateInput = {
 export type PortfolioHistoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   portfolioId?: Prisma.SortOrder
-  totalValue?: Prisma.SortOrder
+  unrealizedPnL?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
 }
@@ -378,7 +378,7 @@ export type PortfolioHistoryMinOrderByAggregateInput = {
 export type PortfolioHistorySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   portfolioId?: Prisma.SortOrder
-  totalValue?: Prisma.SortOrder
+  unrealizedPnL?: Prisma.SortOrder
   cashBalance?: Prisma.SortOrder
 }
 
@@ -425,14 +425,14 @@ export type PortfolioHistoryUncheckedUpdateManyWithoutPortfolioNestedInput = {
 }
 
 export type PortfolioHistoryCreateWithoutPortfolioInput = {
-  totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Date | string
 }
 
 export type PortfolioHistoryUncheckedCreateWithoutPortfolioInput = {
   id?: number
-  totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Date | string
 }
@@ -469,34 +469,34 @@ export type PortfolioHistoryScalarWhereInput = {
   NOT?: Prisma.PortfolioHistoryScalarWhereInput | Prisma.PortfolioHistoryScalarWhereInput[]
   id?: Prisma.IntFilter<"PortfolioHistory"> | number
   portfolioId?: Prisma.IntFilter<"PortfolioHistory"> | number
-  totalValue?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFilter<"PortfolioHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFilter<"PortfolioHistory"> | Date | string
 }
 
 export type PortfolioHistoryCreateManyPortfolioInput = {
   id?: number
-  totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Date | string
 }
 
 export type PortfolioHistoryUpdateWithoutPortfolioInput = {
-  totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PortfolioHistoryUncheckedUpdateWithoutPortfolioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PortfolioHistoryUncheckedUpdateManyWithoutPortfolioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unrealizedPnL?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -506,7 +506,7 @@ export type PortfolioHistoryUncheckedUpdateManyWithoutPortfolioInput = {
 export type PortfolioHistorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   portfolioId?: boolean
-  totalValue?: boolean
+  unrealizedPnL?: boolean
   cashBalance?: boolean
   recordedAt?: boolean
   portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
@@ -515,7 +515,7 @@ export type PortfolioHistorySelect<ExtArgs extends runtime.Types.Extensions.Inte
 export type PortfolioHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   portfolioId?: boolean
-  totalValue?: boolean
+  unrealizedPnL?: boolean
   cashBalance?: boolean
   recordedAt?: boolean
   portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
@@ -524,7 +524,7 @@ export type PortfolioHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Ty
 export type PortfolioHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   portfolioId?: boolean
-  totalValue?: boolean
+  unrealizedPnL?: boolean
   cashBalance?: boolean
   recordedAt?: boolean
   portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
@@ -533,12 +533,12 @@ export type PortfolioHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
 export type PortfolioHistorySelectScalar = {
   id?: boolean
   portfolioId?: boolean
-  totalValue?: boolean
+  unrealizedPnL?: boolean
   cashBalance?: boolean
   recordedAt?: boolean
 }
 
-export type PortfolioHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "portfolioId" | "totalValue" | "cashBalance" | "recordedAt", ExtArgs["result"]["portfolioHistory"]>
+export type PortfolioHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "portfolioId" | "unrealizedPnL" | "cashBalance" | "recordedAt", ExtArgs["result"]["portfolioHistory"]>
 export type PortfolioHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
 }
@@ -557,7 +557,7 @@ export type $PortfolioHistoryPayload<ExtArgs extends runtime.Types.Extensions.In
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     portfolioId: number
-    totalValue: runtime.Decimal
+    unrealizedPnL: runtime.Decimal
     cashBalance: runtime.Decimal
     recordedAt: Date
   }, ExtArgs["result"]["portfolioHistory"]>
@@ -986,7 +986,7 @@ export interface Prisma__PortfolioHistoryClient<T, Null = never, ExtArgs extends
 export interface PortfolioHistoryFieldRefs {
   readonly id: Prisma.FieldRef<"PortfolioHistory", 'Int'>
   readonly portfolioId: Prisma.FieldRef<"PortfolioHistory", 'Int'>
-  readonly totalValue: Prisma.FieldRef<"PortfolioHistory", 'Decimal'>
+  readonly unrealizedPnL: Prisma.FieldRef<"PortfolioHistory", 'Decimal'>
   readonly cashBalance: Prisma.FieldRef<"PortfolioHistory", 'Decimal'>
   readonly recordedAt: Prisma.FieldRef<"PortfolioHistory", 'DateTime'>
 }
