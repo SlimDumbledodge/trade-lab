@@ -49,8 +49,9 @@ export class TransactionsService {
         const totalCost = asset.lastPrice.mul(quantity)
 
         await this.portfoliosService.checkSufficientFunds(portfolioId, totalCost)
-        await this.portfoliosService.updatePortfolioValue(portfolioId, totalCost, TransactionType.buy)
+        await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalCost, TransactionType.buy)
         await this.portfoliosAssetsService.createPortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity), asset.lastPrice)
+        await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
 
         const transaction: TransactionPublic = {
             portfolioId,
