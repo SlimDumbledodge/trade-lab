@@ -1,6 +1,4 @@
 import { Injectable } from "@nestjs/common"
-import { CreatePortfoliosAssetDto } from "./dto/create-portfolios-asset.dto"
-import { UpdatePortfoliosAssetDto } from "./dto/update-portfolios-asset.dto"
 import { PortfolioAsset, Prisma } from "prisma/generated/client"
 import { PrismaService } from "src/prisma/prisma.service"
 
