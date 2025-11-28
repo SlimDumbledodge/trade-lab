@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common"
+import { BadRequestException, Injectable } from "@nestjs/common"
 import { PortfolioAsset, Prisma } from "prisma/generated/client"
 import { PrismaService } from "src/prisma/prisma.service"
 
@@ -44,5 +44,17 @@ export class PortfoliosAssetsService {
         const newAverageBuyPrice = totalValue.div(newQuantity)
 
         return newAverageBuyPrice
+    }
+
+    async getTotalUnrealizedPnL(portfolioId: number) {
+        const holdings = await this.prisma.portfolioAsset.findMany({
+            where: { portfolioId },
+            include: { asset: true },
+        })
+
+        return holdings.reduce((acc, holding) => {
+            const pnl = holding.asset.lastPrice.sub(holding.averageBuyPrice).mul(holding.quantity)
+            return acc.add(pnl)
+        }, new Prisma.Decimal(0))
     }
 }

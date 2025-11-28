@@ -5,7 +5,10 @@ import { PrismaService } from "src/prisma/prisma.service"
 
 @Injectable()
 export class PortfoliosService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly portfoliosAssetsService: PortfoliosAssetsService,
+    ) {}
 
     async getPortfolio(portfolioId: number) {
         const portfolio = await this.prisma.portfolio.findUnique({
@@ -14,7 +17,10 @@ export class PortfoliosService {
         })
         if (!portfolio) throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
 
-        return { portfolio }
+        return {
+            ...portfolio,
+            totalUnrealizedPnL: await this.portfoliosAssetsService.getTotalUnrealizedPnL(portfolioId),
+        }
     }
 
     create(userId: number) {
