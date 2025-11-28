@@ -17,14 +17,15 @@ model User {
 }
 
 model Portfolio {
-  id           Int                @id @default(autoincrement())
-  userId       Int                @unique
-  cashBalance  Decimal            @default(10000.00)
-  createdAt    DateTime           @default(now())
-  user         User               @relation(fields: [userId], references: [id])
-  assets       PortfolioAsset[]
-  history      PortfolioHistory[]
-  transactions Transaction[]
+  id            Int                @id @default(autoincrement())
+  userId        Int                @unique
+  cashBalance   Decimal            @default(10000.00)
+  holdingsValue Decimal            @default(0)
+  createdAt     DateTime           @default(now())
+  user          User               @relation(fields: [userId], references: [id])
+  assets        PortfolioAsset[]
+  history       PortfolioHistory[]
+  transactions  Transaction[]
 }
 
 model Asset {
