@@ -42,7 +42,7 @@ export class PortfoliosService {
 
     async calculatePortfolioAssetsValue(portfolioId: number) {
         const portfolioAssets = await this.prisma.portfolioAsset.findMany({
-            where: { id: portfolioId },
+            where: { portfolioId: portfolioId },
             include: { asset: true },
         })
 
