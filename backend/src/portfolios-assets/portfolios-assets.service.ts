@@ -57,4 +57,21 @@ export class PortfoliosAssetsService {
             return acc.add(pnl)
         }, new Prisma.Decimal(0))
     }
+
+    async getUnrealizedPnLPerAsset(portfolioId: number) {
+        const holdings = await this.prisma.portfolioAsset.findMany({
+            where: { portfolioId },
+            include: { asset: true },
+        })
+
+        if (!holdings) throw new BadRequestException(`getUnrealizedPnLPerAsset : Aucun ordre trouver pour l'ID du portoflio ${portfolioId}`)
+
+        return holdings.map((holding) => {
+            return {
+                ...holding,
+                holdingValue: holding.asset.lastPrice.mul(holding.quantity),
+                unrealizedPnL: holding.asset.lastPrice.sub(holding.averageBuyPrice).mul(holding.quantity),
+            }
+        })
+    }
 }
