@@ -13,13 +13,15 @@ export class PortfoliosService {
     async getPortfolio(portfolioId: number) {
         const portfolio = await this.prisma.portfolio.findUnique({
             where: { id: portfolioId },
-            include: { assets: { include: { asset: true } } },
         })
         if (!portfolio) throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
 
+        const unrealizedPnLByAsset = await this.portfoliosAssetsService.getUnrealizedPnLPerAsset(portfolioId)
+        const totalUnrealizedPnL = await this.portfoliosAssetsService.getTotalUnrealizedPnL(portfolioId)
         return {
             ...portfolio,
-            totalUnrealizedPnL: await this.portfoliosAssetsService.getTotalUnrealizedPnL(portfolioId),
+            totalUnrealizedPnL,
+            holdings: unrealizedPnLByAsset,
         }
     }
 
