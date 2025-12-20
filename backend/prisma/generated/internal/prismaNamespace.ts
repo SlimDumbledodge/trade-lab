@@ -1030,7 +1030,12 @@ export type PortfolioAssetScalarFieldEnum = (typeof PortfolioAssetScalarFieldEnu
 export const AssetPriceScalarFieldEnum = {
   id: 'id',
   assetId: 'assetId',
-  price: 'price',
+  timeframe: 'timeframe',
+  open: 'open',
+  high: 'high',
+  low: 'low',
+  close: 'close',
+  volume: 'volume',
   recordedAt: 'recordedAt'
 } as const
 

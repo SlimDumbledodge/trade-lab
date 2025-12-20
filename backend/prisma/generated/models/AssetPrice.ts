@@ -29,33 +29,56 @@ export type AggregateAssetPrice = {
 export type AssetPriceAvgAggregateOutputType = {
   id: number | null
   assetId: number | null
-  price: runtime.Decimal | null
+  open: runtime.Decimal | null
+  high: runtime.Decimal | null
+  low: runtime.Decimal | null
+  close: runtime.Decimal | null
+  volume: runtime.Decimal | null
 }
 
 export type AssetPriceSumAggregateOutputType = {
   id: number | null
   assetId: number | null
-  price: runtime.Decimal | null
+  open: runtime.Decimal | null
+  high: runtime.Decimal | null
+  low: runtime.Decimal | null
+  close: runtime.Decimal | null
+  volume: runtime.Decimal | null
 }
 
 export type AssetPriceMinAggregateOutputType = {
   id: number | null
   assetId: number | null
-  price: runtime.Decimal | null
+  timeframe: string | null
+  open: runtime.Decimal | null
+  high: runtime.Decimal | null
+  low: runtime.Decimal | null
+  close: runtime.Decimal | null
+  volume: runtime.Decimal | null
   recordedAt: Date | null
 }
 
 export type AssetPriceMaxAggregateOutputType = {
   id: number | null
   assetId: number | null
-  price: runtime.Decimal | null
+  timeframe: string | null
+  open: runtime.Decimal | null
+  high: runtime.Decimal | null
+  low: runtime.Decimal | null
+  close: runtime.Decimal | null
+  volume: runtime.Decimal | null
   recordedAt: Date | null
 }
 
 export type AssetPriceCountAggregateOutputType = {
   id: number
   assetId: number
-  price: number
+  timeframe: number
+  open: number
+  high: number
+  low: number
+  close: number
+  volume: number
   recordedAt: number
   _all: number
 }
@@ -64,33 +87,56 @@ export type AssetPriceCountAggregateOutputType = {
 export type AssetPriceAvgAggregateInputType = {
   id?: true
   assetId?: true
-  price?: true
+  open?: true
+  high?: true
+  low?: true
+  close?: true
+  volume?: true
 }
 
 export type AssetPriceSumAggregateInputType = {
   id?: true
   assetId?: true
-  price?: true
+  open?: true
+  high?: true
+  low?: true
+  close?: true
+  volume?: true
 }
 
 export type AssetPriceMinAggregateInputType = {
   id?: true
   assetId?: true
-  price?: true
+  timeframe?: true
+  open?: true
+  high?: true
+  low?: true
+  close?: true
+  volume?: true
   recordedAt?: true
 }
 
 export type AssetPriceMaxAggregateInputType = {
   id?: true
   assetId?: true
-  price?: true
+  timeframe?: true
+  open?: true
+  high?: true
+  low?: true
+  close?: true
+  volume?: true
   recordedAt?: true
 }
 
 export type AssetPriceCountAggregateInputType = {
   id?: true
   assetId?: true
-  price?: true
+  timeframe?: true
+  open?: true
+  high?: true
+  low?: true
+  close?: true
+  volume?: true
   recordedAt?: true
   _all?: true
 }
@@ -184,7 +230,12 @@ export type AssetPriceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type AssetPriceGroupByOutputType = {
   id: number
   assetId: number
-  price: runtime.Decimal
+  timeframe: string
+  open: runtime.Decimal
+  high: runtime.Decimal
+  low: runtime.Decimal
+  close: runtime.Decimal
+  volume: runtime.Decimal | null
   recordedAt: Date
   _count: AssetPriceCountAggregateOutputType | null
   _avg: AssetPriceAvgAggregateOutputType | null
@@ -214,7 +265,12 @@ export type AssetPriceWhereInput = {
   NOT?: Prisma.AssetPriceWhereInput | Prisma.AssetPriceWhereInput[]
   id?: Prisma.IntFilter<"AssetPrice"> | number
   assetId?: Prisma.IntFilter<"AssetPrice"> | number
-  price?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFilter<"AssetPrice"> | string
+  open?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.DecimalNullableFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFilter<"AssetPrice"> | Date | string
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
 }
@@ -222,7 +278,12 @@ export type AssetPriceWhereInput = {
 export type AssetPriceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  timeframe?: Prisma.SortOrder
+  open?: Prisma.SortOrder
+  high?: Prisma.SortOrder
+  low?: Prisma.SortOrder
+  close?: Prisma.SortOrder
+  volume?: Prisma.SortOrderInput | Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
   asset?: Prisma.AssetOrderByWithRelationInput
 }
@@ -234,7 +295,12 @@ export type AssetPriceWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AssetPriceWhereInput[]
   NOT?: Prisma.AssetPriceWhereInput | Prisma.AssetPriceWhereInput[]
   assetId?: Prisma.IntFilter<"AssetPrice"> | number
-  price?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFilter<"AssetPrice"> | string
+  open?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.DecimalNullableFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFilter<"AssetPrice"> | Date | string
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
 }, "id" | "assetId_recordedAt">
@@ -242,7 +308,12 @@ export type AssetPriceWhereUniqueInput = Prisma.AtLeast<{
 export type AssetPriceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  timeframe?: Prisma.SortOrder
+  open?: Prisma.SortOrder
+  high?: Prisma.SortOrder
+  low?: Prisma.SortOrder
+  close?: Prisma.SortOrder
+  volume?: Prisma.SortOrderInput | Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
   _count?: Prisma.AssetPriceCountOrderByAggregateInput
   _avg?: Prisma.AssetPriceAvgOrderByAggregateInput
@@ -257,12 +328,22 @@ export type AssetPriceScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AssetPriceScalarWhereWithAggregatesInput | Prisma.AssetPriceScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"AssetPrice"> | number
   assetId?: Prisma.IntWithAggregatesFilter<"AssetPrice"> | number
-  price?: Prisma.DecimalWithAggregatesFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringWithAggregatesFilter<"AssetPrice"> | string
+  open?: Prisma.DecimalWithAggregatesFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalWithAggregatesFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalWithAggregatesFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalWithAggregatesFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.DecimalNullableWithAggregatesFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeWithAggregatesFilter<"AssetPrice"> | Date | string
 }
 
 export type AssetPriceCreateInput = {
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe: string
+  open: runtime.Decimal | runtime.DecimalJsLike | number | string
+  high: runtime.Decimal | runtime.DecimalJsLike | number | string
+  low: runtime.Decimal | runtime.DecimalJsLike | number | string
+  close: runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Date | string
   asset: Prisma.AssetCreateNestedOneWithoutPricesInput
 }
@@ -270,12 +351,22 @@ export type AssetPriceCreateInput = {
 export type AssetPriceUncheckedCreateInput = {
   id?: number
   assetId: number
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe: string
+  open: runtime.Decimal | runtime.DecimalJsLike | number | string
+  high: runtime.Decimal | runtime.DecimalJsLike | number | string
+  low: runtime.Decimal | runtime.DecimalJsLike | number | string
+  close: runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Date | string
 }
 
 export type AssetPriceUpdateInput = {
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFieldUpdateOperationsInput | string
+  open?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   asset?: Prisma.AssetUpdateOneRequiredWithoutPricesNestedInput
 }
@@ -283,26 +374,46 @@ export type AssetPriceUpdateInput = {
 export type AssetPriceUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   assetId?: Prisma.IntFieldUpdateOperationsInput | number
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFieldUpdateOperationsInput | string
+  open?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssetPriceCreateManyInput = {
   id?: number
   assetId: number
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe: string
+  open: runtime.Decimal | runtime.DecimalJsLike | number | string
+  high: runtime.Decimal | runtime.DecimalJsLike | number | string
+  low: runtime.Decimal | runtime.DecimalJsLike | number | string
+  close: runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Date | string
 }
 
 export type AssetPriceUpdateManyMutationInput = {
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFieldUpdateOperationsInput | string
+  open?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssetPriceUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   assetId?: Prisma.IntFieldUpdateOperationsInput | number
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFieldUpdateOperationsInput | string
+  open?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -324,34 +435,57 @@ export type AssetPriceAssetIdRecordedAtCompoundUniqueInput = {
 export type AssetPriceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  timeframe?: Prisma.SortOrder
+  open?: Prisma.SortOrder
+  high?: Prisma.SortOrder
+  low?: Prisma.SortOrder
+  close?: Prisma.SortOrder
+  volume?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
 }
 
 export type AssetPriceAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  open?: Prisma.SortOrder
+  high?: Prisma.SortOrder
+  low?: Prisma.SortOrder
+  close?: Prisma.SortOrder
+  volume?: Prisma.SortOrder
 }
 
 export type AssetPriceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  timeframe?: Prisma.SortOrder
+  open?: Prisma.SortOrder
+  high?: Prisma.SortOrder
+  low?: Prisma.SortOrder
+  close?: Prisma.SortOrder
+  volume?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
 }
 
 export type AssetPriceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  timeframe?: Prisma.SortOrder
+  open?: Prisma.SortOrder
+  high?: Prisma.SortOrder
+  low?: Prisma.SortOrder
+  close?: Prisma.SortOrder
+  volume?: Prisma.SortOrder
   recordedAt?: Prisma.SortOrder
 }
 
 export type AssetPriceSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  open?: Prisma.SortOrder
+  high?: Prisma.SortOrder
+  low?: Prisma.SortOrder
+  close?: Prisma.SortOrder
+  volume?: Prisma.SortOrder
 }
 
 export type AssetPriceCreateNestedManyWithoutAssetInput = {
@@ -396,14 +530,32 @@ export type AssetPriceUncheckedUpdateManyWithoutAssetNestedInput = {
   deleteMany?: Prisma.AssetPriceScalarWhereInput | Prisma.AssetPriceScalarWhereInput[]
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type AssetPriceCreateWithoutAssetInput = {
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe: string
+  open: runtime.Decimal | runtime.DecimalJsLike | number | string
+  high: runtime.Decimal | runtime.DecimalJsLike | number | string
+  low: runtime.Decimal | runtime.DecimalJsLike | number | string
+  close: runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Date | string
 }
 
 export type AssetPriceUncheckedCreateWithoutAssetInput = {
   id?: number
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe: string
+  open: runtime.Decimal | runtime.DecimalJsLike | number | string
+  high: runtime.Decimal | runtime.DecimalJsLike | number | string
+  low: runtime.Decimal | runtime.DecimalJsLike | number | string
+  close: runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Date | string
 }
 
@@ -439,30 +591,55 @@ export type AssetPriceScalarWhereInput = {
   NOT?: Prisma.AssetPriceScalarWhereInput | Prisma.AssetPriceScalarWhereInput[]
   id?: Prisma.IntFilter<"AssetPrice"> | number
   assetId?: Prisma.IntFilter<"AssetPrice"> | number
-  price?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFilter<"AssetPrice"> | string
+  open?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.DecimalNullableFilter<"AssetPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFilter<"AssetPrice"> | Date | string
 }
 
 export type AssetPriceCreateManyAssetInput = {
   id?: number
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe: string
+  open: runtime.Decimal | runtime.DecimalJsLike | number | string
+  high: runtime.Decimal | runtime.DecimalJsLike | number | string
+  low: runtime.Decimal | runtime.DecimalJsLike | number | string
+  close: runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Date | string
 }
 
 export type AssetPriceUpdateWithoutAssetInput = {
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFieldUpdateOperationsInput | string
+  open?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssetPriceUncheckedUpdateWithoutAssetInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFieldUpdateOperationsInput | string
+  open?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssetPriceUncheckedUpdateManyWithoutAssetInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timeframe?: Prisma.StringFieldUpdateOperationsInput | string
+  open?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  high?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  low?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  close?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  volume?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -471,7 +648,12 @@ export type AssetPriceUncheckedUpdateManyWithoutAssetInput = {
 export type AssetPriceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
-  price?: boolean
+  timeframe?: boolean
+  open?: boolean
+  high?: boolean
+  low?: boolean
+  close?: boolean
+  volume?: boolean
   recordedAt?: boolean
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assetPrice"]>
@@ -479,7 +661,12 @@ export type AssetPriceSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type AssetPriceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
-  price?: boolean
+  timeframe?: boolean
+  open?: boolean
+  high?: boolean
+  low?: boolean
+  close?: boolean
+  volume?: boolean
   recordedAt?: boolean
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assetPrice"]>
@@ -487,7 +674,12 @@ export type AssetPriceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type AssetPriceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
-  price?: boolean
+  timeframe?: boolean
+  open?: boolean
+  high?: boolean
+  low?: boolean
+  close?: boolean
+  volume?: boolean
   recordedAt?: boolean
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assetPrice"]>
@@ -495,11 +687,16 @@ export type AssetPriceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type AssetPriceSelectScalar = {
   id?: boolean
   assetId?: boolean
-  price?: boolean
+  timeframe?: boolean
+  open?: boolean
+  high?: boolean
+  low?: boolean
+  close?: boolean
+  volume?: boolean
   recordedAt?: boolean
 }
 
-export type AssetPriceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assetId" | "price" | "recordedAt", ExtArgs["result"]["assetPrice"]>
+export type AssetPriceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assetId" | "timeframe" | "open" | "high" | "low" | "close" | "volume" | "recordedAt", ExtArgs["result"]["assetPrice"]>
 export type AssetPriceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
 }
@@ -518,7 +715,12 @@ export type $AssetPricePayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     assetId: number
-    price: runtime.Decimal
+    timeframe: string
+    open: runtime.Decimal
+    high: runtime.Decimal
+    low: runtime.Decimal
+    close: runtime.Decimal
+    volume: runtime.Decimal | null
     recordedAt: Date
   }, ExtArgs["result"]["assetPrice"]>
   composites: {}
@@ -946,7 +1148,12 @@ export interface Prisma__AssetPriceClient<T, Null = never, ExtArgs extends runti
 export interface AssetPriceFieldRefs {
   readonly id: Prisma.FieldRef<"AssetPrice", 'Int'>
   readonly assetId: Prisma.FieldRef<"AssetPrice", 'Int'>
-  readonly price: Prisma.FieldRef<"AssetPrice", 'Decimal'>
+  readonly timeframe: Prisma.FieldRef<"AssetPrice", 'String'>
+  readonly open: Prisma.FieldRef<"AssetPrice", 'Decimal'>
+  readonly high: Prisma.FieldRef<"AssetPrice", 'Decimal'>
+  readonly low: Prisma.FieldRef<"AssetPrice", 'Decimal'>
+  readonly close: Prisma.FieldRef<"AssetPrice", 'Decimal'>
+  readonly volume: Prisma.FieldRef<"AssetPrice", 'Decimal'>
   readonly recordedAt: Prisma.FieldRef<"AssetPrice", 'DateTime'>
 }
     
