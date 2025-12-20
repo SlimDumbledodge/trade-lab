@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug trade-lab",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:debug"],
+      "port": 9229,
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/backend",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    }
+  ]
+}
