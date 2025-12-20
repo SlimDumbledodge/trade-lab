@@ -9,6 +9,17 @@
 * 🟢 You can import this file directly.
 */
 
+export const TimeframeType = {
+  ONE_MIN: 'ONE_MIN',
+  ONE_HOUR: 'ONE_HOUR',
+  ONE_DAY: 'ONE_DAY',
+  ONE_WEEK: 'ONE_WEEK',
+  ONE_MONTH: 'ONE_MONTH'
+} as const
+
+export type TimeframeType = (typeof TimeframeType)[keyof typeof TimeframeType]
+
+
 export const TransactionType = {
   buy: 'buy',
   sell: 'sell'

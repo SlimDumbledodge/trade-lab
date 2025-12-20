@@ -9,6 +9,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TransactionsModule } from './transactions/transactions.module';
 import { PortfoliosAssetsModule } from './portfolios-assets/portfolios-assets.module';
 import { PortfoliosHistoryModule } from './portfolios-history/portfolios-history.module';
+import { AlpacaModule } from './alpaca/alpaca.module';
+import { AssetsPriceModule } from './assets-price/assets-price.module';
 
 @Module({
     imports: [
@@ -25,6 +27,8 @@ import { PortfoliosHistoryModule } from './portfolios-history/portfolios-history
         TransactionsModule,
         PortfoliosAssetsModule,
         PortfoliosHistoryModule,
+        AlpacaModule,
+        AssetsPriceModule,
     ],
 })
 export class AppModule {}

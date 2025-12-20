@@ -69,7 +69,12 @@ model PortfolioAsset {
 model AssetPrice {
   id         Int      @id @default(autoincrement())
   assetId    Int
-  price      Decimal
+  timeframe  String
+  open       Decimal
+  high       Decimal
+  low        Decimal
+  close      Decimal
+  volume     Decimal?
   recordedAt DateTime @default(now())
   asset      Asset    @relation(fields: [assetId], references: [id])
 
@@ -85,6 +90,14 @@ model PortfolioHistory {
   portfolio     Portfolio @relation(fields: [portfolioId], references: [id])
 
   @@unique([portfolioId, recordedAt])
+}
+
+enum TimeframeType {
+  ONE_MIN
+  ONE_HOUR
+  ONE_DAY
+  ONE_WEEK
+  ONE_MONTH
 }
 
 enum TransactionType {
