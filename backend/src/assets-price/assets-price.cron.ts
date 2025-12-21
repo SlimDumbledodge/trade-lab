@@ -1,22 +1,26 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { Cron, CronExpression } from "@nestjs/schedule";
-import * as moment from "moment";
-import { AlpacaService } from "src/alpaca/alpaca.service";
-import { TimeframeEnum } from "src/alpaca/types/alpaca.types";
-import { PrismaService } from "src/prisma/prisma.service";
+import { Injectable, Logger } from "@nestjs/common"
+import { Cron, CronExpression } from "@nestjs/schedule"
+import * as moment from "moment"
+import { AlpacaService } from "src/alpaca/alpaca.service"
+import { TimeframeEnum } from "src/alpaca/types/alpaca.types"
+import { PrismaService } from "src/prisma/prisma.service"
 
 @Injectable()
 export class AssetsPriceCron {
     private readonly logger = new Logger(AssetsPriceCron.name)
     constructor(
         private alpacaService: AlpacaService,
-        private prisma: PrismaService
+        private prisma: PrismaService,
     ) {}
 
-    private async updateAssetsPrices(timeframe: TimeframeEnum, substractAmount: moment.DurationInputArg1, unit: moment.DurationInputArg2): Promise<void> {
+    private async updateAssetsPrices(
+        timeframe: TimeframeEnum,
+        substractAmount: moment.DurationInputArg1,
+        unit: moment.DurationInputArg2,
+    ): Promise<void> {
         const assets = await this.prisma.asset.findMany()
         if (!assets) console.warn(`updateAssetsPriceByHour : Aucun assets trouver`)
-        const symbols = assets.map(asset => asset.symbol)
+        const symbols = assets.map((asset) => asset.symbol)
 
         this.logger.log(`✅ Mise à jour de ${symbols.length} assets sur ${timeframe}`)
 

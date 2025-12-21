@@ -6,5 +6,4 @@ import * as moment from "moment"
 @Controller("alpaca")
 export class AlpacaController {
     constructor(private readonly alpacaService: AlpacaService) {}
-
 }

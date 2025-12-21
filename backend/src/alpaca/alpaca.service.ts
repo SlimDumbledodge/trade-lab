@@ -25,7 +25,7 @@ export class AlpacaService {
             sort = "asc",
         } = params
 
-        const symbolsString = symbols.join(',')
+        const symbolsString = symbols.join(",")
 
         try {
             const response = await axios.get<AlpacaBarsResponse>(this.BASE_URL, {
