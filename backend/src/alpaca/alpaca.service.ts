@@ -1,14 +1,21 @@
 import { Injectable, Logger } from "@nestjs/common"
 import { PrismaService } from "src/prisma/prisma.service"
-import axios, { AxiosError } from "axios"
+import axios from "axios"
 import { HistoricalBarsType, AlpacaBarsResponse } from "./types/alpaca.types"
+import { mapTimeframes } from "src/utils/mapTimeframes"
+import { ConfigService } from "@nestjs/config"
 
 @Injectable()
 export class AlpacaService {
-    private readonly BASE_URL = "https://data.alpaca.markets/v2/stocks/bars"
+    private readonly BASE_URL: string
     private readonly logger = new Logger(AlpacaService.name)
 
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly configService: ConfigService,
+    ) {
+        this.BASE_URL = this.configService.get<string>("APCA_BASE_BARS_STOCK_URL")!
+    }
 
     async getHistoricalBars(params: HistoricalBarsType) {
         const {
@@ -25,13 +32,14 @@ export class AlpacaService {
             sort = "asc",
         } = params
 
-        const symbolsString = symbols.join(',')
+        const symbolsString = symbols.join(",")
+        const formattedTimeframe = mapTimeframes(timeframe)
 
         try {
             const response = await axios.get<AlpacaBarsResponse>(this.BASE_URL, {
                 params: {
                     symbols: symbolsString,
-                    timeframe,
+                    timeframe: formattedTimeframe,
                     start,
                     end,
                     limit,
@@ -44,8 +52,8 @@ export class AlpacaService {
                 },
                 headers: {
                     accept: "application/json",
-                    "APCA-API-KEY-ID": "PKNFHKTVWXGY3D2DJR4PQQCTGT",
-                    "APCA-API-SECRET-KEY": "4MizrRiCkzswTqLQLTojNx5MxrRJwwZMzSa7Nikr49vW",
+                    "APCA-API-KEY-ID": this.configService.get<string>("APCA_API_KEY_ID"),
+                    "APCA-API-SECRET-KEY": this.configService.get<string>("APCA_API_SECRET_KEY"),
                 },
             })
             const bars = response.data.bars
