@@ -5,6 +5,7 @@ import * as bcrypt from "bcrypt"
 import moment from "moment"
 import { AlpacaService } from "../src/alpaca/alpaca.service.js"
 import { ASSET_PRICE_PERIOD } from "src/assets-price/types/types.js"
+import { ConfigService } from "@nestjs/config"
 
 class PrismaServiceMock extends PrismaClient {
     async onModuleInit() {}
@@ -15,7 +16,8 @@ class PrismaServiceMock extends PrismaClient {
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaServiceMock({ adapter })
-const alpacaService = new AlpacaService(prisma)
+const configService = new ConfigService()
+const alpacaService = new AlpacaService(prisma, configService)
 
 const ASSETS = [
     { symbol: "AAPL", name: "Apple Inc.", description: "Technologie - iPhone, Mac, iPad" },
