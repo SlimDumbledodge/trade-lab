@@ -7,6 +7,6 @@ import { PrismaModule } from "src/prisma/prisma.module"
     controllers: [AlpacaController],
     providers: [AlpacaService],
     imports: [PrismaModule],
-    exports: [AlpacaService]
+    exports: [AlpacaService],
 })
 export class AlpacaModule {}

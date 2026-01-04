@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { AuthEntity } from './entities/auth.entity';
-import * as bcrypt from 'bcrypt';
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common"
+import { JwtService } from "@nestjs/jwt"
+import { PrismaService } from "src/prisma/prisma.service"
+import { AuthEntity } from "./entities/auth.entity"
+import * as bcrypt from "bcrypt"
 
 @Injectable()
 export class AuthService {
@@ -12,16 +12,16 @@ export class AuthService {
     ) {}
 
     async login(email: string, password: string): Promise<AuthEntity> {
-        const user = await this.prisma.user.findUnique({ where: { email: email }, include: { portfolio: true } });
+        const user = await this.prisma.user.findUnique({ where: { email: email }, include: { portfolio: true } })
 
         if (!user) {
-            throw new NotFoundException(`No user found for email: ${email}`);
+            throw new NotFoundException(`No user found for email: ${email}`)
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+        const isPasswordValid = await bcrypt.compare(password, user.passwordHash)
 
         if (!isPasswordValid) {
-            throw new UnauthorizedException('Invalid password');
+            throw new UnauthorizedException("Invalid password")
         }
 
         return {
@@ -30,6 +30,6 @@ export class AuthService {
                 ...user,
                 portfolioId: user.portfolio?.id ?? null,
             },
-        };
+        }
     }
 }

@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { PortfoliosHistoryService } from './portfolios-history.service';
+import { Controller } from "@nestjs/common"
+import { PortfoliosHistoryService } from "./portfolios-history.service"
 
-@Controller('portfolios-history')
+@Controller("portfolios-history")
 export class PortfoliosHistoryController {
-  constructor(private readonly portfoliosHistoryService: PortfoliosHistoryService) {}
+    constructor(private readonly portfoliosHistoryService: PortfoliosHistoryService) {}
 }
