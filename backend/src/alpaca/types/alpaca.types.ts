@@ -1,4 +1,5 @@
-// ⏱️ Tous les timeframes supportés par Alpaca
+import { ASSET_PRICE_PERIOD } from "src/assets-price/types/types"
+
 export enum TimeframeEnum {
     // Minutes
     ONE_MIN = "1Min",
@@ -23,12 +24,11 @@ export enum TimeframeEnum {
     TWELVE_MONTH = "12Month",
 }
 
-// ⚙️ Type principal pour les paramètres de requête "GET /v2/stocks/bars"
 export type HistoricalBarsType = {
     /** Liste des symboles séparés par des virgules (AAPL,MSFT,TSLA...) */
     symbols: string[]
     /** Timeframe des barres à récupérer (ex: 1Day, 1Week...) */
-    timeframe: TimeframeEnum
+    timeframe: ASSET_PRICE_PERIOD
 
     /** Date de début incluse (YYYY-MM-DD ou format RFC-3339) */
     start?: string
@@ -39,7 +39,7 @@ export type HistoricalBarsType = {
     limit?: number
 
     /** Type d’ajustement : raw | split | dividend | spin-off | all | combinés (ex: split,dividend) */
-    adjustment?: "raw" | "split" | "dividend" | "spin-off" | "all" | string
+    adjustment?: "raw" | "split" | "dividend" | "spin-off" | "all"
 
     /** Date as-of utilisée pour les renommages (ex: META/FB) */
     asof?: string
@@ -48,7 +48,7 @@ export type HistoricalBarsType = {
     feed?: "sip" | "iex" | "boats" | "otc"
 
     /** Devise des prix (USD par défaut) */
-    currency?: "USD" | "EUR" | "GBP" | string
+    currency?: "USD" | "EUR" | "GBP"
 
     /** Token de pagination renvoyé par Alpaca pour continuer une requête */
     page_token?: string
