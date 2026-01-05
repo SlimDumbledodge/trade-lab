@@ -33,8 +33,8 @@ const TIMEFRAMES: {
     { label: "1y", timeframe: ASSET_PRICE_PERIOD.ONE_YEAR, subtract: { amount: 1, unit: "year" } },
     { label: "6m", timeframe: ASSET_PRICE_PERIOD.SIX_MONTHS, subtract: { amount: 6, unit: "months" } },
     { label: "1m", timeframe: ASSET_PRICE_PERIOD.ONE_MONTH, subtract: { amount: 1, unit: "month" } },
-    { label: "1w", timeframe: ASSET_PRICE_PERIOD.ONE_WEEK, subtract: { amount: 1, unit: "week" } },
-    { label: "1d", timeframe: ASSET_PRICE_PERIOD.ONE_DAY, subtract: { amount: 1, unit: "day" } },
+    { label: "1s", timeframe: ASSET_PRICE_PERIOD.ONE_WEEK, subtract: { amount: 2, unit: "weeks" } },
+    { label: "1d", timeframe: ASSET_PRICE_PERIOD.ONE_DAY, subtract: { amount: 5, unit: "days" } },
 ]
 
 async function seedAssets() {
