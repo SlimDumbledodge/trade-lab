@@ -84,3 +84,12 @@ export type AlpacaBarsResponse = {
     }
     next_page_token?: string
 }
+
+export type CalendarInfo = {
+    date: string
+    open: string
+    close: string
+    session_open: string
+    session_close: string
+    settlement_date: string
+}
