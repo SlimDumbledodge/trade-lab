@@ -78,7 +78,7 @@ model AssetPrice {
   recordedAt DateTime @default(now())
   asset      Asset    @relation(fields: [assetId], references: [id])
 
-  @@unique([assetId, recordedAt])
+  @@unique([assetId, timeframe, recordedAt])
 }
 
 model PortfolioHistory {
