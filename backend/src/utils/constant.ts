@@ -1,1 +1,1 @@
-export const roundsOfHashing = 10;
+export const roundsOfHashing = 10

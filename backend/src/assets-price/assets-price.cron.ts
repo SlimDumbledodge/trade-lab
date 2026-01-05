@@ -1,22 +1,26 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { Cron, CronExpression } from "@nestjs/schedule";
-import * as moment from "moment";
-import { AlpacaService } from "src/alpaca/alpaca.service";
-import { TimeframeEnum } from "src/alpaca/types/alpaca.types";
-import { PrismaService } from "src/prisma/prisma.service";
+import { Injectable, Logger } from "@nestjs/common"
+import { Cron, CronExpression } from "@nestjs/schedule"
+import * as moment from "moment"
+import { AlpacaService } from "src/alpaca/alpaca.service"
+import { PrismaService } from "src/prisma/prisma.service"
+import { ASSET_PRICE_PERIOD } from "./types/types"
 
 @Injectable()
 export class AssetsPriceCron {
     private readonly logger = new Logger(AssetsPriceCron.name)
     constructor(
         private alpacaService: AlpacaService,
-        private prisma: PrismaService
+        private prisma: PrismaService,
     ) {}
 
-    private async updateAssetsPrices(timeframe: TimeframeEnum, substractAmount: moment.DurationInputArg1, unit: moment.DurationInputArg2): Promise<void> {
+    private async updateAssetsPrices(
+        timeframe: ASSET_PRICE_PERIOD,
+        substractAmount: moment.DurationInputArg1,
+        unit: moment.DurationInputArg2,
+    ): Promise<void> {
         const assets = await this.prisma.asset.findMany()
         if (!assets) console.warn(`updateAssetsPriceByHour : Aucun assets trouver`)
-        const symbols = assets.map(asset => asset.symbol)
+        const symbols = assets.map((asset) => asset.symbol)
 
         this.logger.log(`✅ Mise à jour de ${symbols.length} assets sur ${timeframe}`)
 
@@ -28,33 +32,33 @@ export class AssetsPriceCron {
         })
     }
 
-    @Cron(CronExpression.EVERY_MINUTE)
+    @Cron(CronExpression.EVERY_10_SECONDS)
     async updateByMinute(): Promise<void> {
-        await this.updateAssetsPrices(TimeframeEnum.ONE_MIN, 1, "day")
+        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_DAY, 1, "day")
     }
 
     @Cron(CronExpression.EVERY_HOUR)
     async updateByHour(): Promise<void> {
-        await this.updateAssetsPrices(TimeframeEnum.ONE_HOUR, 1, "week")
+        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_WEEK, 1, "week")
     }
 
-    @Cron(CronExpression.EVERY_6_HOURS)
+    @Cron(CronExpression.EVERY_HOUR)
     async updateBy6Hours(): Promise<void> {
-        await this.updateAssetsPrices(TimeframeEnum.SIX_HOUR, 1, "month")
+        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_MONTH, 1, "month")
     }
 
-    @Cron(CronExpression.EVERY_DAY_AT_9AM)
+    @Cron(CronExpression.EVERY_DAY_AT_8PM)
     async updateByDay(): Promise<void> {
-        await this.updateAssetsPrices(TimeframeEnum.ONE_DAY, 6, "months")
+        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.SIX_MONTHS, 6, "months")
     }
 
-    @Cron(CronExpression.EVERY_WEEK)
+    @Cron(CronExpression.EVERY_DAY_AT_8PM)
     async updateByWeek(): Promise<void> {
-        await this.updateAssetsPrices(TimeframeEnum.ONE_WEEK, 1, "year")
+        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_YEAR, 1, "year")
     }
 
-    @Cron(CronExpression.EVERY_WEEK)
+    @Cron(CronExpression.EVERY_DAY_AT_8PM)
     async updateByMonth(): Promise<void> {
-        await this.updateAssetsPrices(TimeframeEnum.ONE_MONTH, 5, "years")
+        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.FIVE_YEARS, 5, "years")
     }
 }

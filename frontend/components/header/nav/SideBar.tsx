@@ -1,6 +1,6 @@
-'use client';
+"use client"
 
-import * as React from 'react';
+import * as React from "react"
 import {
     IconCamera,
     IconChartBar,
@@ -14,10 +14,10 @@ import {
     IconSettings,
     IconUsers,
     IconWallet,
-} from '@tabler/icons-react';
+} from "@tabler/icons-react"
 
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+import { NavMain } from "@/components/header/nav/NavMain"
+import { NavUser } from "@/components/header/nav/NavUser"
 import {
     Sidebar,
     SidebarContent,
@@ -26,82 +26,82 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import Image from 'next/image';
-import { Separator } from './ui/separator';
+} from "@/components/ui/sidebar"
+import Image from "next/image"
+import { Separator } from "../../ui/separator"
 
 const data = {
     user: {
-        name: 'Amaël Rosales',
-        email: 'amael.rosales@gmail.com',
-        avatar: '/avatars/shadcn.jpg',
+        name: "Amaël Rosales",
+        email: "amael.rosales@gmail.com",
+        avatar: "/avatars/shadcn.jpg",
     },
     navMain: [
         {
-            title: 'Portefeuille',
-            url: 'portfolio',
+            title: "Portefeuille",
+            url: "portfolio",
             icon: IconWallet,
         },
         {
-            title: 'Transactions',
-            url: 'transactions',
+            title: "Transactions",
+            url: "transactions",
             icon: IconChartBar,
         },
         {
-            title: 'Marché',
-            url: 'market',
+            title: "Marché",
+            url: "market",
             icon: IconChartLine,
         },
     ],
     navClouds: [
         {
-            title: 'Capture',
+            title: "Capture",
             icon: IconCamera,
             isActive: true,
-            url: '#',
+            url: "#",
             items: [
                 {
-                    title: 'Active Proposals',
-                    url: '#',
+                    title: "Active Proposals",
+                    url: "#",
                 },
                 {
-                    title: 'Archived',
-                    url: '#',
+                    title: "Archived",
+                    url: "#",
                 },
             ],
         },
         {
-            title: 'Proposal',
+            title: "Proposal",
             icon: IconFileDescription,
-            url: '#',
+            url: "#",
             items: [
                 {
-                    title: 'Active Proposals',
-                    url: '#',
+                    title: "Active Proposals",
+                    url: "#",
                 },
                 {
-                    title: 'Archived',
-                    url: '#',
+                    title: "Archived",
+                    url: "#",
                 },
             ],
         },
         {
-            title: 'Prompts',
+            title: "Prompts",
             icon: IconFileAi,
-            url: '#',
+            url: "#",
             items: [
                 {
-                    title: 'Active Proposals',
-                    url: '#',
+                    title: "Active Proposals",
+                    url: "#",
                 },
                 {
-                    title: 'Archived',
-                    url: '#',
+                    title: "Archived",
+                    url: "#",
                 },
             ],
         },
     ],
-};
+}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
@@ -125,5 +125,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavUser user={data.user} />
             </SidebarFooter>
         </Sidebar>
-    );
+    )
 }

@@ -1,34 +1,34 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import NextAuth from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
 
 export const authOptions = {
     providers: [
         CredentialsProvider({
-            name: 'Credentials',
+            name: "Credentials",
             credentials: {
-                email: { label: 'Email', type: 'text' },
-                password: { label: 'Mot de passe', type: 'password' },
+                email: { label: "Email", type: "text" },
+                password: { label: "Mot de passe", type: "password" },
             },
             async authorize(credentials) {
                 try {
                     const res = await fetch(`${process.env.NEXT_PUBLIC_NEST_API_URL}/auth/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             email: credentials?.email,
                             password: credentials?.password,
                         }),
-                    });
+                    })
 
                     if (!res.ok) {
-                        console.error('Login API returned status', res.status);
-                        return null;
+                        console.error("Login API returned status", res.status)
+                        return null
                     }
 
-                    const data = await res.json();
+                    const data = await res.json()
 
                     if (data.success && data.data?.accessToken && data.data?.user) {
-                        const user = data.data.user;
+                        const user = data.data.user
                         return {
                             id: user.id,
                             name: user.username,
@@ -37,13 +37,13 @@ export const authOptions = {
                             subscription: user.subscription,
                             portfolioId: user.portfolioId,
                             accessToken: data.data.accessToken,
-                        };
+                        }
                     }
 
-                    return null;
+                    return null
                 } catch (err) {
-                    console.error('Authorize error:', err);
-                    return null;
+                    console.error("Authorize error:", err)
+                    return null
                 }
             },
         }),
@@ -52,24 +52,24 @@ export const authOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.accessToken = user.accessToken;
-                token.user = user;
+                token.accessToken = user.accessToken
+                token.user = user
             }
-            return token;
+            return token
         },
         async session({ session, token }) {
-            session.accessToken = token.accessToken as string;
-            session.user = token.user;
-            return session;
+            session.accessToken = token.accessToken as string
+            session.user = token.user
+            return session
         },
     },
 
     pages: {
-        signIn: '/login',
+        signIn: "/login",
     },
 
     secret: process.env.NEXTAUTH_SECRET,
-};
+}
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions)
+export { handler as GET, handler as POST }

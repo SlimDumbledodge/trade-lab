@@ -1,38 +1,38 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from "lucide-react"
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button"
 
 interface LandingProps {
-    heading: string;
-    description: string;
+    heading: string
+    description: string
     buttons?: {
         primary?: {
-            text: string;
-            url: string;
-        };
+            text: string
+            url: string
+        }
         secondary?: {
-            text: string;
-            url: string;
-        };
-    };
+            text: string
+            url: string
+        }
+    }
     image: {
-        src: string;
-        alt: string;
-    };
+        src: string
+        alt: string
+    }
 }
 
 const Page = ({
-    heading = 'Apprenez le trading sans risque',
-    description = 'Simulez des transactions sur les marchés financiers en temps réel avec notre plateforme de trading virtuelle. Parfait pour les débutants et les passionnés qui veulent tester des stratégies sans engager de fonds réels.',
+    heading = "Apprenez le trading sans risque",
+    description = "Simulez des transactions sur les marchés financiers en temps réel avec notre plateforme de trading virtuelle. Parfait pour les débutants et les passionnés qui veulent tester des stratégies sans engager de fonds réels.",
     buttons = {
         primary: {
-            text: 'Commencer maintenant',
-            url: '/login',
+            text: "Commencer maintenant",
+            url: "/login",
         },
     },
     image = {
-        src: '/langing.png',
-        alt: 'Image démonstrative de la plateforme de trading virtuelle',
+        src: "/langing.png",
+        alt: "Image démonstrative de la plateforme de trading virtuelle",
     },
 }: LandingProps) => {
     return (
@@ -58,7 +58,7 @@ const Page = ({
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Page;
+export default Page

@@ -1,21 +1,21 @@
-'use client';
+"use client"
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { IconLayoutDashboard, type Icon } from '@tabler/icons-react';
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { IconLayoutDashboard, type Icon } from "@tabler/icons-react"
 
-import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 
 export function NavMain({
     items,
 }: {
     items: {
-        title: string;
-        url: string;
-        icon?: Icon;
-    }[];
+        title: string
+        url: string
+        icon?: Icon
+    }[]
 }) {
-    const pathname = usePathname();
+    const pathname = usePathname()
 
     return (
         <SidebarGroup>
@@ -27,7 +27,7 @@ export function NavMain({
                             asChild
                             tooltip="Dashboard"
                             className={`min-w-8 duration-200 ease-linear ${
-                                pathname.startsWith('/dashboard') ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''
+                                pathname.startsWith("/dashboard") ? "bg-primary text-primary-foreground hover:bg-primary/90" : ""
                             }`}
                         >
                             <Link href="/dashboard">
@@ -41,14 +41,14 @@ export function NavMain({
                 {/* Autres liens */}
                 <SidebarMenu>
                     {items.map((item) => {
-                        const isActive = pathname.startsWith(`/${item.url}`);
+                        const isActive = pathname.startsWith(`/${item.url}`)
                         return (
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton
                                     asChild
                                     tooltip={item.title}
                                     className={`duration-200 ease-linear ${
-                                        isActive ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''
+                                        isActive ? "bg-primary text-primary-foreground hover:bg-primary/90" : ""
                                     }`}
                                 >
                                     <Link href={`/${item.url}`}>
@@ -57,10 +57,10 @@ export function NavMain({
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
-                        );
+                        )
                     })}
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>
-    );
+    )
 }
