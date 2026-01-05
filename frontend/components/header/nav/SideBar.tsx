@@ -16,8 +16,8 @@ import {
     IconWallet,
 } from '@tabler/icons-react';
 
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+import { NavMain } from '@/components/header/nav/NavMain';
+import { NavUser } from '@/components/header/nav/NavUser';
 import {
     Sidebar,
     SidebarContent,
@@ -28,7 +28,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import Image from 'next/image';
-import { Separator } from './ui/separator';
+import { Separator } from '../../ui/separator';
 
 const data = {
     user: {

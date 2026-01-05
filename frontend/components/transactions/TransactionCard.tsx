@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
 import { Transaction, TransactionType } from '@/types/types';
-import { TransactionTypeBadge } from './ui/transaction-type-badge';
+import { TransactionTypeBadge } from '../ui/transaction-type-badge';
 import Image from 'next/image';
 
 type TransactionCardProps = {
@@ -12,11 +12,11 @@ type TransactionCardProps = {
 };
 
 export function TransactionCard({ transaction, className }: TransactionCardProps) {
-    const { type, quantity, priceAtExecution, createdAt, actif } = transaction;
+    const { type, quantity, price, createdAt, actif } = transaction;
     const assetName = actif?.description;
-    const assetLogo = actif?.logo;
+    console.log(price)
 
-    const total = quantity * priceAtExecution;
+    const total = quantity * price;
 
     const formattedDate = new Date(createdAt).toLocaleDateString('fr-FR', {
         day: '2-digit',
@@ -33,7 +33,7 @@ export function TransactionCard({ transaction, className }: TransactionCardProps
             {/* Left : Asset logo + infos */}
             <div className="flex items-center gap-3">
                 <Image
-                    src={assetLogo || '/placeholder-logo.png'}
+                    src={'/placeholder-logo.png'}
                     alt={assetName || 'Asset Logo'}
                     width={32}
                     height={32}
@@ -58,12 +58,12 @@ export function TransactionCard({ transaction, className }: TransactionCardProps
                     Quantité : <span className="font-semibold">{quantity}</span>
                 </div>
                 <div className="text-xs font-medium text-neutral-600 dark:text-neutral-300">
-                    Prix unitaire : <span className="font-semibold">{priceAtExecution.toFixed(2)} $</span>
+                    Prix unitaire : <span className="font-semibold">{price} $</span>
                 </div>
                 <div className="text-sm font-bold mt-0.5">
                     Total :{' '}
                     <span className={isBuy ? 'text-red-500' : 'text-green-500'}>
-                        {isBuy ? `-${total.toFixed(2)} $` : `+${total.toFixed(2)} $`}
+                        {isBuy ? `-${total} $` : `+${total} $`}
                     </span>
                 </div>
             </div>
