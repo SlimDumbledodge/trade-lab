@@ -1,54 +1,59 @@
 import { BadRequestException, Injectable } from "@nestjs/common"
-import * as moment from "moment"
 import { PrismaService } from "src/prisma/prisma.service"
 import { ASSET_PRICE_PERIOD } from "./types/types"
+import { AssetPrice } from "prisma/generated/client"
+import { AlpacaService } from "src/alpaca/alpaca.service"
+import * as moment from "moment"
 
 @Injectable()
 export class AssetsPriceService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly alpacaService: AlpacaService,
+    ) {}
 
     async getAssetPrices(symbol: string, timeframe: ASSET_PRICE_PERIOD) {
         const asset = await this.prisma.asset.findFirst({ where: { symbol } })
-
         if (!asset) throw new BadRequestException(`getAssetPrices : Asset introuvable avec le symbol ${symbol}`)
 
-        const now = moment()
-        let fromDate: moment.Moment
+        const lastDayOpenedMarket = await this.alpacaService.getLastDayOpeningMarket()
+        if (!lastDayOpenedMarket) throw new BadRequestException("Impossible de déterminer le dernier jour d'ouverture du marché")
+
+        const lastMoment = moment(lastDayOpenedMarket, "YYYY-MM-DD")
+        let fromMoment: moment.Moment
+
         switch (timeframe) {
             case ASSET_PRICE_PERIOD.ONE_DAY:
-                fromDate = now.clone().startOf("day")
+                fromMoment = lastMoment.clone()
                 break
             case ASSET_PRICE_PERIOD.ONE_WEEK:
-                fromDate = now.clone().subtract(1, "week")
+                fromMoment = lastMoment.clone().subtract(7, "days")
                 break
             case ASSET_PRICE_PERIOD.ONE_MONTH:
-                fromDate = now.clone().subtract(1, "month")
+                fromMoment = lastMoment.clone().subtract(1, "month")
                 break
             case ASSET_PRICE_PERIOD.SIX_MONTHS:
-                fromDate = now.clone().subtract(6, "months")
+                fromMoment = lastMoment.clone().subtract(6, "months")
                 break
             case ASSET_PRICE_PERIOD.ONE_YEAR:
-                fromDate = now.clone().subtract(1, "year")
+                fromMoment = lastMoment.clone().subtract(1, "year")
                 break
             case ASSET_PRICE_PERIOD.FIVE_YEARS:
-                fromDate = now.clone().subtract(5, "years")
+                fromMoment = lastMoment.clone().subtract(5, "years")
                 break
             default:
-                throw new BadRequestException(`getAssetPrices : timeframe non pris en charge (${timeframe as string})`)
+                throw new BadRequestException(`Timeframe non pris en charge : ${timeframe}`)
         }
-        const prices = await this.prisma.assetPrice.findMany({
-            where: {
-                timeframe,
-                assetId: asset.id,
-                recordedAt: {
-                    gte: fromDate.toDate(),
-                    lte: now.toDate(),
-                },
-            },
-            orderBy: { recordedAt: "asc" },
-        })
 
-        if (prices.length === 0) return []
+        const prices: AssetPrice[] = await this.prisma.$queryRaw`
+            SELECT *
+            FROM "AssetPrice"
+            WHERE "assetId" = ${asset.id}
+            AND "timeframe" = CAST(${timeframe} AS text)
+            AND "recordedAt" >= ${fromMoment.startOf("day").toISOString()}
+            AND "recordedAt" <= ${lastMoment.endOf("day").toISOString()}
+            ORDER BY "recordedAt" ASC
+`
 
         return prices.map((p) => ({
             recordedAt: p.recordedAt,
