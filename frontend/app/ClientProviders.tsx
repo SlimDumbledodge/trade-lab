@@ -1,8 +1,8 @@
-'use client';
+"use client"
 
-import { Toaster } from 'react-hot-toast';
-import { SessionProvider } from 'next-auth/react';
-import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { Toaster } from "react-hot-toast"
+import { SessionProvider } from "next-auth/react"
+import { ThemeProvider } from "@/components/theme/ThemeProvider"
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
     return (
@@ -12,5 +12,5 @@ export default function ClientProviders({ children }: { children: React.ReactNod
                 <Toaster />
             </ThemeProvider>
         </SessionProvider>
-    );
+    )
 }

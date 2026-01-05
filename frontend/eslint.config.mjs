@@ -1,14 +1,39 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
+// eslint.config.mjs
+import eslint from "@eslint/js"
+import globals from "globals"
+import tsPlugin from "@typescript-eslint/eslint-plugin"
+import tsParser from "@typescript-eslint/parser"
+import prettierRecommended from "eslint-plugin-prettier/recommended"
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// ✅ Flat config ESLint
+export default [
+    // Config de base ESLint
+    eslint.configs.recommended,
 
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-});
+    // TypeScript
+    {
+        files: ["**/*.ts", "**/*.tsx"],
+        languageOptions: {
+            parser: tsParser,
+            parserOptions: {
+                ecmaVersion: 2024,
+                sourceType: "module",
+                project: "./tsconfig.json",
+            },
+            globals: {
+                ...globals.node,
+                ...globals.jest,
+            },
+        },
+        plugins: {
+            "@typescript-eslint": tsPlugin,
+        },
+        rules: {
+            "@typescript-eslint/no-unsafe-assignment": "off",
+            "@typescript-eslint/no-unsafe-member-access": "off",
+        },
+    },
 
-const eslintConfig = [...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:prettier/recommended')];
-
-export default eslintConfig;
+    // Prettier
+    prettierRecommended,
+]

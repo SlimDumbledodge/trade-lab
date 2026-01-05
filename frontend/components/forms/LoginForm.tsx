@@ -1,29 +1,29 @@
-'use client';
+"use client"
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Image from 'next/image';
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import Image from "next/image"
+import { useState } from "react"
+import { signIn } from "next-auth/react"
 
-export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        await signIn('credentials', {
+        e.preventDefault()
+        await signIn("credentials", {
             email,
             password,
-            callbackUrl: '/dashboard',
+            callbackUrl: "/dashboard",
             redirect: true,
-        });
-    };
+        })
+    }
 
     return (
-        <div className={cn('flex flex-col gap-6', className)} {...props}>
+        <div className={cn("flex flex-col gap-6", className)} {...props}>
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col items-center gap-2">
@@ -34,7 +34,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                         </a>
                         <h1 className="text-xl font-bold">Bienvenue sur TradeLab</h1>
                         <div className="text-center text-sm">
-                            Vous n’avez pas encore de compte ?{' '}
+                            Vous n’avez pas encore de compte ?{" "}
                             <a href="#" className="underline underline-offset-4">
                                 Créez-en un
                             </a>
@@ -74,5 +74,5 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                 </div>
             </form>
         </div>
-    );
+    )
 }

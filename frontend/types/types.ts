@@ -1,139 +1,140 @@
-// frontend/types.ts
-
 // -------------------------------------------
 // Auth / Users
 // -------------------------------------------
 export type LoginForm = {
-    email: string;
-    password: string;
-};
+    email: string
+    password: string
+}
 
 export type AuthResponse = {
-    accessToken: string;
-    user: User;
-};
+    accessToken: string
+    user: User
+}
 
 // -------------------------------------------
 // User model
 // -------------------------------------------
+
 export type User = {
-    id: number;
-    username: string;
-    email: string;
-    role: 'user' | 'admin';
-    subscription: 'free' | 'premium';
-    portfolioId?: number | null;
-};
-
-// -------------------------------------------
-// Actif model
-// -------------------------------------------
-export enum ActifType {
-    CommonStock = 'Common Stock',
-    ETP = 'ETP',
-    CRYPTO = 'CRYPTO',
+    id: number
+    username: string
+    email: string
+    createdAt: string // DateTime en ISO côté frontend
+    portfolio?: Portfolio | null
 }
-
-export type Actif = {
-    id: number;
-    description: string;
-    sectorActivity: string;
-    logo: string;
-    symbol: string;
-    type: ActifType;
-    current_price: number;
-    highest_price_day: number;
-    lowest_price_day: number;
-    opening_price_day: number;
-    previous_close_price_day: number;
-    percent_change: number;
-    change: number;
-    metrics?: Metrics | null;
-};
-
-// -------------------------------------------
-// Metrics model
-// -------------------------------------------
-export type Metrics = {
-    id: number;
-    tenDayAverageTradingVolume: number;
-    fiftyTwoWeekHigh: number;
-    fiftyTwoWeekLow: number;
-    fiftyTwoWeekLowDate: string; // Dates côté frontend on garde string pour JSON
-    fiftyTwoWeekPriceReturnDaily: number;
-    beta: number;
-    actifId: number;
-};
-
-// -------------------------------------------
-// Company model
-// -------------------------------------------
-export type Company = {
-    id: number;
-    ticker: string;
-    name: string;
-    country: string;
-    currency: string;
-    exchange: string;
-    marketEntryDate: string;
-    marketCapitalization?: number;
-    sharesOutstanding?: number;
-    phone?: string;
-    webUrl?: string;
-    logo?: string;
-    industry?: string;
-};
 
 // -------------------------------------------
 // Portfolio model
 // -------------------------------------------
+
 export type Portfolio = {
-    id: number;
-    userId: number;
-    balance: number;
-    totalActifsValue: number;
-    totalPortfolioValue: number;
-    actifs: PortfolioActif[];
-    transactions: Transaction[];
-};
+    id: number
+    userId: number
+    cashBalance: number // Decimal converti en number côté frontend
+    holdingsValue: number
+    createdAt: string
+    assets: PortfolioAsset[]
+    history: PortfolioHistory[]
+    transactions: Transaction[]
+}
 
 // -------------------------------------------
-// PortfolioActif model
+// Actif (Asset) model
 // -------------------------------------------
-export type PortfolioActif = {
-    id: number;
-    portfolioId: number;
-    actifId: number;
-    quantity: number;
-    averagePrice: number;
-};
+
+export type Asset = {
+    id: number
+    symbol: string
+    name: string
+    description?: string | null
+    lastPrice: number
+    updatedAt: string
+    prices?: AssetPrice[]
+}
+
+// -------------------------------------------
+// Prix d’un actif (AssetPrice)
+// -------------------------------------------
+
+export type AssetPrice = {
+    id: number
+    assetId: number
+    timeframe: string // TimeframeType ONE_DAY, etc.
+    open: number
+    high: number
+    low: number
+    close: number
+    volume?: number | null
+    recordedAt: string
+}
+
+// -------------------------------------------
+// PortfolioActif (PortfolioAsset) model
+// -------------------------------------------
+
+export type PortfolioAsset = {
+    id: number
+    portfolioId: number
+    assetId: number
+    quantity: number
+    averageBuyPrice: number
+    createdAt: string
+    updatedAt: string
+    asset?: Asset
+}
 
 // -------------------------------------------
 // Transaction model
 // -------------------------------------------
 
 export enum TransactionType {
-    BUY = 'BUY',
-    SELL = 'SELL',
+    BUY = "buy",
+    SELL = "sell",
 }
+
 export type Transaction = {
-    id: number;
-    type: TransactionType;
-    quantity: number;
-    priceAtExecution: number;
-    actifId: number;
-    portfolioId: number;
-    actif?: Actif;
-    createdAt: Date;
-};
+    id: number
+    portfolioId: number
+    assetId: number
+    type: TransactionType
+    quantity: number
+    price: number
+    createdAt: string
+    asset?: Asset
+}
+
+// -------------------------------------------
+// PortfolioHistory model
+// -------------------------------------------
+
+export type PortfolioHistory = {
+    id: number
+    portfolioId: number
+    unrealizedPnL: number
+    cashBalance: number
+    recordedAt: string
+}
+
+// -------------------------------------------
+// Pagination
+// -------------------------------------------
 
 export type PaginationMeta = {
-    total: number;
-    page: number;
-    lastPage: number;
-};
+    total: number
+    page: number
+    lastPage: number
+}
 
 export type PaginatedTransactions = {
-    items: Transaction[];
-    meta: PaginationMeta;
-};
+    items: Transaction[]
+    meta: PaginationMeta
+}
+
+export enum ASSET_PRICE_PERIOD {
+    ONE_DAY = "1d",
+    ONE_WEEK = "1s",
+    ONE_MONTH = "1m",
+    SIX_MONTHS = "6m",
+    ONE_YEAR = "1y",
+    FIVE_YEARS = "5y",
+}
