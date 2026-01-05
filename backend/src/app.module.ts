@@ -22,6 +22,7 @@ import { AssetsPriceModule } from "./assets-price/assets-price.module"
         TransactionsModule,
         ConfigModule.forRoot({
             isGlobal: true,
+            envFilePath: ".env",
         }),
         ScheduleModule.forRoot(),
         TransactionsModule,

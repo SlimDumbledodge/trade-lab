@@ -1,40 +1,40 @@
-'use client';
+"use client"
 
-import { cn } from '@/lib/utils';
-import React from 'react';
-import { Transaction, TransactionType } from '@/types/types';
-import { TransactionTypeBadge } from './ui/transaction-type-badge';
-import Image from 'next/image';
+import { cn } from "@/lib/utils"
+import React from "react"
+import { Transaction, TransactionType } from "@/types/types"
+import { TransactionTypeBadge } from "../ui/transaction-type-badge"
+import Image from "next/image"
 
 type TransactionCardProps = {
-    transaction: Transaction;
-    className?: string;
-};
+    transaction: Transaction
+    className?: string
+}
 
 export function TransactionCard({ transaction, className }: TransactionCardProps) {
-    const { type, quantity, priceAtExecution, createdAt, actif } = transaction;
-    const assetName = actif?.description;
-    const assetLogo = actif?.logo;
+    const { type, quantity, price, createdAt, actif } = transaction
+    const assetName = actif?.description
+    console.log(price)
 
-    const total = quantity * priceAtExecution;
+    const total = quantity * price
 
-    const formattedDate = new Date(createdAt).toLocaleDateString('fr-FR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-    });
+    const formattedDate = new Date(createdAt).toLocaleDateString("fr-FR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    })
 
-    const isBuy = type === TransactionType.BUY;
+    const isBuy = type === TransactionType.BUY
 
     return (
-        <div className={cn('flex justify-between items-center gap-3 rounded-xl p-3 shadow-2xs border ', className)}>
+        <div className={cn("flex justify-between items-center gap-3 rounded-xl p-3 shadow-2xs border ", className)}>
             {/* Left : Asset logo + infos */}
             <div className="flex items-center gap-3">
                 <Image
-                    src={assetLogo || '/placeholder-logo.png'}
-                    alt={assetName || 'Asset Logo'}
+                    src={"/placeholder-logo.png"}
+                    alt={assetName || "Asset Logo"}
                     width={32}
                     height={32}
                     className="w-8 h-8 rounded-full object-cover border"
@@ -58,15 +58,13 @@ export function TransactionCard({ transaction, className }: TransactionCardProps
                     Quantité : <span className="font-semibold">{quantity}</span>
                 </div>
                 <div className="text-xs font-medium text-neutral-600 dark:text-neutral-300">
-                    Prix unitaire : <span className="font-semibold">{priceAtExecution.toFixed(2)} $</span>
+                    Prix unitaire : <span className="font-semibold">{price} $</span>
                 </div>
                 <div className="text-sm font-bold mt-0.5">
-                    Total :{' '}
-                    <span className={isBuy ? 'text-red-500' : 'text-green-500'}>
-                        {isBuy ? `-${total.toFixed(2)} $` : `+${total.toFixed(2)} $`}
-                    </span>
+                    Total :{" "}
+                    <span className={isBuy ? "text-red-500" : "text-green-500"}>{isBuy ? `-${total} $` : `+${total} $`}</span>
                 </div>
             </div>
         </div>
-    );
+    )
 }
