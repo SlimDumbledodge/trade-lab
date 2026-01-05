@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { AppSidebar } from '@/components/app-sidebar';
-import { SiteHeader } from '@/components/site-header';
+import { AppSidebar } from '@/components/header/nav/SideBar';
+import { SiteHeader } from '@/components/header/Header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 interface HomeLayoutProps {

@@ -1,7 +1,4 @@
 'use client';
-import { SectionCards } from '@/components/dashboard/section-cards';
-import { PortfolioPerformanceChart } from '@/components/portfolio-performance-chart';
-import { HoldingsByAssetType } from '@/components/dashboard/HoldingsByActifType';
 import { HomeLayout } from '@/components/layouts/HomeLayout';
 import { useSession } from 'next-auth/react';
 import { useFetch } from '@/hooks/use-fetch';
@@ -15,7 +12,7 @@ export default function DashboardPage() {
         loading,
         error,
     } = useFetch<Portfolio>({
-        url: session?.accessToken ? `${process.env.NEXT_PUBLIC_NEST_API_URL}/portfolios/${session.user?.portfolioId}/info` : '', // <-- ton hook peut ignorer l'appel si l'URL est null
+        url: session?.accessToken ? `${process.env.NEXT_PUBLIC_NEST_API_URL}/portfolio` : '', // <-- ton hook peut ignorer l'appel si l'URL est null
         token: session?.accessToken ?? undefined,
     });
 
@@ -26,11 +23,7 @@ export default function DashboardPage() {
 
     return (
         <HomeLayout headerTitle="Dashboard">
-            <SectionCards portfolio={portfolioData} />
-            <div className="px-4 lg:px-6">
-                <PortfolioPerformanceChart />
-            </div>
-            <HoldingsByAssetType />
+            <p>dashboard</p>
         </HomeLayout>
     );
 }

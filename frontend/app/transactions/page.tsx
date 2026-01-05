@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { HomeLayout } from '@/components/layouts/HomeLayout';
-import { TransactionCard } from '@/components/transaction-card';
+import { TransactionCard } from '@/components/transactions/TransactionCard';
 import { useSession } from 'next-auth/react';
 import { useFetch } from '@/hooks/use-fetch';
 import { PaginatedTransactions } from '@/types/types';
@@ -57,7 +57,7 @@ const Page = () => {
         error,
     } = useFetch<PaginatedTransactions>({
         url: session?.user?.portfolioId
-            ? `${process.env.NEXT_PUBLIC_NEST_API_URL}/portfolios/${session.user.portfolioId}/transactions?page=${currentPage}&limit=${limit}`
+            ? `${process.env.NEXT_PUBLIC_NEST_API_URL}/transactions?page=${currentPage}&limit=${limit}`
             : '',
         token: session?.accessToken,
     });
