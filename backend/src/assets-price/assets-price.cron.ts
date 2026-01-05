@@ -32,7 +32,7 @@ export class AssetsPriceCron {
         })
     }
 
-    @Cron(CronExpression.EVERY_MINUTE)
+    @Cron(CronExpression.EVERY_10_SECONDS)
     async updateByMinute(): Promise<void> {
         await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_DAY, 1, "day")
     }
@@ -42,22 +42,22 @@ export class AssetsPriceCron {
         await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_WEEK, 1, "week")
     }
 
-    @Cron(CronExpression.EVERY_6_HOURS)
+    @Cron(CronExpression.EVERY_HOUR)
     async updateBy6Hours(): Promise<void> {
         await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_MONTH, 1, "month")
     }
 
-    @Cron(CronExpression.EVERY_DAY_AT_1AM)
+    @Cron(CronExpression.EVERY_DAY_AT_8PM)
     async updateByDay(): Promise<void> {
         await this.updateAssetsPrices(ASSET_PRICE_PERIOD.SIX_MONTHS, 6, "months")
     }
 
-    @Cron(CronExpression.EVERY_DAY_AT_1AM)
+    @Cron(CronExpression.EVERY_DAY_AT_8PM)
     async updateByWeek(): Promise<void> {
         await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_YEAR, 1, "year")
     }
 
-    @Cron(CronExpression.EVERY_DAY_AT_1AM)
+    @Cron(CronExpression.EVERY_DAY_AT_8PM)
     async updateByMonth(): Promise<void> {
         await this.updateAssetsPrices(ASSET_PRICE_PERIOD.FIVE_YEARS, 5, "years")
     }
