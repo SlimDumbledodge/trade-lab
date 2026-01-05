@@ -8,7 +8,7 @@ export function mapTimeframes(period: ASSET_PRICE_PERIOD): TimeframeEnum {
         case ASSET_PRICE_PERIOD.ONE_WEEK:
             return TimeframeEnum.ONE_HOUR
         case ASSET_PRICE_PERIOD.ONE_MONTH:
-            return TimeframeEnum.SIX_HOUR
+            return TimeframeEnum.ONE_HOUR
         case ASSET_PRICE_PERIOD.SIX_MONTHS:
             return TimeframeEnum.ONE_DAY
         case ASSET_PRICE_PERIOD.ONE_YEAR:
