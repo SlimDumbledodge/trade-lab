@@ -1,15 +1,18 @@
 import { Injectable, Logger } from "@nestjs/common"
 import { PrismaService } from "src/prisma/prisma.service"
 import axios from "axios"
-import { HistoricalBarsType, AlpacaBarsResponse, CalendarInfo } from "./types/alpaca.types"
+import { HistoricalBarsType, AlpacaBarsResponse, CalendarInfo, LatestQuoteType } from "./types/alpaca.types"
 import { mapTimeframes } from "src/utils/mapTimeframes"
 import { ConfigService } from "@nestjs/config"
 import * as moment from "moment-timezone"
+import { Decimal } from "@prisma/client/runtime/client"
+import { Asset } from "prisma/generated/client"
 
 @Injectable()
 export class AlpacaService {
     private readonly BASE_BARS_STOCK_URL: string
     private readonly BASE_MARKET_CALENDAR_INFO_URL: string
+    private readonly BASE_LATEST_QUOTE_URL: string
     private readonly logger = new Logger(AlpacaService.name)
 
     constructor(
@@ -18,6 +21,7 @@ export class AlpacaService {
     ) {
         this.BASE_BARS_STOCK_URL = this.configService.get<string>("APCA_BASE_BARS_STOCK_URL")!
         this.BASE_MARKET_CALENDAR_INFO_URL = this.configService.get<string>("APCA_BASE_MARKET_CALENDAR_INFO")!
+        this.BASE_LATEST_QUOTE_URL = this.configService.get<string>("APCA_BASE_LATEST_QUOTE")!
     }
 
     async getHistoricalBars(params: HistoricalBarsType) {
@@ -148,6 +152,73 @@ export class AlpacaService {
             const msg = error?.response?.data ?? error.message
             this.logger.error(`Erreur lors de la récupération du calendrier du marché : ${msg}`)
             throw new Error(msg)
+        }
+    }
+
+    async getLatestQuote(params: LatestQuoteType) {
+        if (!params?.symbols?.length) {
+            this.logger.warn("getLatestQuote appelé sans symboles.")
+            return
+        }
+        const symbols = params.symbols.join(",")
+        try {
+            const response = await axios.get(this.BASE_LATEST_QUOTE_URL, {
+                params: {
+                    symbols,
+                    feed: "iex",
+                    currency: "EUR",
+                },
+                headers: {
+                    accept: "application/json",
+                    "APCA-API-KEY-ID": this.configService.get<string>("APCA_API_KEY_ID"),
+                    "APCA-API-SECRET-KEY": this.configService.get<string>("APCA_API_SECRET_KEY"),
+                },
+            })
+            const quotes = response.data?.quotes ?? {}
+            const updates: Promise<Asset>[] = []
+            for (const symbol in quotes) {
+                const quote = quotes[symbol]
+                if (!quote) continue
+
+                const asset = await this.prisma.asset.findUnique({ where: { symbol } })
+                if (!asset) {
+                    this.logger.warn(`getLatestQuote ⚠️ Aucun asset trouvé pour ${symbol}, quote ignorée.`)
+                    continue
+                }
+                const bidPrice = new Decimal(quote.bp)
+                const askPrice = new Decimal(quote.ap)
+
+                // Vérifie que les données sont cohérentes avant d’updater
+                if (!bidPrice || !askPrice) {
+                    this.logger.warn(`getLatestQuote ⚠️ Données incomplètes pour ${symbol}`)
+                    continue
+                }
+                const bidVolume = new Decimal(quote.bs) || 0
+                const askVolume = new Decimal(quote.as) || 0
+                const quoteTimestamp = quote.t ? new Date(quote.t) : new Date()
+                const midPrice = bidPrice.add(askPrice).div(new Decimal(2))
+                const quoteVolume = Math.min(Number(bidVolume), Number(askVolume))
+
+                updates.push(
+                    this.prisma.asset.update({
+                        where: { id: asset.id },
+                        data: {
+                            midPrice,
+                            bidPrice,
+                            askPrice,
+                            quoteTimestamp,
+                            quoteVolume,
+                            updatedAt: new Date(),
+                        },
+                    }),
+                )
+            }
+            if (updates.length > 0) {
+                await Promise.all(updates)
+                this.logger.log(`getLatestQuote ✅ Quotes mises à jour pour ${updates.length} symboles.`)
+            }
+        } catch (e) {
+            this.logger.error(`getLatestQuote ❌ Erreur lors de la récupération des quotes : ${e.message}`, e.stack)
         }
     }
 }
