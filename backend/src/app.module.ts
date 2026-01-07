@@ -11,6 +11,7 @@ import { PortfoliosAssetsModule } from "./portfolios-assets/portfolios-assets.mo
 import { PortfoliosHistoryModule } from "./portfolios-snapshots/portfolios-snapshots.module"
 import { AlpacaModule } from "./alpaca/alpaca.module"
 import { AssetsPriceModule } from "./assets-price/assets-price.module"
+import { FinnhubModule } from './finnhub/finnhub.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { AssetsPriceModule } from "./assets-price/assets-price.module"
         PortfoliosHistoryModule,
         AlpacaModule,
         AssetsPriceModule,
+        FinnhubModule,
     ],
 })
 export class AppModule {}
