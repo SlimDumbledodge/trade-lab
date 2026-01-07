@@ -24,7 +24,7 @@ export class UsersService {
             include: {
                 portfolio: {
                     include: {
-                        assets: true,
+                        portfolioAssets: true,
                     },
                 },
             },
@@ -41,7 +41,7 @@ export class UsersService {
             include: {
                 portfolio: {
                     include: {
-                        assets: true,
+                        portfolioAssets: true,
                     },
                 },
             },
