@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { IconLayoutDashboard, type Icon } from "@tabler/icons-react"
+import { type Icon } from "@tabler/icons-react"
 
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 
@@ -20,24 +20,6 @@ export function NavMain({
     return (
         <SidebarGroup>
             <SidebarGroupContent className="flex flex-col gap-2">
-                {/* Dashboard */}
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton
-                            asChild
-                            tooltip="Dashboard"
-                            className={`min-w-8 duration-200 ease-linear ${
-                                pathname.startsWith("/dashboard") ? "bg-primary text-primary-foreground hover:bg-primary/90" : ""
-                            }`}
-                        >
-                            <Link href="/dashboard">
-                                <IconLayoutDashboard />
-                                <span>Dashboard</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-
                 {/* Autres liens */}
                 <SidebarMenu>
                     {items.map((item) => {

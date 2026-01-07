@@ -17,7 +17,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
         await signIn("credentials", {
             email,
             password,
-            callbackUrl: "/dashboard",
+            callbackUrl: "/portfolio",
             redirect: true,
         })
     }

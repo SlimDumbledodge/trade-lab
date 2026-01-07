@@ -57,6 +57,11 @@ export type HistoricalBarsType = {
     sort?: "asc" | "desc"
 }
 
+export type LatestQuoteType = {
+    /** Liste des symboles séparés par des virgules (AAPL,MSFT,TSLA...) */
+    symbols: string[]
+}
+
 // ✅ Réponse typée pour les barres Alpaca
 export type AlpacaBar = {
     /** Timestamp RFC-3339 */

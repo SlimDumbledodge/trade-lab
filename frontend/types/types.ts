@@ -46,8 +46,15 @@ export type Asset = {
     id: number
     symbol: string
     name: string
-    description?: string | null
-    lastPrice: number
+    lastPrice: string // Decimal côté Prisma devient string en JSON
+    midPrice: string
+    bidPrice: string
+    askPrice: string
+    quoteTimestamp: string
+    quoteVolume: string
+    todayPerformance: string
+    logo: string
+    category: string
     updatedAt: string
     prices?: AssetPrice[]
 }
