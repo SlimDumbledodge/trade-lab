@@ -29,19 +29,36 @@ export type AggregateAsset = {
 export type AssetAvgAggregateOutputType = {
   id: number | null
   lastPrice: runtime.Decimal | null
+  midPrice: runtime.Decimal | null
+  bidPrice: runtime.Decimal | null
+  askPrice: runtime.Decimal | null
+  quoteVolume: runtime.Decimal | null
+  todayPerformance: runtime.Decimal | null
 }
 
 export type AssetSumAggregateOutputType = {
   id: number | null
   lastPrice: runtime.Decimal | null
+  midPrice: runtime.Decimal | null
+  bidPrice: runtime.Decimal | null
+  askPrice: runtime.Decimal | null
+  quoteVolume: runtime.Decimal | null
+  todayPerformance: runtime.Decimal | null
 }
 
 export type AssetMinAggregateOutputType = {
   id: number | null
   symbol: string | null
   name: string | null
-  description: string | null
   lastPrice: runtime.Decimal | null
+  midPrice: runtime.Decimal | null
+  bidPrice: runtime.Decimal | null
+  askPrice: runtime.Decimal | null
+  quoteTimestamp: Date | null
+  quoteVolume: runtime.Decimal | null
+  todayPerformance: runtime.Decimal | null
+  logo: string | null
+  category: string | null
   updatedAt: Date | null
 }
 
@@ -49,8 +66,15 @@ export type AssetMaxAggregateOutputType = {
   id: number | null
   symbol: string | null
   name: string | null
-  description: string | null
   lastPrice: runtime.Decimal | null
+  midPrice: runtime.Decimal | null
+  bidPrice: runtime.Decimal | null
+  askPrice: runtime.Decimal | null
+  quoteTimestamp: Date | null
+  quoteVolume: runtime.Decimal | null
+  todayPerformance: runtime.Decimal | null
+  logo: string | null
+  category: string | null
   updatedAt: Date | null
 }
 
@@ -58,8 +82,15 @@ export type AssetCountAggregateOutputType = {
   id: number
   symbol: number
   name: number
-  description: number
   lastPrice: number
+  midPrice: number
+  bidPrice: number
+  askPrice: number
+  quoteTimestamp: number
+  quoteVolume: number
+  todayPerformance: number
+  logo: number
+  category: number
   updatedAt: number
   _all: number
 }
@@ -68,19 +99,36 @@ export type AssetCountAggregateOutputType = {
 export type AssetAvgAggregateInputType = {
   id?: true
   lastPrice?: true
+  midPrice?: true
+  bidPrice?: true
+  askPrice?: true
+  quoteVolume?: true
+  todayPerformance?: true
 }
 
 export type AssetSumAggregateInputType = {
   id?: true
   lastPrice?: true
+  midPrice?: true
+  bidPrice?: true
+  askPrice?: true
+  quoteVolume?: true
+  todayPerformance?: true
 }
 
 export type AssetMinAggregateInputType = {
   id?: true
   symbol?: true
   name?: true
-  description?: true
   lastPrice?: true
+  midPrice?: true
+  bidPrice?: true
+  askPrice?: true
+  quoteTimestamp?: true
+  quoteVolume?: true
+  todayPerformance?: true
+  logo?: true
+  category?: true
   updatedAt?: true
 }
 
@@ -88,8 +136,15 @@ export type AssetMaxAggregateInputType = {
   id?: true
   symbol?: true
   name?: true
-  description?: true
   lastPrice?: true
+  midPrice?: true
+  bidPrice?: true
+  askPrice?: true
+  quoteTimestamp?: true
+  quoteVolume?: true
+  todayPerformance?: true
+  logo?: true
+  category?: true
   updatedAt?: true
 }
 
@@ -97,8 +152,15 @@ export type AssetCountAggregateInputType = {
   id?: true
   symbol?: true
   name?: true
-  description?: true
   lastPrice?: true
+  midPrice?: true
+  bidPrice?: true
+  askPrice?: true
+  quoteTimestamp?: true
+  quoteVolume?: true
+  todayPerformance?: true
+  logo?: true
+  category?: true
   updatedAt?: true
   _all?: true
 }
@@ -193,8 +255,15 @@ export type AssetGroupByOutputType = {
   id: number
   symbol: string
   name: string
-  description: string | null
   lastPrice: runtime.Decimal
+  midPrice: runtime.Decimal
+  bidPrice: runtime.Decimal
+  askPrice: runtime.Decimal
+  quoteTimestamp: Date
+  quoteVolume: runtime.Decimal
+  todayPerformance: runtime.Decimal | null
+  logo: string
+  category: string
   updatedAt: Date
   _count: AssetCountAggregateOutputType | null
   _avg: AssetAvgAggregateOutputType | null
@@ -225,8 +294,15 @@ export type AssetWhereInput = {
   id?: Prisma.IntFilter<"Asset"> | number
   symbol?: Prisma.StringFilter<"Asset"> | string
   name?: Prisma.StringFilter<"Asset"> | string
-  description?: Prisma.StringNullableFilter<"Asset"> | string | null
   lastPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFilter<"Asset"> | Date | string
+  quoteVolume?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.DecimalNullableFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFilter<"Asset"> | string
+  category?: Prisma.StringFilter<"Asset"> | string
   updatedAt?: Prisma.DateTimeFilter<"Asset"> | Date | string
   prices?: Prisma.AssetPriceListRelationFilter
   portfolioAssets?: Prisma.PortfolioAssetListRelationFilter
@@ -237,8 +313,15 @@ export type AssetOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   symbol?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPrice?: Prisma.SortOrder
+  midPrice?: Prisma.SortOrder
+  bidPrice?: Prisma.SortOrder
+  askPrice?: Prisma.SortOrder
+  quoteTimestamp?: Prisma.SortOrder
+  quoteVolume?: Prisma.SortOrder
+  todayPerformance?: Prisma.SortOrderInput | Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   prices?: Prisma.AssetPriceOrderByRelationAggregateInput
   portfolioAssets?: Prisma.PortfolioAssetOrderByRelationAggregateInput
@@ -252,8 +335,15 @@ export type AssetWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AssetWhereInput[]
   NOT?: Prisma.AssetWhereInput | Prisma.AssetWhereInput[]
   name?: Prisma.StringFilter<"Asset"> | string
-  description?: Prisma.StringNullableFilter<"Asset"> | string | null
   lastPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFilter<"Asset"> | Date | string
+  quoteVolume?: Prisma.DecimalFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.DecimalNullableFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFilter<"Asset"> | string
+  category?: Prisma.StringFilter<"Asset"> | string
   updatedAt?: Prisma.DateTimeFilter<"Asset"> | Date | string
   prices?: Prisma.AssetPriceListRelationFilter
   portfolioAssets?: Prisma.PortfolioAssetListRelationFilter
@@ -264,8 +354,15 @@ export type AssetOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   symbol?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPrice?: Prisma.SortOrder
+  midPrice?: Prisma.SortOrder
+  bidPrice?: Prisma.SortOrder
+  askPrice?: Prisma.SortOrder
+  quoteTimestamp?: Prisma.SortOrder
+  quoteVolume?: Prisma.SortOrder
+  todayPerformance?: Prisma.SortOrderInput | Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AssetCountOrderByAggregateInput
   _avg?: Prisma.AssetAvgOrderByAggregateInput
@@ -281,16 +378,30 @@ export type AssetScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Asset"> | number
   symbol?: Prisma.StringWithAggregatesFilter<"Asset"> | string
   name?: Prisma.StringWithAggregatesFilter<"Asset"> | string
-  description?: Prisma.StringNullableWithAggregatesFilter<"Asset"> | string | null
   lastPrice?: Prisma.DecimalWithAggregatesFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalWithAggregatesFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalWithAggregatesFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalWithAggregatesFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeWithAggregatesFilter<"Asset"> | Date | string
+  quoteVolume?: Prisma.DecimalWithAggregatesFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.DecimalNullableWithAggregatesFilter<"Asset"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringWithAggregatesFilter<"Asset"> | string
+  category?: Prisma.StringWithAggregatesFilter<"Asset"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Asset"> | Date | string
 }
 
 export type AssetCreateInput = {
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   prices?: Prisma.AssetPriceCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
@@ -301,8 +412,15 @@ export type AssetUncheckedCreateInput = {
   id?: number
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   prices?: Prisma.AssetPriceUncheckedCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
@@ -312,8 +430,15 @@ export type AssetUncheckedCreateInput = {
 export type AssetUpdateInput = {
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   prices?: Prisma.AssetPriceUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
@@ -324,8 +449,15 @@ export type AssetUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   prices?: Prisma.AssetPriceUncheckedUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
@@ -336,16 +468,30 @@ export type AssetCreateManyInput = {
   id?: number
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
 }
 
 export type AssetUpdateManyMutationInput = {
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -353,8 +499,15 @@ export type AssetUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -362,22 +515,41 @@ export type AssetCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   symbol?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   lastPrice?: Prisma.SortOrder
+  midPrice?: Prisma.SortOrder
+  bidPrice?: Prisma.SortOrder
+  askPrice?: Prisma.SortOrder
+  quoteTimestamp?: Prisma.SortOrder
+  quoteVolume?: Prisma.SortOrder
+  todayPerformance?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AssetAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lastPrice?: Prisma.SortOrder
+  midPrice?: Prisma.SortOrder
+  bidPrice?: Prisma.SortOrder
+  askPrice?: Prisma.SortOrder
+  quoteVolume?: Prisma.SortOrder
+  todayPerformance?: Prisma.SortOrder
 }
 
 export type AssetMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   symbol?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   lastPrice?: Prisma.SortOrder
+  midPrice?: Prisma.SortOrder
+  bidPrice?: Prisma.SortOrder
+  askPrice?: Prisma.SortOrder
+  quoteTimestamp?: Prisma.SortOrder
+  quoteVolume?: Prisma.SortOrder
+  todayPerformance?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -385,14 +557,26 @@ export type AssetMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   symbol?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   lastPrice?: Prisma.SortOrder
+  midPrice?: Prisma.SortOrder
+  bidPrice?: Prisma.SortOrder
+  askPrice?: Prisma.SortOrder
+  quoteTimestamp?: Prisma.SortOrder
+  quoteVolume?: Prisma.SortOrder
+  todayPerformance?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AssetSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lastPrice?: Prisma.SortOrder
+  midPrice?: Prisma.SortOrder
+  bidPrice?: Prisma.SortOrder
+  askPrice?: Prisma.SortOrder
+  quoteVolume?: Prisma.SortOrder
+  todayPerformance?: Prisma.SortOrder
 }
 
 export type AssetScalarRelationFilter = {
@@ -400,8 +584,12 @@ export type AssetScalarRelationFilter = {
   isNot?: Prisma.AssetWhereInput
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AssetCreateNestedOneWithoutTransactionsInput = {
@@ -449,8 +637,15 @@ export type AssetUpdateOneRequiredWithoutPricesNestedInput = {
 export type AssetCreateWithoutTransactionsInput = {
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   prices?: Prisma.AssetPriceCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
@@ -460,8 +655,15 @@ export type AssetUncheckedCreateWithoutTransactionsInput = {
   id?: number
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   prices?: Prisma.AssetPriceUncheckedCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
@@ -486,8 +688,15 @@ export type AssetUpdateToOneWithWhereWithoutTransactionsInput = {
 export type AssetUpdateWithoutTransactionsInput = {
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   prices?: Prisma.AssetPriceUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
@@ -497,8 +706,15 @@ export type AssetUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   prices?: Prisma.AssetPriceUncheckedUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
@@ -507,8 +723,15 @@ export type AssetUncheckedUpdateWithoutTransactionsInput = {
 export type AssetCreateWithoutPortfolioAssetsInput = {
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   prices?: Prisma.AssetPriceCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutAssetInput
@@ -518,8 +741,15 @@ export type AssetUncheckedCreateWithoutPortfolioAssetsInput = {
   id?: number
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   prices?: Prisma.AssetPriceUncheckedCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAssetInput
@@ -544,8 +774,15 @@ export type AssetUpdateToOneWithWhereWithoutPortfolioAssetsInput = {
 export type AssetUpdateWithoutPortfolioAssetsInput = {
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   prices?: Prisma.AssetPriceUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutAssetNestedInput
@@ -555,8 +792,15 @@ export type AssetUncheckedUpdateWithoutPortfolioAssetsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   prices?: Prisma.AssetPriceUncheckedUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAssetNestedInput
@@ -565,8 +809,15 @@ export type AssetUncheckedUpdateWithoutPortfolioAssetsInput = {
 export type AssetCreateWithoutPricesInput = {
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutAssetInput
@@ -576,8 +827,15 @@ export type AssetUncheckedCreateWithoutPricesInput = {
   id?: number
   symbol: string
   name: string
-  description?: string | null
   lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
   updatedAt?: Date | string
   portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAssetInput
@@ -602,8 +860,15 @@ export type AssetUpdateToOneWithWhereWithoutPricesInput = {
 export type AssetUpdateWithoutPricesInput = {
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutAssetNestedInput
@@ -613,8 +878,15 @@ export type AssetUncheckedUpdateWithoutPricesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   symbol?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAssetNestedInput
@@ -673,8 +945,15 @@ export type AssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   symbol?: boolean
   name?: boolean
-  description?: boolean
   lastPrice?: boolean
+  midPrice?: boolean
+  bidPrice?: boolean
+  askPrice?: boolean
+  quoteTimestamp?: boolean
+  quoteVolume?: boolean
+  todayPerformance?: boolean
+  logo?: boolean
+  category?: boolean
   updatedAt?: boolean
   prices?: boolean | Prisma.Asset$pricesArgs<ExtArgs>
   portfolioAssets?: boolean | Prisma.Asset$portfolioAssetsArgs<ExtArgs>
@@ -686,8 +965,15 @@ export type AssetSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   symbol?: boolean
   name?: boolean
-  description?: boolean
   lastPrice?: boolean
+  midPrice?: boolean
+  bidPrice?: boolean
+  askPrice?: boolean
+  quoteTimestamp?: boolean
+  quoteVolume?: boolean
+  todayPerformance?: boolean
+  logo?: boolean
+  category?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["asset"]>
 
@@ -695,8 +981,15 @@ export type AssetSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   symbol?: boolean
   name?: boolean
-  description?: boolean
   lastPrice?: boolean
+  midPrice?: boolean
+  bidPrice?: boolean
+  askPrice?: boolean
+  quoteTimestamp?: boolean
+  quoteVolume?: boolean
+  todayPerformance?: boolean
+  logo?: boolean
+  category?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["asset"]>
 
@@ -704,12 +997,19 @@ export type AssetSelectScalar = {
   id?: boolean
   symbol?: boolean
   name?: boolean
-  description?: boolean
   lastPrice?: boolean
+  midPrice?: boolean
+  bidPrice?: boolean
+  askPrice?: boolean
+  quoteTimestamp?: boolean
+  quoteVolume?: boolean
+  todayPerformance?: boolean
+  logo?: boolean
+  category?: boolean
   updatedAt?: boolean
 }
 
-export type AssetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "symbol" | "name" | "description" | "lastPrice" | "updatedAt", ExtArgs["result"]["asset"]>
+export type AssetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "symbol" | "name" | "lastPrice" | "midPrice" | "bidPrice" | "askPrice" | "quoteTimestamp" | "quoteVolume" | "todayPerformance" | "logo" | "category" | "updatedAt", ExtArgs["result"]["asset"]>
 export type AssetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   prices?: boolean | Prisma.Asset$pricesArgs<ExtArgs>
   portfolioAssets?: boolean | Prisma.Asset$portfolioAssetsArgs<ExtArgs>
@@ -730,8 +1030,15 @@ export type $AssetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: number
     symbol: string
     name: string
-    description: string | null
     lastPrice: runtime.Decimal
+    midPrice: runtime.Decimal
+    bidPrice: runtime.Decimal
+    askPrice: runtime.Decimal
+    quoteTimestamp: Date
+    quoteVolume: runtime.Decimal
+    todayPerformance: runtime.Decimal | null
+    logo: string
+    category: string
     updatedAt: Date
   }, ExtArgs["result"]["asset"]>
   composites: {}
@@ -1162,8 +1469,15 @@ export interface AssetFieldRefs {
   readonly id: Prisma.FieldRef<"Asset", 'Int'>
   readonly symbol: Prisma.FieldRef<"Asset", 'String'>
   readonly name: Prisma.FieldRef<"Asset", 'String'>
-  readonly description: Prisma.FieldRef<"Asset", 'String'>
   readonly lastPrice: Prisma.FieldRef<"Asset", 'Decimal'>
+  readonly midPrice: Prisma.FieldRef<"Asset", 'Decimal'>
+  readonly bidPrice: Prisma.FieldRef<"Asset", 'Decimal'>
+  readonly askPrice: Prisma.FieldRef<"Asset", 'Decimal'>
+  readonly quoteTimestamp: Prisma.FieldRef<"Asset", 'DateTime'>
+  readonly quoteVolume: Prisma.FieldRef<"Asset", 'Decimal'>
+  readonly todayPerformance: Prisma.FieldRef<"Asset", 'Decimal'>
+  readonly logo: Prisma.FieldRef<"Asset", 'String'>
+  readonly category: Prisma.FieldRef<"Asset", 'String'>
   readonly updatedAt: Prisma.FieldRef<"Asset", 'DateTime'>
 }
     

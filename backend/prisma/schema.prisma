@@ -32,9 +32,19 @@ model Asset {
   id              Int              @id @default(autoincrement())
   symbol          String           @unique
   name            String
-  description     String?
   lastPrice       Decimal
-  updatedAt       DateTime         @default(now())
+  // Correspond à (Bid + Ask) / 2
+  midPrice        Decimal         @default(0)
+  bidPrice        Decimal         @default(0)
+  askPrice        Decimal         @default(0)
+  quoteTimestamp  DateTime        @default(now())
+  // Volume d'actions pour le plus petit côté entre bid et ask (Math.min(bidSize, askSize))
+  quoteVolume       Decimal         @default(0)
+  // Performance du jour en pourcentage par rapport au close de la veille
+  todayPerformance Decimal?       @default(0)
+  logo            String          @default("")
+  category        String          @default("")
+  updatedAt       DateTime        @default(now())
   prices          AssetPrice[]
   portfolioAssets PortfolioAsset[]
   transactions    Transaction[]

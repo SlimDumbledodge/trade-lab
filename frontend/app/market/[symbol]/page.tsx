@@ -27,7 +27,7 @@ export default function CompanyPage() {
         error: assetPricesError,
     } = useFetch<PricePoint[]>({
         url: session?.accessToken
-            ? `${process.env.NEXT_PUBLIC_NEST_API_URL}/assets-price/${symbol}/${ASSET_PRICE_PERIOD.FIVE_YEARS}`
+            ? `${process.env.NEXT_PUBLIC_NEST_API_URL}/assets-price/${symbol}/${ASSET_PRICE_PERIOD.ONE_DAY}`
             : "",
         token: session?.accessToken ?? undefined,
     })

@@ -36,7 +36,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
             })
 
             if (!loginRes?.error) {
-                router.push("/dashboard")
+                router.push("/portfolio")
             } else {
                 console.error("Erreur de connexion :", loginRes.error)
             }

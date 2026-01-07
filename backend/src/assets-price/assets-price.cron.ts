@@ -4,12 +4,14 @@ import * as moment from "moment"
 import { AlpacaService } from "src/alpaca/alpaca.service"
 import { PrismaService } from "src/prisma/prisma.service"
 import { ASSET_PRICE_PERIOD } from "./types/types"
+import { AssetsPriceService } from "./assets-price.service"
 
 @Injectable()
 export class AssetsPriceCron {
     private readonly logger = new Logger(AssetsPriceCron.name)
     constructor(
         private alpacaService: AlpacaService,
+        private assetsPriceService: AssetsPriceService,
         private prisma: PrismaService,
     ) {}
 
@@ -30,11 +32,16 @@ export class AssetsPriceCron {
             start: moment().subtract(substractAmount, unit).format("YYYY-MM-DD"),
             end: moment().format("YYYY-MM-DD"),
         })
+
+        await this.alpacaService.getLatestQuote({
+            symbols,
+        })
     }
 
     @Cron(CronExpression.EVERY_MINUTE)
     async updateByMinute(): Promise<void> {
         await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_DAY, 1, "day")
+        await this.assetsPriceService.calculateTodayPerformance()
     }
 
     @Cron(CronExpression.EVERY_HOUR)
