@@ -8,7 +8,7 @@ import { PortfoliosModule } from "./portfolios/portfolios.module"
 import { ScheduleModule } from "@nestjs/schedule"
 import { TransactionsModule } from "./transactions/transactions.module"
 import { PortfoliosAssetsModule } from "./portfolios-assets/portfolios-assets.module"
-import { PortfoliosHistoryModule } from "./portfolios-history/portfolios-history.module"
+import { PortfoliosHistoryModule } from "./portfolios-snapshots/portfolios-snapshots.module"
 import { AlpacaModule } from "./alpaca/alpaca.module"
 import { AssetsPriceModule } from "./assets-price/assets-price.module"
 
