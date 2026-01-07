@@ -390,7 +390,7 @@ export const ModelName = {
   Transaction: 'Transaction',
   PortfolioAsset: 'PortfolioAsset',
   AssetPrice: 'AssetPrice',
-  PortfolioHistory: 'PortfolioHistory'
+  PortfolioSnapshots: 'PortfolioSnapshots'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "portfolio" | "asset" | "transaction" | "portfolioAsset" | "assetPrice" | "portfolioHistory"
+    modelProps: "user" | "portfolio" | "asset" | "transaction" | "portfolioAsset" | "assetPrice" | "portfolioSnapshots"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -854,77 +854,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    PortfolioHistory: {
-      payload: Prisma.$PortfolioHistoryPayload<ExtArgs>
-      fields: Prisma.PortfolioHistoryFieldRefs
+    PortfolioSnapshots: {
+      payload: Prisma.$PortfolioSnapshotsPayload<ExtArgs>
+      fields: Prisma.PortfolioSnapshotsFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.PortfolioHistoryFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload> | null
+          args: Prisma.PortfolioSnapshotsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.PortfolioHistoryFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>
+          args: Prisma.PortfolioSnapshotsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>
         }
         findFirst: {
-          args: Prisma.PortfolioHistoryFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload> | null
+          args: Prisma.PortfolioSnapshotsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.PortfolioHistoryFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>
+          args: Prisma.PortfolioSnapshotsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>
         }
         findMany: {
-          args: Prisma.PortfolioHistoryFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>[]
+          args: Prisma.PortfolioSnapshotsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>[]
         }
         create: {
-          args: Prisma.PortfolioHistoryCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>
+          args: Prisma.PortfolioSnapshotsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>
         }
         createMany: {
-          args: Prisma.PortfolioHistoryCreateManyArgs<ExtArgs>
+          args: Prisma.PortfolioSnapshotsCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.PortfolioHistoryCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>[]
+          args: Prisma.PortfolioSnapshotsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>[]
         }
         delete: {
-          args: Prisma.PortfolioHistoryDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>
+          args: Prisma.PortfolioSnapshotsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>
         }
         update: {
-          args: Prisma.PortfolioHistoryUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>
+          args: Prisma.PortfolioSnapshotsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>
         }
         deleteMany: {
-          args: Prisma.PortfolioHistoryDeleteManyArgs<ExtArgs>
+          args: Prisma.PortfolioSnapshotsDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.PortfolioHistoryUpdateManyArgs<ExtArgs>
+          args: Prisma.PortfolioSnapshotsUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.PortfolioHistoryUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>[]
+          args: Prisma.PortfolioSnapshotsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>[]
         }
         upsert: {
-          args: Prisma.PortfolioHistoryUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioHistoryPayload>
+          args: Prisma.PortfolioSnapshotsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioSnapshotsPayload>
         }
         aggregate: {
-          args: Prisma.PortfolioHistoryAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePortfolioHistory>
+          args: Prisma.PortfolioSnapshotsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePortfolioSnapshots>
         }
         groupBy: {
-          args: Prisma.PortfolioHistoryGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PortfolioHistoryGroupByOutputType>[]
+          args: Prisma.PortfolioSnapshotsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioSnapshotsGroupByOutputType>[]
         }
         count: {
-          args: Prisma.PortfolioHistoryCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PortfolioHistoryCountAggregateOutputType> | number
+          args: Prisma.PortfolioSnapshotsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioSnapshotsCountAggregateOutputType> | number
         }
       }
     }
@@ -1042,15 +1042,15 @@ export const AssetPriceScalarFieldEnum = {
 export type AssetPriceScalarFieldEnum = (typeof AssetPriceScalarFieldEnum)[keyof typeof AssetPriceScalarFieldEnum]
 
 
-export const PortfolioHistoryScalarFieldEnum = {
+export const PortfolioSnapshotsScalarFieldEnum = {
   id: 'id',
   portfolioId: 'portfolioId',
-  unrealizedPnL: 'unrealizedPnL',
+  holdingsValue: 'holdingsValue',
   cashBalance: 'cashBalance',
   recordedAt: 'recordedAt'
 } as const
 
-export type PortfolioHistoryScalarFieldEnum = (typeof PortfolioHistoryScalarFieldEnum)[keyof typeof PortfolioHistoryScalarFieldEnum]
+export type PortfolioSnapshotsScalarFieldEnum = (typeof PortfolioSnapshotsScalarFieldEnum)[keyof typeof PortfolioSnapshotsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1251,7 +1251,7 @@ export type GlobalOmitConfig = {
   transaction?: Prisma.TransactionOmit
   portfolioAsset?: Prisma.PortfolioAssetOmit
   assetPrice?: Prisma.AssetPriceOmit
-  portfolioHistory?: Prisma.PortfolioHistoryOmit
+  portfolioSnapshots?: Prisma.PortfolioSnapshotsOmit
 }
 
 /* Types for Logging */

@@ -66,10 +66,11 @@ export class AlpacaService {
                     continue
                 }
 
-                for (const bar of bars[symbol]) {
-                    const recordedAt = new Date(bar.t)
+                const lastClosingPrice = bars[symbol][bars[symbol].length - 1].c
 
-                    await this.prisma.assetPrice.upsert({
+                const upsertOperations = bars[symbol].map((bar) => {
+                    const recordedAt = new Date(bar.t)
+                    return this.prisma.assetPrice.upsert({
                         where: { assetId_timeframe_recordedAt: { assetId: asset.id, timeframe, recordedAt } },
                         update: {
                             open: bar.o,
@@ -89,7 +90,15 @@ export class AlpacaService {
                             recordedAt,
                         },
                     })
-                }
+                })
+                await Promise.allSettled(upsertOperations)
+                await this.prisma.asset.update({
+                    where: { id: asset.id },
+                    data: {
+                        lastPrice: lastClosingPrice,
+                        updatedAt: new Date(),
+                    },
+                })
             }
         } catch (error: any) {
             this.logger.error(`❌ Erreur getHistoricalBars:`, error)
