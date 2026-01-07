@@ -57,7 +57,7 @@ export const ModelName = {
   Transaction: 'Transaction',
   PortfolioAsset: 'PortfolioAsset',
   AssetPrice: 'AssetPrice',
-  PortfolioHistory: 'PortfolioHistory'
+  PortfolioSnapshots: 'PortfolioSnapshots'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -151,15 +151,15 @@ export const AssetPriceScalarFieldEnum = {
 export type AssetPriceScalarFieldEnum = (typeof AssetPriceScalarFieldEnum)[keyof typeof AssetPriceScalarFieldEnum]
 
 
-export const PortfolioHistoryScalarFieldEnum = {
+export const PortfolioSnapshotsScalarFieldEnum = {
   id: 'id',
   portfolioId: 'portfolioId',
-  unrealizedPnL: 'unrealizedPnL',
+  holdingsValue: 'holdingsValue',
   cashBalance: 'cashBalance',
   recordedAt: 'recordedAt'
 } as const
 
-export type PortfolioHistoryScalarFieldEnum = (typeof PortfolioHistoryScalarFieldEnum)[keyof typeof PortfolioHistoryScalarFieldEnum]
+export type PortfolioSnapshotsScalarFieldEnum = (typeof PortfolioSnapshotsScalarFieldEnum)[keyof typeof PortfolioSnapshotsScalarFieldEnum]
 
 
 export const SortOrder = {

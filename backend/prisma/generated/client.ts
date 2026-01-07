@@ -68,7 +68,7 @@ export type PortfolioAsset = Prisma.PortfolioAssetModel
  */
 export type AssetPrice = Prisma.AssetPriceModel
 /**
- * Model PortfolioHistory
+ * Model PortfolioSnapshots
  * 
  */
-export type PortfolioHistory = Prisma.PortfolioHistoryModel
+export type PortfolioSnapshots = Prisma.PortfolioSnapshotsModel

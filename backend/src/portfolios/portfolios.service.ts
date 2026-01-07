@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
 import { Prisma, TransactionType } from "prisma/generated/client"
 import { PortfoliosAssetsService } from "src/portfolios-assets/portfolios-assets.service"
+import { PortfoliosSnapshotsService } from "src/portfolios-snapshots/portfolios-snapshots.service"
+import { PORTFOLIO_PERFORMANCE_PERIOD } from "src/portfolios-snapshots/types/types"
 import { PrismaService } from "src/prisma/prisma.service"
 
 @Injectable()
@@ -8,6 +10,7 @@ export class PortfoliosService {
     constructor(
         private readonly prisma: PrismaService,
         private readonly portfoliosAssetsService: PortfoliosAssetsService,
+        private readonly portfoliosSnapshotsService: PortfoliosSnapshotsService,
     ) {}
 
     async getPortfolio(portfolioId: number) {
@@ -16,12 +19,10 @@ export class PortfoliosService {
         })
         if (!portfolio) throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
 
-        const unrealizedPnLByAsset = await this.portfoliosAssetsService.getUnrealizedPnLPerAsset(portfolioId)
-        const totalUnrealizedPnL = await this.portfoliosAssetsService.getTotalUnrealizedPnL(portfolioId)
+        const points = await this.portfoliosSnapshotsService.getPortfolioPerformance(portfolioId, PORTFOLIO_PERFORMANCE_PERIOD.ONE_YEAR)
         return {
             ...portfolio,
-            totalUnrealizedPnL,
-            holdings: unrealizedPnLByAsset,
+            points,
         }
     }
 

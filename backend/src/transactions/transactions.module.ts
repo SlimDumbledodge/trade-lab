@@ -4,7 +4,7 @@ import { TransactionsController } from "./transactions.controller"
 import { PrismaModule } from "src/prisma/prisma.module"
 import { PortfoliosModule } from "src/portfolios/portfolios.module"
 import { PortfoliosAssetsModule } from "src/portfolios-assets/portfolios-assets.module"
-import { PortfoliosHistoryModule } from "src/portfolios-history/portfolios-history.module"
+import { PortfoliosHistoryModule } from "src/portfolios-snapshots/portfolios-snapshots.module"
 
 @Module({
     controllers: [TransactionsController],

@@ -314,7 +314,7 @@ export type PortfolioAssetCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   asset: Prisma.AssetCreateNestedOneWithoutPortfolioAssetsInput
-  portfolio: Prisma.PortfolioCreateNestedOneWithoutAssetsInput
+  portfolio: Prisma.PortfolioCreateNestedOneWithoutPortfolioAssetsInput
 }
 
 export type PortfolioAssetUncheckedCreateInput = {
@@ -333,7 +333,7 @@ export type PortfolioAssetUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   asset?: Prisma.AssetUpdateOneRequiredWithoutPortfolioAssetsNestedInput
-  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutAssetsNestedInput
+  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutPortfolioAssetsNestedInput
 }
 
 export type PortfolioAssetUncheckedUpdateInput = {
@@ -579,7 +579,7 @@ export type PortfolioAssetCreateWithoutAssetInput = {
   averageBuyPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  portfolio: Prisma.PortfolioCreateNestedOneWithoutAssetsInput
+  portfolio: Prisma.PortfolioCreateNestedOneWithoutPortfolioAssetsInput
 }
 
 export type PortfolioAssetUncheckedCreateWithoutAssetInput = {
@@ -666,7 +666,7 @@ export type PortfolioAssetUpdateWithoutAssetInput = {
   averageBuyPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutAssetsNestedInput
+  portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutPortfolioAssetsNestedInput
 }
 
 export type PortfolioAssetUncheckedUpdateWithoutAssetInput = {
