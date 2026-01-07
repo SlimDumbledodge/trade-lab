@@ -1,5 +1,4 @@
 import { Injectable, Logger } from "@nestjs/common"
-import { PrismaService } from "src/prisma/prisma.service"
 import { Cron, CronExpression } from "@nestjs/schedule"
 import { FinnhubService } from "src/finnhub/finnhub.service"
 
