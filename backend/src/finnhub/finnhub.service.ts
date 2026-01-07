@@ -26,8 +26,8 @@ export class FinnhubService {
     async updateCompanyProfil() {
         const assets = await this.prisma.asset.findMany()
         if (!assets.length) {
-            this.logger.fatal(`updateCompanyProfil : Aucun assets trouver`)
-            throw new Error(`updateCompanyProfil : Aucun assets trouver`)
+            this.logger.fatal(`updateCompanyProfil : Aucun assets trouvé`)
+            throw new Error(`updateCompanyProfil : Aucun assets trouvé`)
         }
         for (const asset of assets) {
             try {
