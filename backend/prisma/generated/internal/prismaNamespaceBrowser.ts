@@ -102,8 +102,15 @@ export const AssetScalarFieldEnum = {
   id: 'id',
   symbol: 'symbol',
   name: 'name',
-  description: 'description',
   lastPrice: 'lastPrice',
+  midPrice: 'midPrice',
+  bidPrice: 'bidPrice',
+  askPrice: 'askPrice',
+  quoteTimestamp: 'quoteTimestamp',
+  quoteVolume: 'quoteVolume',
+  todayPerformance: 'todayPerformance',
+  logo: 'logo',
+  category: 'category',
   updatedAt: 'updatedAt'
 } as const
 
