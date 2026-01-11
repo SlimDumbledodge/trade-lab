@@ -113,8 +113,8 @@ const Page = () => {
                                             <div className="flex items-center gap-3">
                                                 <Image
                                                     className="rounded-xl shadow"
-                                                    src={transaction.asset?.logo}
-                                                    alt={transaction.asset?.symbol}
+                                                    src={transaction.asset.logo}
+                                                    alt={transaction.asset.symbol}
                                                     width={40}
                                                     height={40}
                                                 />
