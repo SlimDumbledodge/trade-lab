@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
-import { Prisma, Transaction, TransactionType } from "prisma/generated/client"
+import { Prisma, TransactionType } from "prisma/generated/client"
 import { PortfoliosAssetsService } from "src/portfolios-assets/portfolios-assets.service"
 import { PortfoliosSnapshotsService } from "src/portfolios-snapshots/portfolios-snapshots.service"
 import { AssetOperationDto } from "src/portfolios/dto/asset-operation-dto"
