@@ -18,4 +18,9 @@ export class TransactionsController {
     buyAsset(@GetUser("portfolioId") portfolioId: number, @Body() buyAssetDto: AssetOperationDto) {
         return this.transactionsService.buyAsset(portfolioId, buyAssetDto)
     }
+
+    @Post("sell")
+    sellAsset(@GetUser("portfolioId") portfolioId: number, @Body() sellAssetDto: AssetOperationDto) {
+        return this.transactionsService.sellAsset(portfolioId, sellAssetDto)
+    }
 }

@@ -107,7 +107,7 @@ export type Transaction = {
     quantity: number
     price: number
     createdAt: string
-    asset?: Asset
+    asset: Asset
 }
 
 // -------------------------------------------

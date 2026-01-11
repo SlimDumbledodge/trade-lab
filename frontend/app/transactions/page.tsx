@@ -2,10 +2,9 @@
 
 import { useState } from "react"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
-import { TransactionCard } from "@/components/transactions/TransactionCard"
 import { useSession } from "next-auth/react"
 import { useFetch } from "@/hooks/use-fetch"
-import { PaginatedTransactions } from "@/types/types"
+import { PaginatedTransactions, Transaction, TransactionType } from "@/types/types"
 
 import {
     Pagination,
@@ -18,6 +17,13 @@ import {
 } from "@/components/ui/pagination"
 import { EmptyState } from "@/components/ui/empty-state"
 import { Search } from "lucide-react"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import Image from "next/image"
+import moment from "moment"
+import "moment/locale/fr"
+import { TransactionSheet } from "@/components/transactions/TransactionSheet"
+
+moment.locale("fr")
 
 function getPaginationPages(current: number, total: number, delta: number = 2) {
     const pages: (number | "ellipsis")[] = []
@@ -49,7 +55,9 @@ function getPaginationPages(current: number, total: number, delta: number = 2) {
 const Page = () => {
     const { data: session } = useSession()
     const [currentPage, setCurrentPage] = useState(1)
-    const limit = 5
+    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
+    const [isSheetOpen, setIsSheetOpen] = useState(false)
+    const limit = 10
 
     const {
         data: transactions,
@@ -81,10 +89,55 @@ const Page = () => {
                 </div>
             ) : (
                 <>
-                    {transactions.items.map((tx) => (
-                        <TransactionCard key={tx.id} transaction={tx} />
-                    ))}
-
+                    <div className="flex flex-col gap-4">
+                        <h2 className="text-xl font-semibold">Transactions</h2>
+                        <Table>
+                            <TableCaption>Liste complète de vos transactions.</TableCaption>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Informations</TableHead>
+                                    <TableHead className="text-right">Montant</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {transactions.items.map((transaction) => (
+                                    <TableRow
+                                        key={transaction.id}
+                                        className="cursor-pointer hover:bg-muted/50 transition"
+                                        onClick={() => {
+                                            setSelectedTransaction(transaction)
+                                            setIsSheetOpen(true)
+                                        }}
+                                    >
+                                        <TableCell className="font-medium">
+                                            <div className="flex items-center gap-3">
+                                                <Image
+                                                    className="rounded-xl shadow"
+                                                    src={transaction.asset.logo}
+                                                    alt={transaction.asset.symbol}
+                                                    width={40}
+                                                    height={40}
+                                                />
+                                                <div className="flex flex-col">
+                                                    <span className="font-medium">{transaction.asset.name}</span>
+                                                    <span className="text-sm text-muted-foreground">
+                                                        {moment(transaction.createdAt).format("DD MMMM YYYY [à] HH:mm:ss")} -{" "}
+                                                        {transaction.type === TransactionType.BUY
+                                                            ? "Ordre d'achat"
+                                                            : "Ordre de vente"}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-right font-semibold">
+                                            {(transaction.quantity * transaction.price).toFixed(2)} €
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                        <TransactionSheet transaction={selectedTransaction} open={isSheetOpen} onOpenChange={setIsSheetOpen} />
+                    </div>
                     {totalPages > 1 && (
                         <Pagination>
                             <PaginationContent>
