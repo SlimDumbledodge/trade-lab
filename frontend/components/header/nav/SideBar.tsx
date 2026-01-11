@@ -1,32 +1,11 @@
 "use client"
 
 import * as React from "react"
-import {
-    IconCamera,
-    IconChartBar,
-    IconChartHistogram,
-    IconChartLine,
-    IconFileAi,
-    IconFileDescription,
-    IconFolder,
-    IconInnerShadowTop,
-    IconListDetails,
-    IconSettings,
-    IconUsers,
-    IconWallet,
-} from "@tabler/icons-react"
+import { IconCamera, IconChartBar, IconChartLine, IconFileAi, IconFileDescription, IconWallet } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/header/nav/NavMain"
 import { NavUser } from "@/components/header/nav/NavUser"
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar"
 import Image from "next/image"
 import { Separator } from "../../ui/separator"
 
