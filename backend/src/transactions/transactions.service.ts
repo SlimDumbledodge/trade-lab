@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable } from "@nestjs/common"
-import { Prisma, TransactionType } from "prisma/generated/client"
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
+import { Prisma, Transaction, TransactionType } from "prisma/generated/client"
 import { PortfoliosAssetsService } from "src/portfolios-assets/portfolios-assets.service"
 import { PortfoliosSnapshotsService } from "src/portfolios-snapshots/portfolios-snapshots.service"
 import { AssetOperationDto } from "src/portfolios/dto/asset-operation-dto"
@@ -62,6 +62,55 @@ export class TransactionsService {
             price: asset.lastPrice,
             quantity: new Prisma.Decimal(quantity),
             type: TransactionType.buy,
+        }
+        return this.createTransaction(transaction)
+    }
+    async sellAsset(portfolioId: number, sellAssetDto: AssetOperationDto) {
+        const { assetId, quantity } = sellAssetDto
+        const portfolio = await this.prisma.portfolio.findUnique({
+            where: { id: portfolioId },
+            include: {
+                portfolioAssets: true,
+            },
+        })
+
+        if (!portfolio) {
+            throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
+        }
+        const asset = await this.prisma.asset.findUnique({ where: { id: assetId } })
+        if (!asset) throw new BadRequestException(`L'asset avec l'ID ${assetId} n'existe pas`)
+
+        const portfolioAsset = portfolio.portfolioAssets.find((asset) => asset.assetId === assetId)
+
+        if (!portfolioAsset) {
+            throw new NotFoundException(`You can't sell an actif you do not own`)
+        }
+
+        if (quantity > Number(portfolioAsset.quantity)) {
+            throw new BadRequestException(`You can't sell more than you own`)
+        }
+        if (quantity === Number(portfolioAsset.quantity)) {
+            await this.prisma.portfolioAsset.delete({
+                where: {
+                    id: portfolioAsset.id,
+                },
+            })
+        } else {
+            await this.prisma.portfolioAsset.update({
+                where: {
+                    id: portfolioAsset.id,
+                },
+                data: {
+                    quantity: Number(portfolioAsset.quantity) - quantity,
+                },
+            })
+        }
+        const transaction: TransactionPublic = {
+            portfolioId,
+            assetId: asset.id,
+            price: asset.lastPrice,
+            quantity: new Prisma.Decimal(quantity),
+            type: TransactionType.sell,
         }
         return this.createTransaction(transaction)
     }
