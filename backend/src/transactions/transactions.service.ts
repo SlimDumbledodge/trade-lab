@@ -83,7 +83,7 @@ export class TransactionsService {
         const portfolioAsset = portfolio.portfolioAssets.find((asset) => asset.assetId === assetId)
 
         if (!portfolioAsset) {
-            throw new NotFoundException(`You can't sell an actif you do not own`)
+            throw new NotFoundException(`You can't sell an asset you do not own`)
         }
 
         if (quantity > Number(portfolioAsset.quantity)) {
@@ -112,6 +112,9 @@ export class TransactionsService {
             quantity: new Prisma.Decimal(quantity),
             type: TransactionType.sell,
         }
+        await this.portfoliosService.updatePortfolioCashBalance(portfolioId, asset.lastPrice.mul(quantity), TransactionType.buy)
+        await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
+        await this.portfoliosSnapshotsService.capturePortfolioSnapshot(portfolioId)
         return this.createTransaction(transaction)
     }
 
