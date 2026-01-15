@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { useSession } from "next-auth/react"
-import { useFetch } from "@/hooks/use-fetch"
 import { PaginatedTransactions, Transaction, TransactionType } from "@/types/types"
 
 import {
@@ -22,6 +21,7 @@ import Image from "next/image"
 import moment from "moment"
 import "moment/locale/fr"
 import { TransactionSheet } from "@/components/transactions/TransactionSheet"
+import { useTransactions } from "@/hooks/useTransactions"
 
 moment.locale("fr")
 
@@ -53,25 +53,17 @@ function getPaginationPages(current: number, total: number, delta: number = 2) {
 }
 
 const Page = () => {
-    const { data: session } = useSession()
     const [currentPage, setCurrentPage] = useState(1)
-    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
-    const [isSheetOpen, setIsSheetOpen] = useState(false)
     const limit = 10
 
-    const {
-        data: transactions,
-        loading,
-        error,
-    } = useFetch<PaginatedTransactions>({
-        url: session?.user?.portfolioId
-            ? `${process.env.NEXT_PUBLIC_NEST_API_URL}/transactions?page=${currentPage}&limit=${limit}`
-            : "",
-        token: session?.accessToken,
-    })
+    const { data: session } = useSession()
+    const { data: transactions, isLoading, error } = useTransactions(currentPage, limit, session?.accessToken)
 
-    if (loading) return <p className="p-6 text-center">Chargement...</p>
-    if (error) return <p className="p-6 text-red-600">Erreur : {error}</p>
+    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
+    const [isSheetOpen, setIsSheetOpen] = useState(false)
+
+    if (isLoading) return <p className="p-6 text-center">Chargement...</p>
+    if (error) return <p className="p-6 text-red-600">Erreur : {error.message}</p>
 
     const hasTransactions = transactions && transactions.items.length > 0
     const totalPages = transactions?.meta.lastPage || 1
