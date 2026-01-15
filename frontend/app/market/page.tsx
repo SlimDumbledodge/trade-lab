@@ -1,47 +1,22 @@
 "use client"
 
 import { HomeLayout } from "@/components/layouts/HomeLayout"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Image from "next/image"
-import useSWR from "swr"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { Asset } from "@/types/types"
 import moment from "moment"
 import { TrendingUp, TrendingDown } from "lucide-react"
+import { useAssets } from "@/hooks/useAssets"
 
 function Market() {
     const { data: session } = useSession()
+    const { data: assets, isLoading, error } = useAssets(session?.accessToken)
     const router = useRouter()
-    const url = process.env.NEXT_PUBLIC_NEST_API_URL + "/assets"
-
-    const fetcher = async (url: string) => {
-        const res = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${session?.accessToken}`,
-            },
-        })
-
-        if (!res.ok) {
-            throw new Error(`Erreur API ${res.status}`)
-        }
-
-        const json = await res.json()
-        return json.data
-    }
-
-    const shouldFetch = !!session?.accessToken
-
-    const { data, error, isLoading } = useSWR<Asset[]>(shouldFetch ? url : null, fetcher, {
-        refreshInterval: 30000,
-        revalidateOnFocus: false,
-        dedupingInterval: 30000,
-    })
-
     if (isLoading) return <p>Chargement...</p>
     if (error) return <p>Erreur: {error.message}</p>
-    if (!data) return <p>Aucun produit trouver</p>
-    console.log(data)
+    if (!assets) return <p>Aucun produit trouver</p>
+    console.log(assets)
 
     return (
         <HomeLayout headerTitle="Marché">
@@ -62,7 +37,7 @@ function Market() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data.map((asset) => (
+                    {assets.map((asset) => (
                         <TableRow
                             key={asset.id}
                             className="cursor-pointer hover:bg-muted/50 transition"

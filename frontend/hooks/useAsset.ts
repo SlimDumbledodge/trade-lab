@@ -1,0 +1,11 @@
+import { useQuery } from "@tanstack/react-query"
+import { getAsset } from "@/lib/api"
+
+export function useAsset(symbol: string, token?: string) {
+    return useQuery({
+        queryKey: ["asset"],
+        queryFn: () => getAsset(symbol, token),
+        refetchInterval: 60_000,
+        refetchIntervalInBackground: true,
+    })
+}
