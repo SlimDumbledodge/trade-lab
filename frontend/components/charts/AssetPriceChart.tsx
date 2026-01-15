@@ -13,6 +13,7 @@ export type PricePoint = {
 
 type ChartAreaInteractiveProps = {
     data: PricePoint[]
+    handlePerformanceData: (valueEur: number, valuePercent: number) => void
 }
 
 const chartConfig = {
@@ -23,7 +24,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 moment.locale("fr")
-export function AssetPriceChart({ data }: ChartAreaInteractiveProps) {
+export function AssetPriceChart({ data, handlePerformanceData }: ChartAreaInteractiveProps) {
     if (!data || data.length === 0) return <p>Pas de data</p>
 
     const prices = data.map((d) => d.closingPrice)
@@ -69,6 +70,7 @@ export function AssetPriceChart({ data }: ChartAreaInteractiveProps) {
                             content={({ active, payload }) => {
                                 if (!active || !payload || !payload.length) return null
 
+                                handlePerformanceData(payload[0].payload.closingPrice, openingPrice)
                                 const value = payload[0].payload.recordedAt
                                 const first = moment(data[0]?.recordedAt)
                                 const last = moment(data[data.length - 1]?.recordedAt)
