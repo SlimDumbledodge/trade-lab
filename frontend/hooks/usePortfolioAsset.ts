@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export function usePortfolioAsset(symbol: string, token?: string) {
     return useQuery({
-        queryKey: ["portfolioAsset"],
+        queryKey: ["portfolioAsset", symbol],
         queryFn: () => getPortfolioAsset(symbol, token),
         refetchInterval: 60_000,
         refetchIntervalInBackground: true,
