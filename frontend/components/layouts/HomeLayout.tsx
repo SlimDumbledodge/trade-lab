@@ -24,7 +24,7 @@ export function HomeLayout({ children, headerTitle }: HomeLayoutProps) {
                 <div className="flex flex-1 flex-col p-4 md:p-6 lg:p-8">
                     {" "}
                     {/* <- padding global */}
-                    <div className="@container/main flex flex-1 flex-col gap-4">
+                    <div className="@container/main flex flex-1 flex-col gap-4 mx-auto w-full max-w-6xl">
                         <div className="flex flex-col gap-4 md:gap-6">{children}</div>
                     </div>
                 </div>
