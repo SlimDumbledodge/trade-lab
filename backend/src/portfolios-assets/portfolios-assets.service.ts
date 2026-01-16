@@ -27,7 +27,7 @@ export class PortfoliosAssetsService {
 
         if (!asset) {
             this.logger.error(`❌ Erreur getPortfolioAsset: asset introuvable avec le symbol ${symbol}`)
-            throw new BadRequestException(`❌ Erreur getPortfolioAsset: asset introuvable avec l'ID ${symbol}`)
+            throw new BadRequestException(`❌ Erreur getPortfolioAsset: asset introuvable avec le symbol ${symbol}`)
         }
 
         return this.prisma.portfolioAsset.findUnique({
