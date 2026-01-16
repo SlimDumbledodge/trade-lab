@@ -1,10 +1,12 @@
 // src/lib/fetcher.ts
 
-export async function fetcher<T>(url: string, token?: string): Promise<T> {
+export async function fetcher<T>(url: string, token?: string, options?: RequestInit): Promise<T> {
     const res = await fetch(url, {
+        ...options,
         headers: {
             "Content-Type": "application/json",
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            ...options?.headers,
         },
     })
 

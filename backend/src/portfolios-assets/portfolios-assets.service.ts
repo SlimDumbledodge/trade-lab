@@ -1,10 +1,44 @@
-import { BadRequestException, Injectable } from "@nestjs/common"
+import { BadRequestException, Injectable, Logger } from "@nestjs/common"
 import { PortfolioAsset, Prisma } from "prisma/generated/client"
 import { PrismaService } from "src/prisma/prisma.service"
 
 @Injectable()
 export class PortfoliosAssetsService {
+    private readonly logger = new Logger(PortfoliosAssetsService.name)
     constructor(private readonly prisma: PrismaService) {}
+
+    async getPortfolioAsset(symbol: string, portfolioId: number) {
+        const portfolio = await this.prisma.portfolio.findUnique({
+            where: {
+                id: portfolioId,
+            },
+        })
+
+        if (!portfolio) {
+            this.logger.error(`❌ Erreur getPortfolioAsset: Portfolio introuvable avec l'ID ${portfolioId}`)
+            throw new BadRequestException(`❌ Erreur getPortfolioAsset: Portfolio introuvable avec l'ID ${portfolioId}`)
+        }
+
+        const asset = await this.prisma.asset.findUnique({
+            where: {
+                symbol,
+            },
+        })
+
+        if (!asset) {
+            this.logger.error(`❌ Erreur getPortfolioAsset: asset introuvable avec le symbol ${symbol}`)
+            throw new BadRequestException(`❌ Erreur getPortfolioAsset: asset introuvable avec le symbol ${symbol}`)
+        }
+
+        return this.prisma.portfolioAsset.findUnique({
+            where: {
+                portfolioId_assetId: {
+                    assetId: asset.id,
+                    portfolioId,
+                },
+            },
+        })
+    }
 
     async createPortfolioAsset(
         portfolioId: number,

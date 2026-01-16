@@ -24,7 +24,12 @@ export default function ClientProviders({ children }: { children: React.ReactNod
             <QueryClientProvider client={queryClient}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true} disableTransitionOnChange>
                     {children}
-                    <Toaster />
+                    <Toaster
+                        position="bottom-right"
+                        toastOptions={{
+                            duration: 4000,
+                        }}
+                    />
                 </ThemeProvider>
             </QueryClientProvider>
         </SessionProvider>

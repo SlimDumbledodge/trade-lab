@@ -3,7 +3,7 @@ import { getAsset } from "@/lib/api"
 
 export function useAsset(symbol: string, token?: string) {
     return useQuery({
-        queryKey: ["asset"],
+        queryKey: ["asset", symbol],
         queryFn: () => getAsset(symbol, token),
         refetchInterval: 60_000,
         refetchIntervalInBackground: true,
