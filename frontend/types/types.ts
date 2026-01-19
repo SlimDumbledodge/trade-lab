@@ -1,5 +1,8 @@
 // -------------------------------------------
 // Auth / Users
+
+import { PortfolioPoint } from "@/components/charts/PortfolioPerformanceChart"
+
 // -------------------------------------------
 export type LoginForm = {
     email: string
@@ -33,6 +36,7 @@ export type Portfolio = {
     cashBalance: number // Decimal converti en number côté frontend
     holdingsValue: number
     createdAt: string
+    points: PortfolioPoint[]
     assets: PortfolioAsset[]
     history: PortfolioHistory[]
     transactions: Transaction[]
@@ -85,9 +89,11 @@ export type PortfolioAsset = {
     assetId: number
     quantity: number
     averageBuyPrice: number
+    holdingsValue: number
+    unrealizedPnl: number
     createdAt: string
     updatedAt: string
-    asset?: Asset
+    asset: Asset
 }
 
 // -------------------------------------------
@@ -144,4 +150,12 @@ export enum ASSET_PRICE_PERIOD {
     SIX_MONTHS = "6m",
     ONE_YEAR = "1y",
     FIVE_YEARS = "5y",
+}
+
+export enum PORTFOLIO_PERFORMANCE_PERIOD {
+    ONE_DAY = "1d",
+    ONE_WEEK = "1s",
+    ONE_MONTH = "1m",
+    ONE_YEAR = "1y",
+    MAX = "max",
 }

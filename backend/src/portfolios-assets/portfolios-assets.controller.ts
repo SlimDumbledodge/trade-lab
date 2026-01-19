@@ -8,6 +8,11 @@ import { GetUser } from "src/common/decorators/user.decorator"
 export class PortfoliosAssetsController {
     constructor(private readonly portfoliosAssetsService: PortfoliosAssetsService) {}
 
+    @Get()
+    getPortfolioAssets(@GetUser("portfolioId") portfolioId: number) {
+        return this.portfoliosAssetsService.getPortfolioAssets(portfolioId)
+    }
+
     @Get(":symbol")
     getPortfolioAsset(@Param("symbol") symbol: string, @GetUser("portfolioId") portfolioId: number) {
         return this.portfoliosAssetsService.getPortfolioAsset(symbol, portfolioId)

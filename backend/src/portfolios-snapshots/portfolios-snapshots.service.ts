@@ -26,14 +26,25 @@ export class PortfoliosSnapshotsService {
         if (!portfolio) throw new BadRequestException(`capturePortfolioSnapshot: Portfolio introuvable pour l'ID ${portfolioId}`)
 
         let holdingsValue = new Prisma.Decimal(0)
-        for (const portfolioAsset of portfolio.portfolioAssets) {
-            holdingsValue = holdingsValue.add(portfolioAsset.quantity.mul(portfolioAsset.asset.lastPrice))
+        let unrealizedPnl = new Prisma.Decimal(0)
+        let totalInvested = new Prisma.Decimal(0)
+
+        for (const pa of portfolio.portfolioAssets) {
+            const currentHoldingsValue = pa.asset.lastPrice.mul(pa.quantity)
+            const investedAmount = pa.averageBuyPrice.mul(pa.quantity)
+            const pnl = currentHoldingsValue.sub(investedAmount)
+
+            holdingsValue = holdingsValue.add(currentHoldingsValue)
+            unrealizedPnl = unrealizedPnl.add(pnl)
+            totalInvested = totalInvested.add(investedAmount)
         }
+
         await this.prisma.portfolioSnapshots.create({
             data: {
                 portfolioId,
                 cashBalance: portfolio.cashBalance,
                 holdingsValue,
+                unrealizedPnl,
                 recordedAt: new Date(),
             },
         })
@@ -49,14 +60,15 @@ export class PortfoliosSnapshotsService {
                     recordedAt: { gte: moment().subtract(amount, unit).toDate() },
                 },
                 orderBy: { recordedAt: "asc" },
-                select: { recordedAt: true, holdingsValue: true },
+                select: { recordedAt: true, holdingsValue: true, unrealizedPnl: true },
             })
         }
 
         const results = await this.prisma.$queryRaw<PortfolioPerformance[]>`
         SELECT DISTINCT ON (date_bin(interval ${Prisma.raw(`'${granularity}'`)}, "recordedAt", timestamp '1970-01-01')) 
             date_bin(interval ${Prisma.raw(`'${granularity}'`)}, "recordedAt", timestamp '1970-01-01') AS "recordedAt",
-            "holdingsValue"
+            "holdingsValue",
+            "unrealizedPnl"
         FROM 
             "PortfolioSnapshots"
         WHERE 
