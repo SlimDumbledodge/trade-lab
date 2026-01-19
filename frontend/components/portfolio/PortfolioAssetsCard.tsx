@@ -10,22 +10,22 @@ export const PortfolioAssetCard = () => {
     const { data: session } = useSession()
     const router = useRouter()
     const {
-        data: portofolioAssets,
+        data: portfolioAssets,
         isLoading: isPortfolioAssetsLoading,
         error: errorPortfolioAssets,
     } = usePortfolioAssets(session?.accessToken)
-    console.log(portofolioAssets)
+    console.log(portfolioAssets)
 
     if (isPortfolioAssetsLoading) return <p>Chargement...</p>
     if (errorPortfolioAssets) return <p className="text-red-600">{errorPortfolioAssets?.message}</p>
-    if (!portofolioAssets) return <p>Erreur : aucun actif trouvé.</p>
+    if (!portfolioAssets) return <p>Erreur : aucun actif trouvé.</p>
     return (
         <Card className="w-full max-w-xs">
             <CardHeader>
                 <CardTitle>Investissements</CardTitle>
             </CardHeader>
             <CardContent className="space-y-1">
-                {portofolioAssets.map((portfolioAsset) => (
+                {portfolioAssets.map((portfolioAsset) => (
                     <div
                         key={portfolioAsset.id}
                         onClick={() => router.push(`/market/${portfolioAsset.asset.symbol}`)}
