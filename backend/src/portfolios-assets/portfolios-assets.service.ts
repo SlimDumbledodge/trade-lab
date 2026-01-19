@@ -40,6 +40,27 @@ export class PortfoliosAssetsService {
         })
     }
 
+    async getPortfolioAssets(portfolioId: number) {
+        const portfolio = await this.prisma.portfolio.findUnique({
+            where: {
+                id: portfolioId,
+            },
+        })
+
+        if (!portfolio) {
+            this.logger.error(`❌ Erreur getPortfolioAsset: Portfolio introuvable avec l'ID ${portfolioId}`)
+            throw new BadRequestException(`❌ Erreur getPortfolioAsset: Portfolio introuvable avec l'ID ${portfolioId}`)
+        }
+        return await this.prisma.portfolioAsset.findMany({
+            where: {
+                portfolioId,
+            },
+            include: {
+                asset: true,
+            },
+        })
+    }
+
     async createPortfolioAsset(
         portfolioId: number,
         assetId: number,
