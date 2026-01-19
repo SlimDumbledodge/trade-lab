@@ -67,8 +67,22 @@ export class PortfoliosAssetsService {
         quantity: Prisma.Decimal,
         buyPrice: Prisma.Decimal,
     ): Promise<PortfolioAsset> {
-        // On calcule le nouveau prix moyen avant de passer à Prisma
         const newAverageBuyPrice = await this.getNewAverageBuyPrice(portfolioId, assetId, quantity, buyPrice)
+        const asset = await this.prisma.asset.findUnique({ where: { id: assetId } })
+        if (!asset) {
+            this.logger.error(`❌ Erreur createPortfolioAsset: asset introuvable avec l'ID ${assetId}`)
+            throw new BadRequestException(`❌ Erreur createPortfolioAsset: asset introuvable avec l'ID ${assetId}`)
+        }
+
+        const existingPortfolioAsset = await this.prisma.portfolioAsset.findUnique({
+            where: { portfolioId_assetId: { portfolioId, assetId } },
+        })
+
+        const newQuantity = existingPortfolioAsset ? existingPortfolioAsset.quantity.add(quantity) : quantity
+        const newHoldingsValue = asset.lastPrice.mul(newQuantity)
+        const investedAmount = newAverageBuyPrice.mul(newQuantity)
+        const newUnrealizedPnl = newHoldingsValue.sub(investedAmount)
+
         return this.prisma.portfolioAsset.upsert({
             where: { portfolioId_assetId: { portfolioId, assetId } },
             create: {
@@ -76,10 +90,14 @@ export class PortfoliosAssetsService {
                 assetId,
                 quantity,
                 averageBuyPrice: buyPrice,
+                holdingsValue: newHoldingsValue,
+                unrealizedPnl: newUnrealizedPnl,
             },
             update: {
                 quantity: { increment: quantity },
                 averageBuyPrice: newAverageBuyPrice,
+                holdingsValue: newHoldingsValue,
+                unrealizedPnl: newUnrealizedPnl,
                 updatedAt: new Date(),
             },
         })
