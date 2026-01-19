@@ -28,13 +28,15 @@ function Portfolio() {
 
     const lastHoveredPnlRef = useRef<number | null>(null)
     const handleHover = useCallback((currentPnl: number, currentHoldingsValue: number) => {
-        const pnlPercent = (currentPnl / currentHoldingsValue) * 100
+        // On évite la division par zéro
+        const investedAmount = currentHoldingsValue - currentPnl
+        const pnlPercent = investedAmount !== 0 ? (currentPnl / investedAmount) * 100 : 0
 
         if (lastHoveredPnlRef.current !== currentPnl) {
             lastHoveredPnlRef.current = currentPnl
             setPerformanceData({
                 pnlEuros: currentPnl,
-                pnlPercent: pnlPercent,
+                pnlPercent,
                 holdingsValue: currentHoldingsValue,
             })
         }
