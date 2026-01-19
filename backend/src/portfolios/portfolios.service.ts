@@ -13,13 +13,13 @@ export class PortfoliosService {
         private readonly portfoliosSnapshotsService: PortfoliosSnapshotsService,
     ) {}
 
-    async getPortfolio(portfolioId: number) {
+    async getPortfolio(portfolioId: number, period: PORTFOLIO_PERFORMANCE_PERIOD) {
         const portfolio = await this.prisma.portfolio.findUnique({
             where: { id: portfolioId },
         })
         if (!portfolio) throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
 
-        const points = await this.portfoliosSnapshotsService.getPortfolioPerformance(portfolioId, PORTFOLIO_PERFORMANCE_PERIOD.ONE_YEAR)
+        const points = await this.portfoliosSnapshotsService.getPortfolioPerformance(portfolioId, period)
         return {
             ...portfolio,
             points,
