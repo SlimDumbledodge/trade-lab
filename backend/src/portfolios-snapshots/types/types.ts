@@ -11,4 +11,5 @@ export enum PORTFOLIO_PERFORMANCE_PERIOD {
 export type PortfolioPerformance = {
     recordedAt: Date
     holdingsValue: Prisma.Decimal
+    unrealizedPnl: Prisma.Decimal
 }
