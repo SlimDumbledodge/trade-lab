@@ -169,8 +169,11 @@ export class PortfoliosAssetsService {
             throw new BadRequestException(`Vous ne pouvez pas vendre plus que ce que vous possédez`)
         }
 
-        // Si on vend toute la position, on la supprime
-        if (quantityToSell.equals(portfolioAsset.quantity)) {
+        // Si on vend toute la position (comparaison avec précision de 6 décimales), on la supprime
+        const quantityToSellRounded = quantityToSell.toFixed(6)
+        const portfolioQuantityRounded = portfolioAsset.quantity.toFixed(6)
+
+        if (quantityToSellRounded === portfolioQuantityRounded) {
             await this.prisma.portfolioAsset.delete({
                 where: { portfolioId_assetId: { portfolioId, assetId } },
             })
