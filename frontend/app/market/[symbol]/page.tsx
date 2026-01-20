@@ -39,7 +39,7 @@ export default function MarketProductDetails() {
     }, [])
 
     const { data: asset, isLoading: assetLoading, error: assetError } = useAsset(symbol, session?.accessToken)
-    const { data: portofolioAsset, isLoading: isPortfolioAssetLoading } = usePortfolioAsset(symbol, session?.accessToken)
+    const { data: portfolioAsset, isLoading: isPortfolioAssetLoading } = usePortfolioAsset(symbol, session?.accessToken)
 
     const {
         data: assetPrices,
@@ -107,7 +107,7 @@ export default function MarketProductDetails() {
                     <div className="flex-1 sm:flex-1 lg:flex-none">
                         <TradeExecutionForm />
                     </div>
-                    <div className="flex-1 sm:flex-1 lg:flex-none">{portofolioAsset?.assetId && <PositionDetails />}</div>
+                    <div className="flex-1 sm:flex-1 lg:flex-none">{portfolioAsset?.assetId && <PositionDetails />}</div>
                 </div>
             </div>
         </HomeLayout>

@@ -21,11 +21,7 @@ function Portfolio() {
     })
 
     const { data: session } = useSession()
-    const {
-        data: portfolioAssets,
-        isLoading: isPortfolioAssetsLoading,
-        error: portfolioAssetsError,
-    } = usePortfolioAssets(session?.accessToken)
+    const { data: portfolioAssets, isLoading: isPortfolioAssetsLoading } = usePortfolioAssets(session?.accessToken)
     const {
         data: portfolio,
         isLoading: isPortfolioLoading,

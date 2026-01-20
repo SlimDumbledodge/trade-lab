@@ -4,14 +4,7 @@ import moment from "moment"
 import "moment/locale/fr"
 
 import { Card, CardContent } from "@/components/ui/card"
-import {
-    ChartContainer,
-    ChartLegend,
-    ChartLegendContent,
-    ChartTooltip,
-    ChartTooltipContent,
-    type ChartConfig,
-} from "@/components/ui/chart"
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, type ChartConfig } from "@/components/ui/chart"
 
 export type PricePoint = {
     recordedAt: string
