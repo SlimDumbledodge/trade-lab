@@ -89,7 +89,8 @@ export type PortfolioAsset = {
     assetId: number
     quantity: number
     averageBuyPrice: number
-    holdingsValue: number
+    holdingValue: number
+    weight: number
     unrealizedPnl: number
     createdAt: string
     updatedAt: string
