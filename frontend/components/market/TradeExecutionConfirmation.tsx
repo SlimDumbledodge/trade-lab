@@ -12,12 +12,13 @@ type TradeExecutionConfirmation = {
     nbActions: number
     open: boolean
     setOpen: (isOpen: boolean) => void
+    onSuccess?: () => void
 }
 
 export const TradeExecutionConfirmation: React.FC<TradeExecutionConfirmation> = (props) => {
     const params = useParams()
     const symbol = params?.symbol as string
-    const { transactionType, nbActions, open, setOpen } = props
+    const { transactionType, nbActions, open, setOpen, onSuccess } = props
     const { data: session } = useSession()
     const { data: asset, isLoading: isAssetLoading, error: assetError } = useAsset(symbol, session?.accessToken)
     const { mutateAsync: processTradeExecution, isPending: isTradeExecutionLoading } = useTradeExecution()
@@ -76,8 +77,10 @@ export const TradeExecutionConfirmation: React.FC<TradeExecutionConfirmation> = 
                                     quantity: nbActions,
                                     token: session?.accessToken,
                                 }),
-                                new Promise((resolve) => setTimeout(resolve, 800)),
-                            ]).then(([result]) => result),
+                            ]).then(([result]) => {
+                                onSuccess?.()
+                                return result
+                            }),
                             {
                                 loading: "Transaction en cours...",
                                 success: "Transaction exécutée avec succès !",
