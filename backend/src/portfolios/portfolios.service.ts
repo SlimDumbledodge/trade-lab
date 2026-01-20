@@ -60,6 +60,7 @@ export class PortfoliosService {
                 where: { id: portfolioId },
                 data: { holdingsValue: new Prisma.Decimal(0) },
             })
+            return
         }
 
         const holdingsValue = portfolioAssets.reduce((acc, portfolioAsset) => {
@@ -67,5 +68,19 @@ export class PortfoliosService {
         }, new Prisma.Decimal(0))
 
         await this.prisma.portfolio.update({ where: { id: portfolioId }, data: { holdingsValue } })
+
+        // Recalculer les weights de tous les assets avec le nouveau holdingsValue
+        if (holdingsValue.greaterThan(0)) {
+            await Promise.all(
+                portfolioAssets.map((portfolioAsset) => {
+                    const assetHoldingValue = portfolioAsset.quantity.mul(portfolioAsset.asset.lastPrice)
+                    const weight = assetHoldingValue.div(holdingsValue).mul(100)
+                    return this.prisma.portfolioAsset.update({
+                        where: { id: portfolioAsset.id },
+                        data: { weight },
+                    })
+                }),
+            )
+        }
     }
 }
