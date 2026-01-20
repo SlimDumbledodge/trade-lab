@@ -21,7 +21,9 @@ export const useTradeExecution = () => {
         onSuccess: (data: Transaction) => {
             queryClient.invalidateQueries({ queryKey: ["portfolio"] })
             queryClient.invalidateQueries({ queryKey: ["portfolioAsset"] })
+            queryClient.invalidateQueries({ queryKey: ["portfolioAssets"] })
             queryClient.invalidateQueries({ queryKey: ["transactions"] })
+            queryClient.invalidateQueries({ queryKey: ["asset"] })
         },
     })
 }
