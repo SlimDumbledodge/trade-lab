@@ -7,11 +7,18 @@ import { ResponseInterceptor } from "./common/interceptors/response.interceptors
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
+
+    // Parse CORS origins - supporte plusieurs origines séparées par virgule
+    const corsOrigins = process.env.CORS_ORIGINS
+        ? process.env.CORS_ORIGINS.split(",").map((origin) => origin.trim())
+        : ["http://localhost:3000"]
+
     app.enableCors({
-        origin: "http://localhost:3000",
+        origin: corsOrigins,
         credentials: true,
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-        allowedHeaders: "Content-Type, Authorization",
+        methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        exposedHeaders: ["X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset"],
     })
     app.useGlobalFilters(new HttpExceptionFilter())
     app.useGlobalPipes(
