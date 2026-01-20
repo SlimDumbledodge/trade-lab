@@ -4,12 +4,14 @@ import { CreateUserDto } from "./dto/create-user.dto"
 import { UpdateUserDto } from "./dto/update-user.dto"
 import { ApiTags } from "@nestjs/swagger"
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard"
+import { Throttle } from "@nestjs/throttler"
 
 @Controller("users")
 @ApiTags("users")
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
+    @Throttle({ default: { ttl: 3600000, limit: 3 } })
     @Post()
     create(@Body() createUserDto: CreateUserDto) {
         return this.usersService.create(createUserDto)

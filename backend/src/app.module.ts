@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common"
 import { PrismaModule } from "./prisma/prisma.module"
 import { UsersModule } from "./users/users.module"
 import { AuthModule } from "./auth/auth.module"
-import { ConfigModule } from "@nestjs/config"
+import { ConfigModule, ConfigService } from "@nestjs/config"
 import { AssetsModule } from "./assets/assets.module"
 import { PortfoliosModule } from "./portfolios/portfolios.module"
 import { ScheduleModule } from "@nestjs/schedule"
@@ -11,7 +11,9 @@ import { PortfoliosAssetsModule } from "./portfolios-assets/portfolios-assets.mo
 import { PortfoliosHistoryModule } from "./portfolios-snapshots/portfolios-snapshots.module"
 import { AlpacaModule } from "./alpaca/alpaca.module"
 import { AssetsPriceModule } from "./assets-price/assets-price.module"
-import { FinnhubModule } from './finnhub/finnhub.module';
+import { FinnhubModule } from "./finnhub/finnhub.module"
+import { ThrottlerModule, ThrottlerGuard } from "@nestjs/throttler"
+import { APP_GUARD } from "@nestjs/core"
 
 @Module({
     imports: [
@@ -25,6 +27,16 @@ import { FinnhubModule } from './finnhub/finnhub.module';
             isGlobal: true,
             envFilePath: ".env",
         }),
+        ThrottlerModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => [
+                {
+                    ttl: config.get<number>("THROTTLE_TTL") || 60000,
+                    limit: config.get<number>("THROTTLE_LIMIT") || 100,
+                },
+            ],
+        }),
         ScheduleModule.forRoot(),
         TransactionsModule,
         PortfoliosAssetsModule,
@@ -32,6 +44,12 @@ import { FinnhubModule } from './finnhub/finnhub.module';
         AlpacaModule,
         AssetsPriceModule,
         FinnhubModule,
+    ],
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard,
+        },
     ],
 })
 export class AppModule {}
