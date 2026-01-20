@@ -68,8 +68,9 @@ model PortfolioAsset {
   assetId         Int
   quantity        Decimal
   averageBuyPrice Decimal
-  holdingsValue   Decimal   @default(0)
+  holdingValue   Decimal   @default(0)
   unrealizedPnl   Decimal   @default(0)
+  weight          Decimal   @default(0) // proportion de l'actif dans le portefeuille
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @default(now())
   asset           Asset     @relation(fields: [assetId], references: [id])

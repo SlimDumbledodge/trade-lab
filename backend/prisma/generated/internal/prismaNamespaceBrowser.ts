@@ -136,7 +136,7 @@ export const PortfolioAssetScalarFieldEnum = {
   assetId: 'assetId',
   quantity: 'quantity',
   averageBuyPrice: 'averageBuyPrice',
-  holdingsValue: 'holdingsValue',
+  holdingValue: 'holdingValue',
   unrealizedPnl: 'unrealizedPnl',
   weight: 'weight',
   createdAt: 'createdAt',
