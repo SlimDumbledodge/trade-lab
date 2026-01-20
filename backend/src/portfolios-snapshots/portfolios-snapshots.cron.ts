@@ -13,7 +13,7 @@ export class PortfoliosSnapshotsCron {
         private readonly portfoliosSnapshotsService: PortfoliosSnapshotsService,
     ) {}
 
-    @Cron("*/15 * * * *")
+    @Cron("*/1 * * * *")
     async captureAllPortfolios() {
         this.logger.log("Début de la capture des snapshots de portefeuilles...")
         const portfolios = await this.prisma.portfolio.findMany()
