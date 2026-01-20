@@ -20,8 +20,8 @@ const configService = new ConfigService()
 const alpacaService = new AlpacaService(prisma, configService)
 
 const ASSETS = [
-    { symbol: "AAPL", name: "Apple Inc.", description: "Technologie - iPhone, Mac, iPad" },
-    { symbol: "MSFT", name: "Microsoft Corp.", description: "Technologie - Cloud, Windows, Office" },
+    { symbol: "AAPL", name: "Apple Inc." },
+    { symbol: "MSFT", name: "Microsoft Corp." },
 ]
 
 const TIMEFRAMES: {

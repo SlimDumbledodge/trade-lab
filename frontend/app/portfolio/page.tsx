@@ -10,6 +10,7 @@ import { PORTFOLIO_PERFORMANCE_PERIODS } from "@/lib/constants"
 import { PORTFOLIO_PERFORMANCE_PERIOD } from "@/types/types"
 import { PriceChange } from "@/components/ui/price-change"
 import { PortfolioAssetCard } from "@/components/portfolio/PortfolioAssetsCard"
+import { usePortfolioAssets } from "@/hooks/usePortfolioAssets"
 
 function Portfolio() {
     const [selectedPeriod, setSelectedPeriod] = useState<PORTFOLIO_PERFORMANCE_PERIOD>(PORTFOLIO_PERFORMANCE_PERIOD.ONE_DAY)
@@ -20,6 +21,7 @@ function Portfolio() {
     })
 
     const { data: session } = useSession()
+    const { data: portfolioAssets, isLoading: isPortfolioAssetsLoading } = usePortfolioAssets(session?.accessToken)
     const {
         data: portfolio,
         isLoading: isPortfolioLoading,
@@ -42,7 +44,7 @@ function Portfolio() {
         }
     }, [])
 
-    if (isPortfolioLoading) return <p>Chargement...</p>
+    if (isPortfolioLoading || isPortfolioAssetsLoading) return <p>Chargement...</p>
     if (portfolioError) return <p className="text-red-600">{portfolioError?.message}</p>
     if (!portfolio) return <p>Aucun portefeuille trouvé</p>
 
@@ -95,9 +97,7 @@ function Portfolio() {
                     <div className="flex-1">
                         <PortfolioPerformanceChart points={formatPerformancePoints} handleHover={handleHover} />
                     </div>
-                    <div>
-                        <PortfolioAssetCard />
-                    </div>
+                    {portfolioAssets && portfolioAssets.length > 0 && <PortfolioAssetCard />}
                 </div>
             </div>
         </HomeLayout>

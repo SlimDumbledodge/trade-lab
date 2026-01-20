@@ -67,44 +67,17 @@ export class TransactionsService {
     }
     async sellAsset(portfolioId: number, sellAssetDto: AssetOperationDto) {
         const { assetId, quantity } = sellAssetDto
-        const portfolio = await this.prisma.portfolio.findUnique({
-            where: { id: portfolioId },
-            include: {
-                portfolioAssets: true,
-            },
-        })
-
-        if (!portfolio) {
-            throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
-        }
         const asset = await this.prisma.asset.findUnique({ where: { id: assetId } })
         if (!asset) throw new BadRequestException(`L'asset avec l'ID ${assetId} n'existe pas`)
 
-        const portfolioAsset = portfolio.portfolioAssets.find((asset) => asset.assetId === assetId)
+        // Utilisation du service pour gérer la logique métier (weight, PnL, etc.)
+        await this.portfoliosAssetsService.reducePortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity))
 
-        if (!portfolioAsset) {
-            throw new NotFoundException(`You can't sell an asset you do not own`)
-        }
+        const totalProceeds = asset.lastPrice.mul(quantity)
+        await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalProceeds, TransactionType.sell)
+        await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
+        await this.portfoliosSnapshotsService.capturePortfolioSnapshot(portfolioId)
 
-        if (quantity > Number(portfolioAsset.quantity)) {
-            throw new BadRequestException(`You can't sell more than you own`)
-        }
-        if (quantity === Number(portfolioAsset.quantity)) {
-            await this.prisma.portfolioAsset.delete({
-                where: {
-                    id: portfolioAsset.id,
-                },
-            })
-        } else {
-            await this.prisma.portfolioAsset.update({
-                where: {
-                    id: portfolioAsset.id,
-                },
-                data: {
-                    quantity: Number(portfolioAsset.quantity) - quantity,
-                },
-            })
-        }
         const transaction: TransactionPublic = {
             portfolioId,
             assetId: asset.id,
@@ -112,9 +85,6 @@ export class TransactionsService {
             quantity: new Prisma.Decimal(quantity),
             type: TransactionType.sell,
         }
-        await this.portfoliosService.updatePortfolioCashBalance(portfolioId, asset.lastPrice.mul(quantity), TransactionType.buy)
-        await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
-        await this.portfoliosSnapshotsService.capturePortfolioSnapshot(portfolioId)
         return this.createTransaction(transaction)
     }
 

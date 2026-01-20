@@ -51,7 +51,7 @@ export const PortfolioAssetCard = () => {
                                 <span className="text-muted-foreground text-xs">
                                     x{Number(portfolioAsset.quantity).toFixed(6)}
                                 </span>
-                                <span className="font-semibold">{Number(portfolioAsset.holdingsValue).toFixed(2)} €</span>
+                                <span className="font-semibold">{Number(portfolioAsset.holdingValue).toFixed(2)} €</span>
                             </div>
                         </div>
                     </div>

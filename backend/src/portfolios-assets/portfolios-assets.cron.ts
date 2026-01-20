@@ -1,5 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common"
 import { Cron, CronExpression } from "@nestjs/schedule"
+import { Prisma } from "prisma/generated/client"
 import { PrismaService } from "src/prisma/prisma.service"
 
 @Injectable()
@@ -17,6 +18,7 @@ export class PortfoliosAssetsCron {
             const portfolioAssets = await this.prisma.portfolioAsset.findMany({
                 include: {
                     asset: true,
+                    portfolio: true,
                 },
             })
 
@@ -27,15 +29,19 @@ export class PortfoliosAssetsCron {
 
             // Mettre à jour chaque holdingsValue et unrealizedPnl
             const updates = portfolioAssets.map((portfolioAsset) => {
-                const newHoldingsValue = portfolioAsset.quantity.mul(portfolioAsset.asset.lastPrice)
+                const newHoldingValue = portfolioAsset.quantity.mul(portfolioAsset.asset.lastPrice)
                 const investedAmount = portfolioAsset.averageBuyPrice.mul(portfolioAsset.quantity)
-                const newUnrealizedPnl = newHoldingsValue.sub(investedAmount)
+                const newUnrealizedPnl = newHoldingValue.sub(investedAmount)
+                const positionWeight = portfolioAsset.portfolio.holdingsValue.equals(0)
+                    ? new Prisma.Decimal(0)
+                    : newHoldingValue.div(portfolioAsset.portfolio.holdingsValue).mul(100)
 
                 return this.prisma.portfolioAsset.update({
                     where: { id: portfolioAsset.id },
                     data: {
-                        holdingsValue: newHoldingsValue,
+                        holdingValue: newHoldingValue,
                         unrealizedPnl: newUnrealizedPnl,
+                        weight: positionWeight,
                         updatedAt: new Date(),
                     },
                 })

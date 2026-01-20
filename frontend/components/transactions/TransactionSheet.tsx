@@ -39,7 +39,7 @@ export function TransactionSheet({ transaction, open, onOpenChange }: Transactio
                             <TableRow>
                                 <TableCell className="font-medium">Transaction</TableCell>
                                 <TableCell className="text-right font-semibold">
-                                    {transaction.quantity} x {transaction.price} €
+                                    {Number(transaction.quantity).toFixed(6)} x {transaction.price} €
                                 </TableCell>
                             </TableRow>
                             <TableRow>

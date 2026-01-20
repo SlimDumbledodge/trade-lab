@@ -79,9 +79,9 @@ export class PortfoliosAssetsService {
         })
 
         const newQuantity = existingPortfolioAsset ? existingPortfolioAsset.quantity.add(quantity) : quantity
-        const newHoldingsValue = asset.lastPrice.mul(newQuantity)
+        const newHoldingValue = asset.lastPrice.mul(newQuantity)
         const investedAmount = newAverageBuyPrice.mul(newQuantity)
-        const newUnrealizedPnl = newHoldingsValue.sub(investedAmount)
+        const newUnrealizedPnl = newHoldingValue.sub(investedAmount)
 
         return this.prisma.portfolioAsset.upsert({
             where: { portfolioId_assetId: { portfolioId, assetId } },
@@ -90,15 +90,17 @@ export class PortfoliosAssetsService {
                 assetId,
                 quantity,
                 averageBuyPrice: buyPrice,
-                holdingsValue: newHoldingsValue,
+                holdingValue: newHoldingValue,
                 unrealizedPnl: newUnrealizedPnl,
+                weight: new Prisma.Decimal(0), // Sera recalculé par calculatePortfolioAssetsValue
             },
             update: {
                 quantity: { increment: quantity },
                 averageBuyPrice: newAverageBuyPrice,
-                holdingsValue: newHoldingsValue,
+                holdingValue: newHoldingValue,
                 unrealizedPnl: newUnrealizedPnl,
                 updatedAt: new Date(),
+                // Weight ne sera pas mis à jour ici, il sera recalculé par calculatePortfolioAssetsValue
             },
         })
     }
@@ -145,6 +147,51 @@ export class PortfoliosAssetsService {
                 holdingValue: holding.asset.lastPrice.mul(holding.quantity),
                 unrealizedPnL: holding.asset.lastPrice.sub(holding.averageBuyPrice).mul(holding.quantity),
             }
+        })
+    }
+
+    async reducePortfolioAsset(portfolioId: number, assetId: number, quantityToSell: Prisma.Decimal): Promise<PortfolioAsset | null> {
+        const asset = await this.prisma.asset.findUnique({ where: { id: assetId } })
+        if (!asset) {
+            this.logger.error(`❌ Erreur reducePortfolioAsset: asset introuvable avec l'ID ${assetId}`)
+            throw new BadRequestException(`❌ Erreur reducePortfolioAsset: asset introuvable avec l'ID ${assetId}`)
+        }
+
+        const portfolioAsset = await this.prisma.portfolioAsset.findUnique({
+            where: { portfolioId_assetId: { portfolioId, assetId } },
+        })
+
+        if (!portfolioAsset) {
+            throw new BadRequestException(`Vous ne pouvez pas vendre un actif que vous ne possédez pas`)
+        }
+
+        if (quantityToSell.greaterThan(portfolioAsset.quantity)) {
+            throw new BadRequestException(`Vous ne pouvez pas vendre plus que ce que vous possédez`)
+        }
+
+        // Si on vend toute la position, on la supprime
+        if (quantityToSell.equals(portfolioAsset.quantity)) {
+            await this.prisma.portfolioAsset.delete({
+                where: { portfolioId_assetId: { portfolioId, assetId } },
+            })
+            return null
+        }
+
+        // Sinon, on met à jour la quantité et recalcule les valeurs
+        const newQuantity = portfolioAsset.quantity.sub(quantityToSell)
+        const newHoldingValue = asset.lastPrice.mul(newQuantity)
+        const investedAmount = portfolioAsset.averageBuyPrice.mul(newQuantity)
+        const newUnrealizedPnl = newHoldingValue.sub(investedAmount)
+
+        return this.prisma.portfolioAsset.update({
+            where: { portfolioId_assetId: { portfolioId, assetId } },
+            data: {
+                quantity: newQuantity,
+                holdingValue: newHoldingValue,
+                unrealizedPnl: newUnrealizedPnl,
+                updatedAt: new Date(),
+                // Weight sera recalculé par calculatePortfolioAssetsValue
+            },
         })
     }
 }
