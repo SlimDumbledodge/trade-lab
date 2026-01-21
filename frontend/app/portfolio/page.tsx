@@ -3,7 +3,7 @@
 import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { PortfolioPerformanceChart, PortfolioPoint } from "@/components/charts/PortfolioPerformanceChart"
 import { Button } from "@/components/ui/button"
-import { useCallback, useRef, useState } from "react"
+import { Suspense, useCallback, useRef, useState } from "react"
 import { useSession } from "next-auth/react"
 import { usePortfolio } from "@/hooks/usePortfolio"
 import { PORTFOLIO_PERFORMANCE_PERIODS } from "@/lib/constants"
@@ -11,6 +11,8 @@ import { PORTFOLIO_PERFORMANCE_PERIOD } from "@/types/types"
 import { PriceChange } from "@/components/ui/price-change"
 import { PortfolioAssetCard } from "@/components/portfolio/PortfolioAssetsCard"
 import { usePortfolioAssets } from "@/hooks/usePortfolioAssets"
+import { SkeletonCard } from "@/components/ui/skeleton-card"
+import { SkeletonChart } from "@/components/ui/skeleton-chart"
 
 function Portfolio() {
     const [selectedPeriod, setSelectedPeriod] = useState<PORTFOLIO_PERFORMANCE_PERIOD>(PORTFOLIO_PERFORMANCE_PERIOD.ONE_DAY)
@@ -44,9 +46,13 @@ function Portfolio() {
         }
     }, [])
 
-    if (isPortfolioLoading || isPortfolioAssetsLoading) return <p>Chargement...</p>
+    if (isPortfolioLoading || isPortfolioAssetsLoading || !portfolio)
+        return (
+            <HomeLayout headerTitle="Portefeuille">
+                <SkeletonChart />
+            </HomeLayout>
+        )
     if (portfolioError) return <p className="text-red-600">{portfolioError?.message}</p>
-    if (!portfolio) return <p>Aucun portefeuille trouvé</p>
 
     const firstUnrealizedPnl = portfolio.points[0]?.unrealizedPnl ?? 0
     const formatPerformancePoints: PortfolioPoint[] = portfolio.points.map((point) => {
@@ -95,9 +101,15 @@ function Portfolio() {
                 {/* Graphique et card investissements */}
                 <div className="flex gap-6">
                     <div className="flex-1">
-                        <PortfolioPerformanceChart points={formatPerformancePoints} handleHover={handleHover} />
+                        <Suspense fallback={<SkeletonChart />}>
+                            <PortfolioPerformanceChart points={formatPerformancePoints} handleHover={handleHover} />
+                        </Suspense>
                     </div>
-                    {portfolioAssets && portfolioAssets.length > 0 && <PortfolioAssetCard />}
+                    {portfolioAssets && portfolioAssets.length > 0 && (
+                        <Suspense fallback={<SkeletonCard />}>
+                            <PortfolioAssetCard />
+                        </Suspense>
+                    )}
                 </div>
             </div>
         </HomeLayout>

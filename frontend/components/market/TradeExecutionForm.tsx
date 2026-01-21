@@ -29,17 +29,9 @@ export default function TradeExecutionForm() {
     const [formMode, setFormMode] = useState<FormMode>(FormMode.MONTANT)
     const [open, setOpen] = useState<boolean>(false)
     const { data: session } = useSession()
-    const {
-        data: portfolio,
-        isLoading: isPortfolioLoading,
-        error: portfolioError,
-    } = usePortfolio(PORTFOLIO_PERFORMANCE_PERIOD.ONE_DAY, session?.accessToken)
-    const { data: asset, isLoading: isAssetLoading, error: assetError } = useAsset(symbol, session?.accessToken)
-    const {
-        data: portfolioAsset,
-        isLoading: isPortfolioAssetLoading,
-        error: portfolioAssetError,
-    } = usePortfolioAsset(symbol, session?.accessToken)
+    const { data: portfolio, error: portfolioError } = usePortfolio(PORTFOLIO_PERFORMANCE_PERIOD.ONE_DAY, session?.accessToken)
+    const { data: asset, error: assetError } = useAsset(symbol, session?.accessToken)
+    const { data: portfolioAsset, error: portfolioAssetError } = usePortfolioAsset(symbol, session?.accessToken)
 
     const lastPrice = Number(asset?.lastPrice)
     const cashBalance = Number(portfolio?.cashBalance) || 0
@@ -47,7 +39,6 @@ export default function TradeExecutionForm() {
     const displayAvailableCashBalance = `${cashBalance.toFixed(2)} € disponibles.`
     const displayPortfolioAssetQuantity = `${portfolioAssetQuantity.toFixed(6)} actions disponibles.`
 
-    if (isPortfolioLoading || isAssetLoading || isPortfolioAssetLoading) return <p>Chargement...</p>
     if (assetError || portfolioError || portfolioAssetError)
         return <p className="text-red-600">{assetError?.message || portfolioError?.message || portfolioAssetError?.message}</p>
     if (!asset) return <p>Erreur : aucun actif trouvé.</p>
