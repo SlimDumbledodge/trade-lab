@@ -203,14 +203,6 @@ describe("AuthService", () => {
 
         it("devrait lancer BadRequestException si le token est expiré", async () => {
             const plainToken = "expired-token"
-            const hashedToken = crypto.createHash("sha256").update(plainToken).digest("hex")
-
-            const mockUser = {
-                id: 1,
-                email: "test@example.com",
-                resetPasswordToken: hashedToken,
-                resetPasswordExpires: new Date(Date.now() - 3600000), // 1h dans le passé
-            }
 
             // Le findFirst ne retournera rien car la condition resetPasswordExpires > now ne sera pas remplie
             mockPrismaService.user.findFirst.mockResolvedValue(null)
