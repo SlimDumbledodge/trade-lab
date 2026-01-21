@@ -9,13 +9,8 @@ export const PositionDetails = () => {
     const params = useParams()
     const symbol = params?.symbol as string
     const { data: session } = useSession()
-    const {
-        data: portfolioAsset,
-        isLoading: isPortfolioAssetLoading,
-        error: errorPortfolioAsset,
-    } = usePortfolioAsset(symbol, session?.accessToken)
+    const { data: portfolioAsset, error: errorPortfolioAsset } = usePortfolioAsset(symbol, session?.accessToken)
 
-    if (isPortfolioAssetLoading) return <p>Chargement...</p>
     if (errorPortfolioAsset) return <p className="text-red-600">{errorPortfolioAsset?.message}</p>
     if (!portfolioAsset) return <p>Erreur : aucun actif trouvé.</p>
     return (

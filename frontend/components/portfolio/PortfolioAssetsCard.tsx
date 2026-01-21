@@ -9,14 +9,9 @@ import { PriceChange } from "../ui/price-change"
 export const PortfolioAssetCard = () => {
     const { data: session } = useSession()
     const router = useRouter()
-    const {
-        data: portfolioAssets,
-        isLoading: isPortfolioAssetsLoading,
-        error: errorPortfolioAssets,
-    } = usePortfolioAssets(session?.accessToken)
+    const { data: portfolioAssets, error: errorPortfolioAssets } = usePortfolioAssets(session?.accessToken)
     console.log(portfolioAssets)
 
-    if (isPortfolioAssetsLoading) return <p>Chargement...</p>
     if (errorPortfolioAssets) return <p className="text-red-600">{errorPortfolioAssets?.message}</p>
     if (!portfolioAssets) return <p>Erreur : aucun actif trouvé.</p>
     return (
