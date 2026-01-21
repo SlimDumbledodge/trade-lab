@@ -41,3 +41,15 @@ export const processTradeExecution = (
         method: "POST",
         body: JSON.stringify({ assetId, quantity }),
     })
+
+export const forgotPassword = (email: string): Promise<{ message: string }> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/auth/forgot-password`, undefined, {
+        method: "POST",
+        body: JSON.stringify({ email }),
+    })
+
+export const resetPassword = (token: string, newPassword: string): Promise<{ message: string }> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/auth/reset-password`, undefined, {
+        method: "POST",
+        body: JSON.stringify({ token, newPassword }),
+    })
