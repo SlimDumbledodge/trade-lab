@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
+import { BadRequestException, Injectable } from "@nestjs/common"
 import { Prisma, TransactionType } from "prisma/generated/client"
 import { PortfoliosAssetsService } from "src/portfolios-assets/portfolios-assets.service"
 import { PortfoliosSnapshotsService } from "src/portfolios-snapshots/portfolios-snapshots.service"
