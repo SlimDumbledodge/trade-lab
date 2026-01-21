@@ -14,6 +14,7 @@ import { AssetsPriceModule } from "./assets-price/assets-price.module"
 import { FinnhubModule } from "./finnhub/finnhub.module"
 import { ThrottlerModule, ThrottlerGuard } from "@nestjs/throttler"
 import { APP_GUARD } from "@nestjs/core"
+import { EmailModule } from './email/email.module';
 
 @Module({
     imports: [
@@ -44,6 +45,7 @@ import { APP_GUARD } from "@nestjs/core"
         AlpacaModule,
         AssetsPriceModule,
         FinnhubModule,
+        EmailModule,
     ],
     providers: [
         {

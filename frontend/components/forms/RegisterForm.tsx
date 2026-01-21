@@ -33,6 +33,7 @@ const RegisterForm = () => {
             email: "",
             password: "",
             confirmPassword: "",
+            acceptTerms: false,
         },
     })
 
@@ -89,12 +90,14 @@ const RegisterForm = () => {
                 <CardHeader className="gap-6">
                     <div className="flex items-center gap-3">
                         <Image src="/icon.png" alt="Logo TradeLab" width={35} height={35} />
-                        <span className="text-xl font-semibold">TradeLab</span>
+                        <span className="text-xl font-semibold">tradelab/studio</span>
                     </div>
 
                     <div>
                         <CardTitle className="mb-1.5 text-2xl">Inscription à TradeLab</CardTitle>
-                        <CardDescription className="text-base">Gérez votre portefeuille en toute simplicité.</CardDescription>
+                        <CardDescription className="text-base">
+                            Investissez en toute sécurité grâce à l'argent virtuelle.
+                        </CardDescription>
                     </div>
                 </CardHeader>
 
@@ -219,13 +222,32 @@ const RegisterForm = () => {
                                 />
 
                                 {/* Privacy policy */}
-                                <div className="flex items-center gap-3">
-                                    <Checkbox id="terms" className="size-6" required />
-                                    <Label htmlFor="terms">
-                                        <span className="text-muted-foreground">J'accepte les</span>{" "}
-                                        <a href="#">conditions générales</a>
-                                    </Label>
-                                </div>
+                                <FormField
+                                    control={form.control}
+                                    name="acceptTerms"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <div className="flex items-center gap-3">
+                                                <FormControl>
+                                                    <Checkbox
+                                                        id="terms"
+                                                        className="size-6"
+                                                        checked={field.value}
+                                                        onCheckedChange={field.onChange}
+                                                        disabled={isLoading}
+                                                    />
+                                                </FormControl>
+                                                <Label htmlFor="terms" className="cursor-pointer">
+                                                    <span className="text-muted-foreground">J'accepte les</span>
+                                                    <Link href="#" className="text-foreground hover:underline">
+                                                        conditions générales
+                                                    </Link>
+                                                </Label>
+                                            </div>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
 
                                 {isLoading ? (
                                     <ButtonLoader type="submit" variant="default" className="w-full">
