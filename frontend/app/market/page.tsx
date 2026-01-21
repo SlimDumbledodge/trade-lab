@@ -8,12 +8,18 @@ import { useRouter } from "next/navigation"
 import moment from "moment"
 import { TrendingUp, TrendingDown } from "lucide-react"
 import { useAssets } from "@/hooks/useAssets"
+import { SkeletonMarket } from "@/components/ui/skeleton-market"
 
 function Market() {
     const { data: session } = useSession()
     const { data: assets, isLoading, error } = useAssets(session?.accessToken)
     const router = useRouter()
-    if (isLoading) return <p>Chargement...</p>
+    if (isLoading)
+        return (
+            <HomeLayout headerTitle="Marché">
+                <SkeletonMarket />
+            </HomeLayout>
+        )
     if (error) return <p>Erreur: {error.message}</p>
     if (!assets) return <p>Aucun produit trouver</p>
     console.log(assets)
