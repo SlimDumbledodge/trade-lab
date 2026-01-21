@@ -1,61 +1,76 @@
 name: CI
 
 on:
-    push:
-        branches: [main, develop]
-    pull_request:
-        branches: [main, develop]
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 
 jobs:
-    build-and-test:
-        runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ubuntu-latest
 
-        services:
-            postgres:
-                image: postgres:14
-                env:
-                    POSTGRES_USER: postgres
-                    POSTGRES_PASSWORD: postgres
-                    POSTGRES_DB: test_db
-                ports: ['5432:5432']
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
-
+    services:
+      postgres:
+        image: postgres:14
         env:
-            DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/test_db'
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
+    env:
+      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/test_db"
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-            - name: Install dependencies
-              run: npm ci
-              working-directory: ./backend
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
-            - name: Generate Prisma Client
-              run: npx prisma generate
-              working-directory: ./backend
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./backend
 
-            - name: Run Prisma Migrate (dev)
-              run: npx prisma migrate deploy
-              working-directory: ./backend
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        working-directory: ./backend
 
-            - name: Run linter
-              run: npm run lint
-              working-directory: ./backend
+      - name: Run Prisma Migrate (dev)
+        run: npx prisma migrate deploy
+        working-directory: ./backend
 
-            - name: Run prettier
-              run: npm run format
-              working-directory: ./backend
+      - name: Run linter
+        run: npm run lint
+        working-directory: ./backend
 
-            - name: Run tests
-              run: npm run test
-              working-directory: ./backend
+      - name: Run prettier
+        run: npm run format
+        working-directory: ./backend
+
+      - name: Run tests
+        run: npm run test
+        working-directory: ./backend
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+        working-directory: ./backend
+        env:
+          JWT_SECRET: test-jwt-secret-for-ci
+          SMTP_HOST: smtp.test.com
+          SMTP_PORT: 587
+          SMTP_USER: test@test.com
+          SMTP_PASSWORD: test
+          SMTP_FROM: noreply@test.com
+
+      - name: Run tests with coverage
+        run: npm run test:cov
+        working-directory: ./backend
