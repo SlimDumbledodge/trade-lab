@@ -145,9 +145,9 @@ const LoginForm = () => {
 
                                 {/* Forgot Password */}
                                 <div className="flex items-center justify-end">
-                                    <a href="#" className="hover:underline">
+                                    <Link href="/forgot-password" className="hover:underline">
                                         Mot de passe oublié ?
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 {isLoading ? (
