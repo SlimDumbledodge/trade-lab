@@ -6,7 +6,7 @@ import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { ASSET_PRICE_PERIOD } from "@/types/types"
 import { AssetPriceChart, PricePoint } from "../../../components/charts/AssetPriceChart"
 import Image from "next/image"
-import { useState, useRef, useCallback } from "react"
+import { useState, useRef, useCallback, Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { PriceChange } from "@/components/ui/price-change"
 import TradeExecutionForm from "@/components/market/TradeExecutionForm"
@@ -15,6 +15,9 @@ import { useAsset } from "@/hooks/useAsset"
 import { ASSET_PRICE_PERIODS } from "@/lib/constants"
 import { PositionDetails } from "@/components/market/PositionDetailsCard"
 import { usePortfolioAsset } from "@/hooks/usePortfolioAsset"
+import { SkeletonCard } from "@/components/ui/skeleton-card"
+import { SkeletonChart } from "@/components/ui/skeleton-chart"
+import { SkeletonMarketDetails } from "@/components/ui/skeleton-market-details"
 
 export default function MarketProductDetails() {
     const { data: session } = useSession()
@@ -47,7 +50,12 @@ export default function MarketProductDetails() {
         error: assetPricesError,
     } = useAssetPrices(symbol, selectedPeriod, session?.accessToken ?? undefined)
 
-    if (assetLoading || assetPricesLoading || isPortfolioAssetLoading) return <p>Chargement...</p>
+    if (assetLoading || assetPricesLoading || isPortfolioAssetLoading)
+        return (
+            <HomeLayout headerTitle={"Marché"}>
+                <SkeletonMarketDetails />
+            </HomeLayout>
+        )
     if (assetError || assetPricesError) return <p className="text-red-600">{assetError?.message || assetPricesError?.message}</p>
     if (!asset || !assetPrices) return <p>Introuvable</p>
 
@@ -99,15 +107,25 @@ export default function MarketProductDetails() {
                     </div>
 
                     {/* Graphique */}
-                    <AssetPriceChart data={formatAssetPrices} handlePerformanceData={handlePerformanceData} />
+                    <Suspense fallback={<SkeletonChart />}>
+                        <AssetPriceChart data={formatAssetPrices} handlePerformanceData={handlePerformanceData} />
+                    </Suspense>
                 </div>
 
                 {/* Partie droite: Formulaire et Position */}
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-6 w-full lg:w-[350px]">
                     <div className="flex-1 sm:flex-1 lg:flex-none">
-                        <TradeExecutionForm />
+                        <Suspense fallback={<SkeletonCard />}>
+                            <TradeExecutionForm />
+                        </Suspense>
                     </div>
-                    <div className="flex-1 sm:flex-1 lg:flex-none">{portfolioAsset?.assetId && <PositionDetails />}</div>
+                    <div className="flex-1 sm:flex-1 lg:flex-none">
+                        {portfolioAsset?.assetId && (
+                            <Suspense fallback={<SkeletonCard />}>
+                                <PositionDetails />
+                            </Suspense>
+                        )}
+                    </div>
                 </div>
             </div>
         </HomeLayout>

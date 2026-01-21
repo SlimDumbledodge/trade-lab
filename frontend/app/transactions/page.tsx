@@ -22,6 +22,7 @@ import moment from "moment"
 import "moment/locale/fr"
 import { TransactionSheet } from "@/components/transactions/TransactionSheet"
 import { useTransactions } from "@/hooks/useTransactions"
+import { SkeletonTransactions } from "@/components/ui/skeleton-transactions"
 
 moment.locale("fr")
 
@@ -62,7 +63,12 @@ const Page = () => {
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
     const [isSheetOpen, setIsSheetOpen] = useState(false)
 
-    if (isLoading) return <p className="p-6 text-center">Chargement...</p>
+    if (isLoading)
+        return (
+            <HomeLayout headerTitle="Transactions">
+                <SkeletonTransactions />
+            </HomeLayout>
+        )
     if (error) return <p className="p-6 text-red-600">Erreur : {error.message}</p>
 
     const hasTransactions = transactions && transactions.items.length > 0

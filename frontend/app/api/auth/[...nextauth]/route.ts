@@ -22,7 +22,8 @@ export const authOptions = {
 
                     if (!res.ok) {
                         console.error("Login API returned status", res.status)
-                        return null
+                        // Lancer une erreur avec le status code pour la transmettre au frontend
+                        throw new Error(`${res.status}`)
                     }
 
                     const data = await res.json()
@@ -43,7 +44,8 @@ export const authOptions = {
                     return null
                 } catch (err) {
                     console.error("Authorize error:", err)
-                    return null
+                    // Relancer l'erreur pour la transmettre à NextAuth
+                    throw err
                 }
             },
         }),
