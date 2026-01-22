@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common"
+import { SentryModule } from "@sentry/nestjs/setup"
 import { PrismaModule } from "./prisma/prisma.module"
 import { UsersModule } from "./users/users.module"
 import { AuthModule } from "./auth/auth.module"
@@ -14,10 +15,11 @@ import { AssetsPriceModule } from "./assets-price/assets-price.module"
 import { FinnhubModule } from "./finnhub/finnhub.module"
 import { ThrottlerModule, ThrottlerGuard } from "@nestjs/throttler"
 import { APP_GUARD } from "@nestjs/core"
-import { EmailModule } from './email/email.module';
+import { EmailModule } from "./email/email.module"
 
 @Module({
     imports: [
+        SentryModule.forRoot(),
         PrismaModule,
         UsersModule,
         AuthModule,
