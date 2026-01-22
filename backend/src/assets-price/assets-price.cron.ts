@@ -5,6 +5,7 @@ import { AlpacaService } from "src/alpaca/alpaca.service"
 import { PrismaService } from "src/prisma/prisma.service"
 import { ASSET_PRICE_PERIOD } from "./types/types"
 import { AssetsPriceService } from "./assets-price.service"
+import * as Sentry from "@sentry/nestjs"
 
 @Injectable()
 export class AssetsPriceCron {
@@ -40,19 +41,34 @@ export class AssetsPriceCron {
 
     @Cron(CronExpression.EVERY_MINUTE)
     async updateByMinute(): Promise<void> {
-        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_DAY, 1, "day")
-        await this.assetsPriceService.calculateTodayPerformance()
+        try {
+            await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_DAY, 1, "day")
+            await this.assetsPriceService.calculateTodayPerformance()
+        } catch (error) {
+            Sentry.captureException(error)
+            this.logger.error("❌ Erreur dans updateByMinute", error)
+        }
     }
 
     @Cron(CronExpression.EVERY_HOUR)
     async updateByHour(): Promise<void> {
-        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_WEEK, 1, "week")
-        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_MONTH, 1, "month")
+        try {
+            await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_WEEK, 1, "week")
+            await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_MONTH, 1, "month")
+        } catch (error) {
+            Sentry.captureException(error)
+            this.logger.error("❌ Erreur dans updateByHour", error)
+        }
     }
     @Cron(CronExpression.EVERY_DAY_AT_8PM)
     async updateByDay(): Promise<void> {
-        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.SIX_MONTHS, 6, "months")
-        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_YEAR, 1, "year")
-        await this.updateAssetsPrices(ASSET_PRICE_PERIOD.FIVE_YEARS, 5, "years")
+        try {
+            await this.updateAssetsPrices(ASSET_PRICE_PERIOD.SIX_MONTHS, 6, "months")
+            await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_YEAR, 1, "year")
+            await this.updateAssetsPrices(ASSET_PRICE_PERIOD.FIVE_YEARS, 5, "years")
+        } catch (error) {
+            Sentry.captureException(error)
+            this.logger.error("❌ Erreur dans updateByDay", error)
+        }
     }
 }
