@@ -16,6 +16,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createTradeFormSchema, TradeFormSchema } from "@/lib/validations/trade-execution-form.schema"
+import { useMarketStatus } from "@/hooks/useMarketStatus"
 
 export enum FormMode {
     MONTANT,
@@ -29,6 +30,7 @@ export default function TradeExecutionForm() {
     const [formMode, setFormMode] = useState<FormMode>(FormMode.MONTANT)
     const [open, setOpen] = useState<boolean>(false)
     const { data: session } = useSession()
+    const { data: marketStatus, error: marketStatusError } = useMarketStatus(session?.accessToken)
     const { data: portfolio, error: portfolioError } = usePortfolio(PORTFOLIO_PERFORMANCE_PERIOD.ONE_DAY, session?.accessToken)
     const { data: asset, error: assetError } = useAsset(symbol, session?.accessToken)
     const { data: portfolioAsset, error: portfolioAssetError } = usePortfolioAsset(symbol, session?.accessToken)
@@ -39,8 +41,12 @@ export default function TradeExecutionForm() {
     const displayAvailableCashBalance = `${cashBalance.toFixed(2)} € disponibles.`
     const displayPortfolioAssetQuantity = `${portfolioAssetQuantity.toFixed(6)} actions disponibles.`
 
-    if (assetError || portfolioError || portfolioAssetError)
-        return <p className="text-red-600">{assetError?.message || portfolioError?.message || portfolioAssetError?.message}</p>
+    if (assetError || portfolioError || portfolioAssetError || marketStatusError)
+        return (
+            <p className="text-red-600">
+                {assetError?.message || portfolioError?.message || portfolioAssetError?.message || marketStatusError?.message}
+            </p>
+        )
     if (!asset) return <p>Erreur : aucun actif trouvé.</p>
 
     const onSubmit = (values: TradeFormSchema) => {
@@ -177,9 +183,14 @@ export default function TradeExecutionForm() {
                                     />
                                 )}
 
-                                <Button type="submit" className="w-full">
+                                <Button disabled={!marketStatus?.isOpen} type="submit" className="w-full">
                                     Valider l’ordre
                                 </Button>
+                                {!marketStatus?.isOpen && (
+                                    <p className="text-sm italic text-muted-foreground text-center">
+                                        La bourse est actuellement fermé.
+                                    </p>
+                                )}
                             </TabsContent>
                         </Tabs>
                     </form>
