@@ -1,18 +1,19 @@
 import { Injectable, Logger } from "@nestjs/common"
 import { Cron, CronExpression } from "@nestjs/schedule"
-import * as moment from "moment"
 import { AlpacaService } from "src/alpaca/alpaca.service"
 import { PrismaService } from "src/prisma/prisma.service"
 import { ASSET_PRICE_PERIOD } from "./types/types"
 import { AssetsPriceService } from "./assets-price.service"
 import * as Sentry from "@sentry/nestjs"
-
+import { MarketStatusService } from "src/market-status/market-status.service"
+const moment = require("moment-timezone")
 @Injectable()
 export class AssetsPriceCron {
     private readonly logger = new Logger(AssetsPriceCron.name)
     constructor(
         private alpacaService: AlpacaService,
         private assetsPriceService: AssetsPriceService,
+        private marketStatusService: MarketStatusService,
         private prisma: PrismaService,
     ) {}
 
@@ -21,27 +22,42 @@ export class AssetsPriceCron {
         substractAmount: moment.DurationInputArg1,
         unit: moment.DurationInputArg2,
     ): Promise<void> {
-        const assets = await this.prisma.asset.findMany()
-        if (!assets) console.warn(`updateAssetsPriceByHour : Aucun assets trouver`)
-        const symbols = assets.map((asset) => asset.symbol)
+        try {
+            const isMarketOpen = await this.marketStatusService.isMarketOpen()
+            if (!isMarketOpen) {
+                this.logger.log("❌ Marché fermé, updateByMinute ignoré")
+                return
+            }
+            const assets = await this.prisma.asset.findMany()
+            if (!assets) console.warn(`updateAssetsPriceByHour : Aucun assets trouver`)
+            const symbols = assets.map((asset) => asset.symbol)
 
-        this.logger.log(`✅ Mise à jour de ${symbols.length} assets sur ${timeframe}`)
+            this.logger.log(`✅ Mise à jour de ${symbols.length} assets sur ${timeframe}`)
 
-        await this.alpacaService.getHistoricalBars({
-            symbols,
-            timeframe,
-            start: moment().subtract(substractAmount, unit).format("YYYY-MM-DD"),
-            end: moment().format("YYYY-MM-DD"),
-        })
+            await this.alpacaService.getHistoricalBars({
+                symbols,
+                timeframe,
+                start: moment().subtract(substractAmount, unit).format("YYYY-MM-DD"),
+                end: moment().format("YYYY-MM-DD"),
+            })
 
-        await this.alpacaService.getLatestQuote({
-            symbols,
-        })
+            await this.alpacaService.getLatestQuote({
+                symbols,
+            })
+        } catch (error) {
+            Sentry.captureException(error)
+            this.logger.error("❌ Erreur dans updateByMinute", error)
+        }
     }
 
     @Cron(CronExpression.EVERY_MINUTE)
     async updateByMinute(): Promise<void> {
         try {
+            const isMarketOpen = await this.marketStatusService.isMarketOpen()
+            if (!isMarketOpen) {
+                this.logger.log("❌ Marché fermé, updateByMinute ignoré")
+                return
+            }
             await this.updateAssetsPrices(ASSET_PRICE_PERIOD.ONE_DAY, 1, "day")
             await this.assetsPriceService.calculateTodayPerformance()
         } catch (error) {

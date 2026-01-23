@@ -2,6 +2,7 @@ import { Injectable, Logger } from "@nestjs/common"
 import { PrismaService } from "src/prisma/prisma.service"
 import { PortfoliosSnapshotsService } from "./portfolios-snapshots.service"
 import { Cron } from "@nestjs/schedule"
+import { MarketStatusService } from "src/market-status/market-status.service"
 
 @Injectable()
 export class PortfoliosSnapshotsCron {
@@ -11,10 +12,16 @@ export class PortfoliosSnapshotsCron {
     constructor(
         private readonly prisma: PrismaService,
         private readonly portfoliosSnapshotsService: PortfoliosSnapshotsService,
+        private marketStatusService: MarketStatusService,
     ) {}
 
     @Cron("*/1 * * * *")
     async captureAllPortfolios() {
+        const isMarketOpen = await this.marketStatusService.isMarketOpen()
+        if (!isMarketOpen) {
+            this.logger.log("❌ Marché fermé, captureAllPortfolios ignoré")
+            return
+        }
         this.logger.log("Début de la capture des snapshots de portefeuilles...")
         const portfolios = await this.prisma.portfolio.findMany()
 
