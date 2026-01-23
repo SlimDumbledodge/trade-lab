@@ -9,13 +9,14 @@ import { PortfoliosModule } from "./portfolios/portfolios.module"
 import { ScheduleModule } from "@nestjs/schedule"
 import { TransactionsModule } from "./transactions/transactions.module"
 import { PortfoliosAssetsModule } from "./portfolios-assets/portfolios-assets.module"
-import { PortfoliosHistoryModule } from "./portfolios-snapshots/portfolios-snapshots.module"
+import { PortfoliosSnapshotsModule } from "./portfolios-snapshots/portfolios-snapshots.module"
 import { AlpacaModule } from "./alpaca/alpaca.module"
 import { AssetsPriceModule } from "./assets-price/assets-price.module"
 import { FinnhubModule } from "./finnhub/finnhub.module"
 import { ThrottlerModule, ThrottlerGuard } from "@nestjs/throttler"
 import { APP_GUARD } from "@nestjs/core"
 import { EmailModule } from "./email/email.module"
+import { MarketStatusModule } from "./market-status/market-status.module"
 
 @Module({
     imports: [
@@ -43,11 +44,12 @@ import { EmailModule } from "./email/email.module"
         ScheduleModule.forRoot(),
         TransactionsModule,
         PortfoliosAssetsModule,
-        PortfoliosHistoryModule,
+        PortfoliosSnapshotsModule,
         AlpacaModule,
         AssetsPriceModule,
         FinnhubModule,
         EmailModule,
+        MarketStatusModule,
     ],
     providers: [
         {

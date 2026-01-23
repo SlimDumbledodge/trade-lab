@@ -3,13 +3,14 @@ import { PortfoliosService } from "./portfolios.service"
 import { PortfoliosController } from "./portfolios.controller"
 import { PrismaModule } from "src/prisma/prisma.module"
 import { PortfoliosAssetsModule } from "src/portfolios-assets/portfolios-assets.module"
-import { PortfoliosHistoryModule } from "src/portfolios-snapshots/portfolios-snapshots.module"
+import { PortfoliosSnapshotsModule } from "src/portfolios-snapshots/portfolios-snapshots.module"
 import { PortfoliosSnapshotsCron } from "src/portfolios-snapshots/portfolios-snapshots.cron"
+import { MarketStatusModule } from "src/market-status/market-status.module"
 
 @Module({
     controllers: [PortfoliosController],
     providers: [PortfoliosService, PortfoliosSnapshotsCron],
-    imports: [PrismaModule, PortfoliosAssetsModule, PortfoliosHistoryModule],
+    imports: [PrismaModule, PortfoliosAssetsModule, PortfoliosSnapshotsModule, MarketStatusModule],
     exports: [PortfoliosService],
 })
 export class PortfoliosModule {}
