@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export function useTransactions(page: number, limit: number, token?: string) {
     return useQuery({
-        queryKey: ["transactions"],
+        queryKey: ["transactions", page],
         queryFn: () => getTransactions(page, limit, token),
     })
 }

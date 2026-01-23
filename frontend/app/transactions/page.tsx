@@ -55,7 +55,7 @@ function getPaginationPages(current: number, total: number, delta: number = 2) {
 
 const Page = () => {
     const [currentPage, setCurrentPage] = useState(1)
-    const limit = 10
+    const limit = 8
 
     const { data: session } = useSession()
     const { data: transactions, isLoading, error } = useTransactions(currentPage, limit, session?.accessToken)

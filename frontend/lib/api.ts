@@ -2,6 +2,7 @@ import {
     Asset,
     ASSET_PRICE_PERIOD,
     AssetPrice,
+    MarketStatusType,
     PaginatedTransactions,
     Portfolio,
     PORTFOLIO_PERFORMANCE_PERIOD,
@@ -30,6 +31,9 @@ export const getPortfolioAsset = (symbol: string, token?: string): Promise<Portf
 
 export const getPortfolioAssets = (token?: string): Promise<PortfolioAsset[]> =>
     fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/portfolios-assets`, token)
+
+export const getMarketStatus = (token?: string): Promise<MarketStatusType> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/market-status`, token)
 
 export const processTradeExecution = (
     transactionType: TransactionType,

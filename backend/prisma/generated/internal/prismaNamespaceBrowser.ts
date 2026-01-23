@@ -57,7 +57,8 @@ export const ModelName = {
   Transaction: 'Transaction',
   PortfolioAsset: 'PortfolioAsset',
   AssetPrice: 'AssetPrice',
-  PortfolioSnapshots: 'PortfolioSnapshots'
+  PortfolioSnapshots: 'PortfolioSnapshots',
+  MarketCalendar: 'MarketCalendar'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -66,12 +67,12 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  * Enums
  */
 
-export const TransactionIsolationLevel = {
+export const TransactionIsolationLevel = runtime.makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
-} as const
+} as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
@@ -173,6 +174,17 @@ export const PortfolioSnapshotsScalarFieldEnum = {
 } as const
 
 export type PortfolioSnapshotsScalarFieldEnum = (typeof PortfolioSnapshotsScalarFieldEnum)[keyof typeof PortfolioSnapshotsScalarFieldEnum]
+
+
+export const MarketCalendarScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  openTime: 'openTime',
+  closeTime: 'closeTime',
+  createdAt: 'createdAt'
+} as const
+
+export type MarketCalendarScalarFieldEnum = (typeof MarketCalendarScalarFieldEnum)[keyof typeof MarketCalendarScalarFieldEnum]
 
 
 export const SortOrder = {

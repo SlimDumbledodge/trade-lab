@@ -52,3 +52,8 @@ export type AssetPrice = Prisma.AssetPriceModel
  * 
  */
 export type PortfolioSnapshots = Prisma.PortfolioSnapshotsModel
+/**
+ * Model MarketCalendar
+ * 
+ */
+export type MarketCalendar = Prisma.MarketCalendarModel

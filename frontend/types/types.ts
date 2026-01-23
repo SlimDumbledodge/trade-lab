@@ -129,6 +129,27 @@ export type PortfolioHistory = {
     recordedAt: string
 }
 
+export type MarketCalendar = {
+    id: number
+    date: string
+    openTime: Date
+    closeTime: Date
+    createdAt: Date
+}
+
+export type MarketStatusType = {
+    isOpen: boolean
+    todayMarketInfos: PublicMarketCalendarInfo | null
+    nextDayMarketInfos: PublicMarketCalendarInfo
+    previousDayMarketInfos: PublicMarketCalendarInfo
+}
+
+export type PublicMarketCalendarInfo = {
+    date: string
+    openTime: Date
+    closeTime: Date
+}
+
 // -------------------------------------------
 // Pagination
 // -------------------------------------------

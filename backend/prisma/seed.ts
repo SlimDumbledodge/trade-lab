@@ -93,10 +93,23 @@ async function seedHistoricalPrices(assets: any[]) {
     }
 }
 
+async function seedMarketCalendar() {
+    console.log("⏳ Récupération du calendrier du marché depuis Alpaca...")
+
+    try {
+        const result = await alpacaService.insertMarketCalendar()
+        console.log(`✅ Calendrier inséré en base avec succès !`)
+        console.log(`Détails :`, result)
+    } catch (error: any) {
+        console.error("❌ Erreur lors de l'insertion du calendrier :", error?.message ?? error)
+    }
+}
+
 async function main() {
     const assets = await seedAssets()
     await seedUser()
     await seedHistoricalPrices(assets)
+    await seedMarketCalendar()
 }
 
 main()

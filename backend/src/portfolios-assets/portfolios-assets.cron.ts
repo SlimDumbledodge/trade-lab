@@ -1,16 +1,25 @@
 import { Injectable, Logger } from "@nestjs/common"
 import { Cron, CronExpression } from "@nestjs/schedule"
 import { Prisma } from "prisma/generated/client"
+import { MarketStatusService } from "src/market-status/market-status.service"
 import { PrismaService } from "src/prisma/prisma.service"
 
 @Injectable()
 export class PortfoliosAssetsCron {
     private readonly logger = new Logger(PortfoliosAssetsCron.name)
 
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        private readonly prisma: PrismaService,
+        private marketStatusService: MarketStatusService,
+    ) {}
 
     @Cron(CronExpression.EVERY_MINUTE)
     async updateHoldingsValue() {
+        const isMarketOpen = await this.marketStatusService.isMarketOpen()
+        if (!isMarketOpen) {
+            this.logger.log("❌ Marché fermé, updateHoldingsValue ignoré")
+            return
+        }
         this.logger.log("🔄 Début de la mise à jour des holdingsValue et unrealizedPnl...")
 
         try {

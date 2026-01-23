@@ -4,10 +4,10 @@ import axios from "axios"
 import { HistoricalBarsType, AlpacaBarsResponse, CalendarInfo, LatestQuoteType } from "./types/alpaca.types"
 import { mapTimeframes } from "src/utils/mapTimeframes"
 import { ConfigService } from "@nestjs/config"
-import * as moment from "moment-timezone"
+
 import { Decimal } from "@prisma/client/runtime/client"
 import { Asset } from "prisma/generated/client"
-
+const moment = require("moment-timezone")
 @Injectable()
 export class AlpacaService {
     private readonly BASE_BARS_STOCK_URL: string
@@ -219,6 +219,46 @@ export class AlpacaService {
             }
         } catch (e) {
             this.logger.error(`getLatestQuote ❌ Erreur lors de la récupération des quotes : ${e.message}`, e.stack)
+        }
+    }
+
+    async insertMarketCalendar() {
+        try {
+            const response = await axios.get(this.BASE_MARKET_CALENDAR_INFO_URL, {
+                params: {
+                    start: moment().subtract(1, "month").format("YYYY-MM-DD"),
+                    end: moment().format("2029-12-31"),
+                },
+                headers: {
+                    accept: "application/json",
+                    "APCA-API-KEY-ID": this.configService.get<string>("APCA_API_KEY_ID"),
+                    "APCA-API-SECRET-KEY": this.configService.get<string>("APCA_API_SECRET_KEY"),
+                },
+            })
+
+            const calendarDays: CalendarInfo[] = response.data
+            if (!calendarDays?.length) throw new Error("Aucun jour de marché renvoyé par l’API")
+
+            const formattedCalendars: { date: string; openTime: Date; closeTime: Date }[] = calendarDays.map((day) => {
+                const openTime = moment.tz(`${day.date} ${day.open}`, "YYYY-MM-DD HH:mm", "America/New_York").tz("Europe/Paris").toDate()
+
+                const closeTime = moment.tz(`${day.date} ${day.close}`, "YYYY-MM-DD HH:mm", "America/New_York").tz("Europe/Paris").toDate()
+
+                return {
+                    date: day.date,
+                    openTime,
+                    closeTime,
+                }
+            })
+
+            return await this.prisma.marketCalendar.createMany({
+                data: formattedCalendars,
+                skipDuplicates: true,
+            })
+        } catch (error: any) {
+            const msg = error?.response?.data ?? error.message
+            this.logger.error(`Erreur lors de la récupération du calendrier du marché : ${msg}`)
+            throw new Error(msg)
         }
     }
 }
