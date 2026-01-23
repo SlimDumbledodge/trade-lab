@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.2.0
- * Query Engine version: 0c8ef2ce45c83248ab3df073180d5eda9e8be7a3
+ * Prisma Client JS version: 7.3.0
+ * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.2.0",
-  engine: "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3"
+  client: "7.3.0",
+  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
 }
 
 /**
@@ -390,7 +390,8 @@ export const ModelName = {
   Transaction: 'Transaction',
   PortfolioAsset: 'PortfolioAsset',
   AssetPrice: 'AssetPrice',
-  PortfolioSnapshots: 'PortfolioSnapshots'
+  PortfolioSnapshots: 'PortfolioSnapshots',
+  MarketCalendar: 'MarketCalendar'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "portfolio" | "asset" | "transaction" | "portfolioAsset" | "assetPrice" | "portfolioSnapshots"
+    modelProps: "user" | "portfolio" | "asset" | "transaction" | "portfolioAsset" | "assetPrice" | "portfolioSnapshots" | "marketCalendar"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MarketCalendar: {
+      payload: Prisma.$MarketCalendarPayload<ExtArgs>
+      fields: Prisma.MarketCalendarFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MarketCalendarFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MarketCalendarFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>
+        }
+        findFirst: {
+          args: Prisma.MarketCalendarFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MarketCalendarFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>
+        }
+        findMany: {
+          args: Prisma.MarketCalendarFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>[]
+        }
+        create: {
+          args: Prisma.MarketCalendarCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>
+        }
+        createMany: {
+          args: Prisma.MarketCalendarCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MarketCalendarCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>[]
+        }
+        delete: {
+          args: Prisma.MarketCalendarDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>
+        }
+        update: {
+          args: Prisma.MarketCalendarUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>
+        }
+        deleteMany: {
+          args: Prisma.MarketCalendarDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MarketCalendarUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MarketCalendarUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>[]
+        }
+        upsert: {
+          args: Prisma.MarketCalendarUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketCalendarPayload>
+        }
+        aggregate: {
+          args: Prisma.MarketCalendarAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMarketCalendar>
+        }
+        groupBy: {
+          args: Prisma.MarketCalendarGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MarketCalendarGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MarketCalendarCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MarketCalendarCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1064,6 +1139,17 @@ export const PortfolioSnapshotsScalarFieldEnum = {
 } as const
 
 export type PortfolioSnapshotsScalarFieldEnum = (typeof PortfolioSnapshotsScalarFieldEnum)[keyof typeof PortfolioSnapshotsScalarFieldEnum]
+
+
+export const MarketCalendarScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  openTime: 'openTime',
+  closeTime: 'closeTime',
+  createdAt: 'createdAt'
+} as const
+
+export type MarketCalendarScalarFieldEnum = (typeof MarketCalendarScalarFieldEnum)[keyof typeof MarketCalendarScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1281,6 +1367,7 @@ export type GlobalOmitConfig = {
   portfolioAsset?: Prisma.PortfolioAssetOmit
   assetPrice?: Prisma.AssetPriceOmit
   portfolioSnapshots?: Prisma.PortfolioSnapshotsOmit
+  marketCalendar?: Prisma.MarketCalendarOmit
 }
 
 /* Types for Logging */

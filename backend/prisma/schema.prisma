@@ -109,6 +109,15 @@ model PortfolioSnapshots {
   @@index([portfolioId, recordedAt])
 }
 
+model MarketCalendar {
+  id              Int      @id @default(autoincrement())
+  date            String @unique
+  openTime        DateTime
+  closeTime       DateTime
+  createdAt       DateTime @default(now())
+}
+
+
 enum TransactionType {
   buy
   sell
