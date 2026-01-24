@@ -76,34 +76,6 @@ export function AssetPriceChart({ data, handlePerformanceData }: ChartAreaIntera
                             }}
                         />
 
-                        {/* <ChartTooltip
-                            cursor={false}
-                            content={({ active, payload }) => {
-                                if (!active || !payload || !payload.length) return null
-                                handlePerformanceData(payload[0].payload.closingPrice, openingPrice)
-                                const value = payload[0].payload.recordedAt
-                                const first = moment(data[0]?.recordedAt)
-                                const last = moment(data[data.length - 1]?.recordedAt)
-                                const durationDays = last.diff(first, "days")
-
-                                let formattedDate = ""
-                                if (durationDays < 1) {
-                                    formattedDate = moment(value).format("DD/MM/YYYY - HH:mm")
-                                } else if (durationDays < 7) {
-                                    formattedDate = moment(value).format("DD/MM/YYYY - HH:mm")
-                                } else if (durationDays < 60) {
-                                    formattedDate = moment(value).format("DD/MM/YYYY - HH:mm")
-                                } else {
-                                    formattedDate = moment(value).format("DD/MM/YYYY")
-                                }
-
-                                return (
-                                    <div className="rounded-lg border bg-background p-2 shadow-sm">
-                                        <div className="text-sm font-medium">{formattedDate}</div>
-                                    </div>
-                                )
-                            }}
-                        /> */}
                         <ChartTooltip
                             cursor={false}
                             content={({ active, payload }) => {
