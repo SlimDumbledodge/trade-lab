@@ -3,7 +3,7 @@ import { PrismaService } from "src/prisma/prisma.service"
 import { ASSET_PRICE_PERIOD } from "./types/types"
 import { AssetPrice } from "prisma/generated/client"
 import { AlpacaService } from "src/alpaca/alpaca.service"
-import * as moment from "moment"
+const moment = require("moment-timezone")
 
 @Injectable()
 export class AssetsPriceService {

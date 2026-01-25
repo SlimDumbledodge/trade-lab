@@ -35,74 +35,79 @@ export class AlpacaService {
             asof,
             feed = "iex",
             currency = "EUR",
-            page_token,
             sort = "asc",
         } = params
 
         const symbolsString = symbols.join(",")
         const formattedTimeframe = mapTimeframes(timeframe)
+        let pageToken: string | undefined = undefined
+        let hasToken = true
         try {
-            const response = await axios.get<AlpacaBarsResponse>(this.BASE_BARS_STOCK_URL, {
-                params: {
-                    symbols: symbolsString,
-                    timeframe: formattedTimeframe,
-                    start,
-                    end,
-                    limit,
-                    adjustment,
-                    asof,
-                    feed,
-                    currency,
-                    page_token,
-                    sort,
-                },
-                headers: {
-                    accept: "application/json",
-                    "APCA-API-KEY-ID": this.configService.get<string>("APCA_API_KEY_ID"),
-                    "APCA-API-SECRET-KEY": this.configService.get<string>("APCA_API_SECRET_KEY"),
-                },
-            })
-            const bars = response.data.bars
-            for (const symbol in bars) {
-                const asset = await this.prisma.asset.findUnique({ where: { symbol } })
-                if (!asset) {
-                    this.logger.warn(`⚠️ Aucun asset trouvé pour ${symbol}, insertion ignorée.`)
-                    continue
-                }
-
-                const lastClosingPrice = bars[symbol][bars[symbol].length - 1].c
-
-                const upsertOperations = bars[symbol].map((bar) => {
-                    const recordedAt = new Date(bar.t)
-                    return this.prisma.assetPrice.upsert({
-                        where: { assetId_timeframe_recordedAt: { assetId: asset.id, timeframe, recordedAt } },
-                        update: {
-                            open: bar.o,
-                            high: bar.h,
-                            low: bar.l,
-                            close: bar.c,
-                            volume: bar.v,
-                        },
-                        create: {
-                            assetId: asset.id,
-                            timeframe,
-                            open: bar.o,
-                            high: bar.h,
-                            low: bar.l,
-                            close: bar.c,
-                            volume: bar.v,
-                            recordedAt,
-                        },
-                    })
-                })
-                await Promise.allSettled(upsertOperations)
-                await this.prisma.asset.update({
-                    where: { id: asset.id },
-                    data: {
-                        lastPrice: lastClosingPrice,
-                        updatedAt: new Date(),
+            while (hasToken) {
+                const response = await axios.get<AlpacaBarsResponse>(this.BASE_BARS_STOCK_URL, {
+                    params: {
+                        symbols: symbolsString,
+                        timeframe: formattedTimeframe,
+                        start,
+                        end,
+                        limit,
+                        adjustment,
+                        asof,
+                        feed,
+                        currency,
+                        page_token: pageToken,
+                        sort,
+                    },
+                    headers: {
+                        accept: "application/json",
+                        "APCA-API-KEY-ID": this.configService.get<string>("APCA_API_KEY_ID"),
+                        "APCA-API-SECRET-KEY": this.configService.get<string>("APCA_API_SECRET_KEY"),
                     },
                 })
+                pageToken = response.data.next_page_token
+                hasToken = !!pageToken
+                const bars = response.data.bars
+                for (const symbol in bars) {
+                    const asset = await this.prisma.asset.findUnique({ where: { symbol } })
+                    if (!asset) {
+                        this.logger.warn(`⚠️ Aucun asset trouvé pour ${symbol}, insertion ignorée.`)
+                        continue
+                    }
+
+                    const lastClosingPrice = bars[symbol][bars[symbol].length - 1].c
+
+                    const upsertOperations = bars[symbol].map((bar) => {
+                        const recordedAt = new Date(bar.t)
+                        return this.prisma.assetPrice.upsert({
+                            where: { assetId_timeframe_recordedAt: { assetId: asset.id, timeframe, recordedAt } },
+                            update: {
+                                open: bar.o,
+                                high: bar.h,
+                                low: bar.l,
+                                close: bar.c,
+                                volume: bar.v,
+                            },
+                            create: {
+                                assetId: asset.id,
+                                timeframe,
+                                open: bar.o,
+                                high: bar.h,
+                                low: bar.l,
+                                close: bar.c,
+                                volume: bar.v,
+                                recordedAt,
+                            },
+                        })
+                    })
+                    await Promise.allSettled(upsertOperations)
+                    await this.prisma.asset.update({
+                        where: { id: asset.id },
+                        data: {
+                            lastPrice: lastClosingPrice,
+                            updatedAt: new Date(),
+                        },
+                    })
+                }
             }
         } catch (error: any) {
             this.logger.error(`❌ Erreur getHistoricalBars:`, error)

@@ -6,6 +6,8 @@ import moment from "moment"
 import { AlpacaService } from "../src/alpaca/alpaca.service.js"
 import { ASSET_PRICE_PERIOD } from "src/assets-price/types/types.js"
 import { ConfigService } from "@nestjs/config"
+import { FinnhubService } from "src/finnhub/finnhub.service.js"
+import { AssetsPriceService } from "src/assets-price/assets-price.service.js"
 
 class PrismaServiceMock extends PrismaClient {
     async onModuleInit() {}
@@ -18,10 +20,19 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaServiceMock({ adapter })
 const configService = new ConfigService()
 const alpacaService = new AlpacaService(prisma, configService)
+const finnhubService = new FinnhubService(prisma, configService)
+const assetsPriceService = new AssetsPriceService(prisma, alpacaService)
 
 const ASSETS = [
     { symbol: "AAPL", name: "Apple Inc." },
     { symbol: "MSFT", name: "Microsoft Corp." },
+    { symbol: "GOOGL", name: "Alphabet Inc." },
+    { symbol: "AMZN", name: "Amazon.com Inc." },
+    { symbol: "META", name: "Meta Platforms Inc." },
+    { symbol: "TSLA", name: "Tesla Inc." },
+    { symbol: "NVDA", name: "NVIDIA Corp." },
+    { symbol: "NFLX", name: "Netflix Inc." },
+    { symbol: "ADBE", name: "Adobe Inc." },
 ]
 
 const TIMEFRAMES: {
@@ -105,11 +116,51 @@ async function seedMarketCalendar() {
     }
 }
 
+async function seedCompanyInfo() {
+    console.log("⏳ Récupération du calendrier du marché depuis Alpaca...")
+
+    try {
+        const result = await finnhubService.updateCompanyProfil()
+        console.log(`✅ Company infos inséré en base avec succès !`)
+        console.log(`Détails :`, result)
+    } catch (error: any) {
+        console.error("❌ Erreur lors de l'insertion du Company profil :", error?.message ?? error)
+    }
+}
+
+async function seedGetLastQuote() {
+    console.log("⏳ Récupération du calendrier du marché depuis Alpaca...")
+
+    try {
+        const symbols = ASSETS.map((asset) => asset.symbol)
+        const result = await alpacaService.getLatestQuote({ symbols })
+        console.log(`✅ seedGetLastQuote infos inséré en base avec succès !`)
+        console.log(`Détails :`, result)
+    } catch (error: any) {
+        console.error("❌ Erreur lors de l'insertion seedGetLastQuote :", error?.message ?? error)
+    }
+}
+
+async function seedCalculateTodayPerformance() {
+    console.log("⏳ Récupération du seedCalculateTodayPerformance du marché depuis Alpaca...")
+
+    try {
+        const result = await assetsPriceService.calculateTodayPerformance()
+        console.log(`✅ seedCalculateTodayPerformance infos inséré en base avec succès !`)
+        console.log(`Détails :`, result)
+    } catch (error: any) {
+        console.error("❌ Erreur lors de l'insertion seedCalculateTodayPerformance :", error?.message ?? error)
+    }
+}
+
 async function main() {
     const assets = await seedAssets()
     await seedUser()
     await seedHistoricalPrices(assets)
     await seedMarketCalendar()
+    await seedCompanyInfo()
+    await seedGetLastQuote()
+    await seedCalculateTodayPerformance()
 }
 
 main()
