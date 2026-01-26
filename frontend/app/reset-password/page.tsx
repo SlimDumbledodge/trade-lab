@@ -1,7 +1,10 @@
+import React, { Suspense } from "react"
 import ResetPassword from "@/components/forms/ResetPasswordForm"
 
-const ResetPasswordPage = () => {
-    return <ResetPassword />
+export default function Page() {
+    return (
+        <Suspense fallback={<div>Chargement...</div>}>
+            <ResetPassword />
+        </Suspense>
+    )
 }
-
-export default ResetPasswordPage

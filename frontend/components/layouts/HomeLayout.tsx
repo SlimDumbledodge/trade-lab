@@ -1,7 +1,8 @@
 import { ReactNode } from "react"
 import { AppSidebar } from "@/components/header/nav/SideBar"
 import { SiteHeader } from "@/components/header/Header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
+import { Footer } from "@/components/footer/Footer"
 
 interface HomeLayoutProps {
     children: ReactNode
@@ -18,17 +19,22 @@ export function HomeLayout({ children, headerTitle }: HomeLayoutProps) {
                 } as React.CSSProperties
             }
         >
-            <AppSidebar variant="inset" />
-            <SidebarInset>
-                <SiteHeader headerTitle={headerTitle} />
-                <div className="flex flex-1 flex-col p-4 md:p-6 lg:p-8">
-                    {" "}
-                    {/* <- padding global */}
-                    <div className="@container/main flex flex-1 flex-col gap-4 mx-auto w-full max-w-6xl">
-                        <div className="flex flex-col gap-4 md:gap-6">{children}</div>
-                    </div>
+            <div className="flex min-h-screen w-full">
+                {/* Sidebar */}
+                <AppSidebar variant="inset" />
+
+                {/* Main Content Area */}
+                <div className="flex flex-1 flex-col">
+                    {/* Header */}
+                    <SiteHeader headerTitle={headerTitle} />
+
+                    {/* Main content */}
+                    <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">
+                        <div className="mx-auto w-full max-w-6xl">{children}</div>
+                    </main>
+                    <Footer />
                 </div>
-            </SidebarInset>
+            </div>
         </SidebarProvider>
     )
 }
