@@ -5,6 +5,7 @@ export function usePortfolioAsset(symbol: string, token?: string) {
     return useQuery({
         queryKey: ["portfolioAsset", symbol],
         queryFn: () => getPortfolioAsset(symbol, token),
+        enabled: !!token,
         refetchInterval: 60_000,
         refetchIntervalInBackground: true,
     })
