@@ -10,7 +10,6 @@ export const PortfolioAssetCard = () => {
     const { data: session } = useSession()
     const router = useRouter()
     const { data: portfolioAssets, error: errorPortfolioAssets } = usePortfolioAssets(session?.accessToken)
-    console.log(portfolioAssets)
 
     if (errorPortfolioAssets) return <p className="text-red-600">{errorPortfolioAssets?.message}</p>
     if (!portfolioAssets) return <p>Erreur : aucun actif trouvé.</p>

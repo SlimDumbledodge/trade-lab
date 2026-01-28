@@ -27,7 +27,6 @@ function Market() {
         )
     if (error) return <p>Erreur: {error.message}</p>
     if (!assets) return <p>Aucun produit trouver</p>
-    console.log(assets)
 
     return (
         <HomeLayout headerTitle="Marché">
@@ -40,10 +39,10 @@ function Market() {
                     <TableRow>
                         <TableHead className="font-bold">Titre</TableHead>
                         <TableHead className="font-bold text-center">Prix moyen</TableHead>
-                        <TableHead className="font-bold text-center">Bid</TableHead>
-                        <TableHead className="font-bold text-center">Ask</TableHead>
-                        <TableHead className="font-bold text-center">Horodatage</TableHead>
-                        <TableHead className="font-bold text-center">Actions</TableHead>
+                        <TableHead className="font-bold text-center hidden lg:table-cell">Bid</TableHead>
+                        <TableHead className="font-bold text-center hidden lg:table-cell">Ask</TableHead>
+                        <TableHead className="font-bold text-center hidden xl:table-cell">Horodatage</TableHead>
+                        <TableHead className="font-bold text-center hidden md:table-cell">Volume</TableHead>
                         <TableHead className="font-bold text-center">Aujourd'hui</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -70,12 +69,16 @@ function Market() {
                                 </div>
                             </TableCell>
                             <TableCell className="text-center font-semibold">{Number(asset.midPrice).toFixed(2)} €</TableCell>
-                            <TableCell className="text-center font-semibold">{Number(asset.bidPrice).toFixed(2)} €</TableCell>
-                            <TableCell className="text-center font-semibold">{Number(asset.askPrice).toFixed(2)} €</TableCell>
-                            <TableCell className="text-center font-semibold">
+                            <TableCell className="text-center font-semibold hidden lg:table-cell">
+                                {Number(asset.bidPrice).toFixed(2)} €
+                            </TableCell>
+                            <TableCell className="text-center font-semibold hidden lg:table-cell">
+                                {Number(asset.askPrice).toFixed(2)} €
+                            </TableCell>
+                            <TableCell className="text-center font-semibold hidden xl:table-cell">
                                 {moment(asset.quoteTimestamp).format("HH:mm:ss:ms")}
                             </TableCell>
-                            <TableCell className="text-center font-semibold">{asset.quoteVolume}</TableCell>
+                            <TableCell className="text-center font-semibold hidden md:table-cell">{asset.quoteVolume}</TableCell>
                             <TableCell className="text-center">
                                 <span
                                     className={`font-semibold flex items-center justify-center gap-1 ${

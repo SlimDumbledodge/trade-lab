@@ -40,8 +40,6 @@ const LoginForm = () => {
             })
 
             if (result?.error) {
-                // Analyser le type d'erreur pour afficher un message approprié
-                console.log("Error from signIn:", result.error)
                 if (result.error === "429") {
                     toast.error("Trop de tentatives de connexion. Veuillez réessayer dans quelques minutes.")
                 } else if (result.error === "500" || result.error === "503") {
