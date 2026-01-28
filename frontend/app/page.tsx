@@ -2,244 +2,201 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import {
-    TrendingUpIcon,
-    BarChart3Icon,
-    ShieldIcon,
-    GraduationCapIcon,
-    Users,
-    Target,
-    Award,
-    PlayCircle,
-    ArrowRight,
-    CheckCircle,
-} from "lucide-react"
+import { ArrowRight, Play } from "lucide-react"
+import Image from "next/image"
 
-const Page = () => {
+export default function LandingPage() {
     return (
-        <div className="min-h-screen">
-            {/* Hero Section */}
-            <section className="relative overflow-hidden py-20 lg:py-32">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20" />
-                <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center">
-                        <Badge className="rounded-sm border-transparent bg-gradient-to-r from-blue-600 to-purple-600 [background-size:105%] bg-center text-white">
-                            Plateforme éducative n°1
-                        </Badge>
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl lg:text-7xl">
-                            Apprenez le trading sans
-                            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                {" "}
-                                risquer
-                            </span>{" "}
-                            votre argent
+        <div className="relative min-h-screen overflow-hidden bg-background">
+            {/* Background gradient */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute -top-[40%] left-1/2 h-[80%] w-[200%] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-primary/20 to-fuchsia-600/20 blur-3xl" />
+            </div>
+
+            {/* Navbar */}
+            <header className="relative z-50">
+                <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6">
+                    <Link href="/" className="flex items-center gap-2 sm:gap-3">
+                        <Image src="/icon.png" alt="Tradelab" width={28} height={28} className="sm:h-9 sm:w-9" />
+                        <span className="hidden font-medium text-foreground sm:block sm:text-lg">tradelab/studio</span>
+                    </Link>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <Link href="/login">
+                            <Button variant="ghost" size="sm" className="text-sm">
+                                Se connecter
+                            </Button>
+                        </Link>
+                        <Link href="/register">
+                            <Button size="sm" className="text-sm ">
+                                Créer un compte
+                            </Button>
+                        </Link>
+                    </div>
+                </nav>
+            </header>
+
+            {/* Hero */}
+            <main className="relative">
+                <section className="mx-auto max-w-7xl px-6 pb-32 pt-20 lg:pt-32">
+                    <div className="mx-auto max-w-4xl text-center">
+                        {/* Badge */}
+                        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border/50 bg-muted/50 px-4 py-2 text-sm backdrop-blur-sm">
+                            <span className="relative flex h-2 w-2">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                            </span>
+                            <span className="text-muted-foreground">Marchés ouverts</span>
+                        </div>
+
+                        {/* Headline */}
+                        <h1 className="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+                            Investissez sans
+                            <span className="relative mx-3 inline-block">
+                                <span className="relative z-10 bg-gradient-to-r from-violet-500 via-primary to-fuchsia-500 bg-clip-text text-transparent">
+                                    risque
+                                </span>
+                            </span>
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 sm:text-xl">
-                            Tradelab Studio vous offre un environnement sécurisé pour maîtriser les marchés financiers avec de
-                            l'argent virtuel. Développez vos compétences, testez vos stratégies, progressez à votre rythme.
+
+                        <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+                            Simulez vos investissements avec des données réelles. Apprenez, testez vos stratégies, et développez
+                            vos compétences avant de passer au réel.
                         </p>
-                        <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
+
+                        {/* CTA */}
+                        <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
                             <Link href="/register">
-                                <Button
-                                    size="lg"
-                                    className="bg-gradient-to-r text-white from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                                >
-                                    <PlayCircle className="mr-2 h-5 w-5" />
-                                    Commencer gratuitement
+                                <Button size="lg" className="gap-2 px-8 text-base">
+                                    <Play className="h-4 w-4" />
+                                    Commencer maintenant
                                 </Button>
                             </Link>
                             <Link href="/market">
-                                <Button variant="outline" size="lg">
-                                    Découvrir les marchés
-                                    <ArrowRight className="ml-2 h-5 w-5" />
+                                <Button size="lg" variant="outline" className="gap-2 px-8 text-base">
+                                    Explorer les marchés
+                                    <ArrowRight className="h-4 w-4" />
                                 </Button>
                             </Link>
                         </div>
-                    </div>
-                </div>
-            </section>
 
-            {/* Features Section */}
-            <section className="py-20 lg:py-32">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl text-center">
-                        <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
-                            Tout ce dont vous avez besoin pour apprendre
-                        </h2>
-                        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-                            Une plateforme complète conçue pour vous accompagner dans votre apprentissage du trading
-                        </p>
-                    </div>
-                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
-                        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950/20 dark:to-indigo-950/20">
-                            <CardHeader>
-                                <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600 text-white">
-                                    <TrendingUpIcon className="h-6 w-6" />
-                                </div>
-                                <CardTitle className="text-xl">Données en temps réel</CardTitle>
-                                <CardDescription>
-                                    Accédez aux données de marché en temps réel via l'API Alpaca pour une expérience authentique
-                                </CardDescription>
-                            </CardHeader>
-                        </Card>
-
-                        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-purple-50 to-pink-100 dark:from-purple-950/20 dark:to-pink-950/20">
-                            <CardHeader>
-                                <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg bg-purple-600 text-white">
-                                    <BarChart3Icon className="h-6 w-6" />
-                                </div>
-                                <CardTitle className="text-xl">Portefeuille virtuel</CardTitle>
-                                <CardDescription>
-                                    Gérez votre portefeuille virtuel de 100 000€ et suivez vos performances en détail
-                                </CardDescription>
-                            </CardHeader>
-                        </Card>
-
-                        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-950/20 dark:to-emerald-950/20">
-                            <CardHeader>
-                                <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg bg-green-600 text-white">
-                                    <ShieldIcon className="h-6 w-6" />
-                                </div>
-                                <CardTitle className="text-xl">100% sécurisé</CardTitle>
-                                <CardDescription>
-                                    Aucun risque financier - apprenez avec de l'argent virtuel dans un environnement sûr
-                                </CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            {/* Benefits Section */}
-            <section className="bg-gray-50 dark:bg-gray-900/50 py-20 lg:py-32">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
-                        <div className="lg:pr-8">
-                            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
-                                Pourquoi choisir Tradelab Studio ?
-                            </h2>
-                            <p className="mt-6 text-lg text-gray-600 dark:text-gray-300">
-                                Notre plateforme vous offre tous les outils nécessaires pour développer vos compétences en trading
-                                dans un environnement d'apprentissage optimal.
-                            </p>
-                            <div className="mt-10 space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
-                                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                                            Formation progressive
-                                        </h3>
-                                        <p className="text-gray-600 dark:text-gray-300">
-                                            Commencez par les bases et progressez à votre rythme avec nos outils adaptés
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
-                                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                                            Interface intuitive
-                                        </h3>
-                                        <p className="text-gray-600 dark:text-gray-300">
-                                            Une interface moderne et simple d'utilisation pour vous concentrer sur l'essentiel
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
-                                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Suivi détaillé</h3>
-                                        <p className="text-gray-600 dark:text-gray-300">
-                                            Analysez vos performances et identifiez les points d'amélioration
-                                        </p>
-                                    </div>
-                                </div>
+                        {/* Social proof */}
+                        <div className="mt-20 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-center text-sm text-muted-foreground">
+                            <div>
+                                <div className="text-3xl font-bold text-foreground">10k€</div>
+                                <div className="mt-1">Capital de départ</div>
+                            </div>
+                            <div className="hidden h-8 w-px bg-border sm:block" />
+                            <div>
+                                <div className="text-3xl font-bold text-foreground">Temps réel</div>
+                                <div className="mt-1">Données via Alpaca</div>
+                            </div>
+                            <div className="hidden h-8 w-px bg-border sm:block" />
+                            <div>
+                                <div className="text-3xl font-bold text-foreground">0 risque</div>
+                                <div className="mt-1">Argent 100% virtuel</div>
                             </div>
                         </div>
-                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                            <Card className="border-0 bg-white/50 backdrop-blur-sm dark:bg-gray-800/50">
-                                <CardHeader className="text-center">
-                                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/20">
-                                        <Users className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                                    </div>
-                                    <CardTitle className="text-2xl font-bold text-blue-600 dark:text-blue-400">1000+</CardTitle>
-                                    <CardDescription>Utilisateurs actifs</CardDescription>
-                                </CardHeader>
-                            </Card>
-                            <Card className="border-0 bg-white/50 backdrop-blur-sm dark:bg-gray-800/50">
-                                <CardHeader className="text-center">
-                                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/20">
-                                        <Target className="h-8 w-8 text-purple-600 dark:text-purple-400" />
-                                    </div>
-                                    <CardTitle className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                                        10M€
-                                    </CardTitle>
-                                    <CardDescription>Volumes échangés</CardDescription>
-                                </CardHeader>
-                            </Card>
-                            <Card className="border-0 bg-white/50 backdrop-blur-sm dark:bg-gray-800/50">
-                                <CardHeader className="text-center">
-                                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
-                                        <Award className="h-8 w-8 text-green-600 dark:text-green-400" />
-                                    </div>
-                                    <CardTitle className="text-2xl font-bold text-green-600 dark:text-green-400">95%</CardTitle>
-                                    <CardDescription>Taux de satisfaction</CardDescription>
-                                </CardHeader>
-                            </Card>
-                            <Card className="border-0 bg-white/50 backdrop-blur-sm dark:bg-gray-800/50">
-                                <CardHeader className="text-center">
-                                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/20">
-                                        <GraduationCapIcon className="h-8 w-8 text-orange-600 dark:text-orange-400" />
-                                    </div>
-                                    <CardTitle className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                                        24/7
-                                    </CardTitle>
-                                    <CardDescription>Marchés disponibles</CardDescription>
-                                </CardHeader>
-                            </Card>
-                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* CTA Section */}
-            <section className="relative overflow-hidden py-20 lg:py-32">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600" />
-                <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                            Prêt à commencer votre apprentissage ?
-                        </h2>
-                        <p className="mt-6 text-lg text-blue-100">
-                            Rejoignez des milliers d'utilisateurs qui développent leurs compétences en trading avec Tradelab
-                            Studio
+                {/* Features */}
+                <section className="relative border-t border-border/50 bg-muted/30">
+                    <div className="mx-auto max-w-7xl px-6 py-24">
+                        <div className="grid gap-8 md:grid-cols-3">
+                            <div className="group rounded-2xl border border-border/50 bg-background/50 p-8 backdrop-blur-sm transition-all ">
+                                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={1.5}
+                                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="mb-2 text-lg font-semibold">Trading simulé</h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Achetez et vendez des actions comme sur un vrai compte, sans les conséquences financières.
+                                </p>
+                            </div>
+
+                            <div className="group rounded-2xl border border-border/50 bg-background/50 p-8 backdrop-blur-sm transition-all">
+                                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={1.5}
+                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="mb-2 text-lg font-semibold">Suivi performant</h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Visualisez l'évolution de votre portefeuille avec des graphiques clairs et détaillés.
+                                </p>
+                            </div>
+
+                            <div className="group rounded-2xl border border-border/50 bg-background/50 p-8 backdrop-blur-sm transition-all">
+                                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={1.5}
+                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="mb-2 text-lg font-semibold">100% sécurisé</h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Aucun risque financier. Apprenez sereinement dans un environnement protégé.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* CTA Section */}
+                <section className="relative overflow-hidden border-t border-border/50">
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+                    <div className="relative mx-auto max-w-7xl px-6 py-24 text-center">
+                        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Prêt à apprendre ?</h2>
+                        <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
+                            Créez votre compte en quelques secondes et commencez à trader avec 10 000€ virtuels.
                         </p>
-                        <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
+                        <div className="mt-8">
                             <Link href="/register">
-                                <Button size="lg" variant="secondary" className="bg-white text-gray-900 hover:bg-gray-100">
-                                    <PlayCircle className="mr-2 h-5 w-5" />
+                                <Button size="lg" className="gap-2 px-8 text-base">
                                     Créer mon compte gratuit
-                                </Button>
-                            </Link>
-                            <Link href="/FAQ">
-                                <Button size="lg" variant="ghost" className="text-white border-white hover:bg-white/10">
-                                    En savoir plus
+                                    <ArrowRight className="h-4 w-4" />
                                 </Button>
                             </Link>
                         </div>
                     </div>
+                </section>
+            </main>
+
+            {/* Footer */}
+            <footer className="border-t border-border/50">
+                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Image src="/icon.png" alt="Tradelab" width={20} height={20} />
+                        <span>tradelab/studio</span>
+                    </div>
+                    <div className="flex gap-6 text-sm text-muted-foreground">
+                        <Link href="/legal" className="transition-colors hover:text-foreground">
+                            Mentions légales
+                        </Link>
+                        <Link href="/privacy" className="transition-colors hover:text-foreground">
+                            Confidentialité
+                        </Link>
+                        <Link href="/contact" className="transition-colors hover:text-foreground">
+                            Contact
+                        </Link>
+                    </div>
                 </div>
-            </section>
+            </footer>
         </div>
     )
 }
-
-export default Page
