@@ -6,7 +6,7 @@ import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { ASSET_PRICE_PERIOD } from "@/types/types"
 import { AssetPriceChart, PricePoint } from "../../../components/charts/AssetPriceChart"
 import Image from "next/image"
-import { useState, useRef, useCallback, Suspense } from "react"
+import { useState, useRef, useCallback, Suspense, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { PriceChange } from "@/components/ui/price-change"
 import TradeExecutionForm from "@/components/market/TradeExecutionForm"
@@ -43,6 +43,13 @@ export default function MarketProductDetails() {
 
     const { data: asset, isLoading: assetLoading, error: assetError } = useAsset(symbol, session?.accessToken)
     const { data: portfolioAsset, isLoading: isPortfolioAssetLoading } = usePortfolioAsset(symbol, session?.accessToken)
+
+    // Mettre à jour le titre de la page dynamiquement
+    useEffect(() => {
+        if (asset?.name) {
+            document.title = `Tradelab Studio | ${asset.name}`
+        }
+    }, [asset])
 
     const {
         data: assetPrices,

@@ -9,8 +9,13 @@ import moment from "moment"
 import { TrendingUp, TrendingDown } from "lucide-react"
 import { useAssets } from "@/hooks/useAssets"
 import { SkeletonMarket } from "@/components/ui/skeleton-market"
+import { useEffect } from "react"
 
 function Market() {
+    useEffect(() => {
+        document.title = "Tradelab Studio - Marché"
+    }, [])
+
     const { data: session } = useSession()
     const { data: assets, isLoading, error } = useAssets(session?.accessToken)
     const router = useRouter()
@@ -55,8 +60,8 @@ function Market() {
                                         className="rounded-xl shadow"
                                         src={asset.logo}
                                         alt={asset.symbol}
-                                        width={28}
-                                        height={28}
+                                        width={35}
+                                        height={35}
                                     />
                                     <div className="flex flex-col">
                                         <span className="font-bold">{asset.name}</span>
