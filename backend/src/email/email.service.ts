@@ -107,9 +107,9 @@ Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet emai
         `
 
         return this.sendMail({
-            from: `"TradeLab Studio" <${this.configService.get("EMAIL_USER")}>`,
+            from: `"Tradelab Studio" <${this.configService.get("EMAIL_USER")}>`,
             to: email,
-            subject: "Réinitialisation de votre mot de passe - TradeLab Studio",
+            subject: "Réinitialisation de votre mot de passe - Tradelab Studio",
             text: textContent,
             html: htmlContent,
         })
@@ -124,7 +124,7 @@ Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet emai
     }): Promise<void> {
         const { firstName, lastName, email, subject, message } = contactData
 
-        // Email envoyé à l'équipe TradeLab
+        // Email envoyé à l'équipe Tradelab
         const htmlContentToTeam = `
             <!DOCTYPE html>
             <html>
@@ -145,7 +145,7 @@ Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet emai
                         <h2 style="margin: 0;">📧 Nouveau message de contact</h2>
                     </div>
                     <div class="content">
-                        <p>Vous avez reçu un nouveau message depuis le formulaire de contact de TradeLab Studio.</p>
+                        <p>Vous avez reçu un nouveau message depuis le formulaire de contact de Tradelab Studio.</p>
                         
                         <div class="info-row">
                             <span class="label">De :</span> ${firstName} ${lastName}
@@ -174,7 +174,7 @@ Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet emai
         `
 
         const textContentToTeam = `
-Nouveau message de contact - TradeLab Studio
+Nouveau message de contact - Tradelab Studio
 
 De : ${firstName} ${lastName}
 Email : ${email}
@@ -218,7 +218,7 @@ Pour répondre, utilisez l'adresse : ${email}
                         <a href="mailto:contact@tradelab-studio.fr">contact@tradelab-studio.fr</a></p>
                         
                         <div class="footer">
-                            <p><strong>TradeLab Studio</strong> - Votre plateforme d'apprentissage du trading</p>
+                            <p><strong>Tradelab Studio</strong> - Votre plateforme d'apprentissage du trading</p>
                             <p>Cet email a été envoyé automatiquement, merci de ne pas y répondre directement.</p>
                         </div>
                     </div>
@@ -240,14 +240,14 @@ Notre équipe examinera votre demande et vous répondra dans les 24-48 heures.
 Si votre demande est urgente, n'hésitez pas à nous contacter directement à l'adresse : contact@tradelab-studio.fr
 
 ---
-TradeLab Studio - Votre plateforme d'apprentissage du trading
+Tradelab Studio - Votre plateforme d'apprentissage du trading
         `
 
         // Envoi des deux emails
         await Promise.all([
             // Email à l'équipe
             this.sendMail({
-                from: `"TradeLab Contact Form" <${this.configService.get("EMAIL_USER")}>`,
+                from: `"Tradelab Contact Form" <${this.configService.get("EMAIL_USER")}>`,
                 to: this.configService.get("EMAIL_USER"),
                 replyTo: email,
                 subject: `[Contact] ${subject}`,
@@ -256,9 +256,9 @@ TradeLab Studio - Votre plateforme d'apprentissage du trading
             }),
             // Email de confirmation à l'utilisateur
             this.sendMail({
-                from: `"TradeLab Studio" <${this.configService.get("EMAIL_USER")}>`,
+                from: `"Tradelab Studio" <${this.configService.get("EMAIL_USER")}>`,
                 to: email,
-                subject: "Nous avons bien reçu votre message - TradeLab Studio",
+                subject: "Nous avons bien reçu votre message - Tradelab Studio",
                 text: textContentToUser,
                 html: htmlContentToUser,
             }),

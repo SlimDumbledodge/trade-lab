@@ -63,7 +63,7 @@ async function bootstrap() {
         }),
     )
     app.useGlobalInterceptors(new ResponseInterceptor())
-    const config = new DocumentBuilder().setTitle("TradeLab API").setVersion("0.1").build()
+    const config = new DocumentBuilder().setTitle("Tradelab API").setVersion("0.1").build()
     const document = SwaggerModule.createDocument(app, config)
     SwaggerModule.setup("api", app, document)
     await app.listen(process.env.PORT ?? 3001)

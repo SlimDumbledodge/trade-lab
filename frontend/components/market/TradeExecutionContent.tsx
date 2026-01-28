@@ -82,7 +82,7 @@ export const TradeExecutionContent: React.FC<TradeExecutionContentProps> = ({
             </Button>
 
             <p className="text-xs text-center text-muted-foreground px-4">
-                Par la présente, je donne instruction à TradeLab de placer mon ordre à TradeLab.
+                Par la présente, je donne instruction à Tradelab de placer mon ordre à Tradelab.
             </p>
         </div>
     )

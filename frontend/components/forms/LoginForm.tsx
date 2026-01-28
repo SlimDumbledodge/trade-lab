@@ -71,12 +71,12 @@ const LoginForm = () => {
             <Card className="z-1 w-full border-none shadow-md sm:max-w-lg">
                 <CardHeader className="gap-6">
                     <div className="flex items-center gap-3">
-                        <Image src="/icon.png" alt="Logo TradeLab" width={35} height={35} />
+                        <Image src="/icon.png" alt="Logo Tradelab" width={35} height={35} />
                         <span className="text-xl font-semibold">tradelab/studio</span>
                     </div>
 
                     <div>
-                        <CardTitle className="mb-1.5 text-2xl">Connexion à TradeLab Studio</CardTitle>
+                        <CardTitle className="mb-1.5 text-2xl">Connexion à Tradelab Studio</CardTitle>
                         <CardDescription className="text-base">
                             Investissez en toute sécurité grâce à l'argent virtuelle.
                         </CardDescription>
