@@ -17,7 +17,7 @@ const ForgotPassword = () => {
             <Card className="z-1 w-full border-none shadow-md sm:max-w-md">
                 <CardHeader className="gap-6">
                     <div className="flex items-center gap-3">
-                        <Image src="/icon.png" alt="Logo TradeLab" width={35} height={35} />
+                        <Image src="/icon.png" alt="Logo Tradelab" width={35} height={35} />
                         <span className="text-xl font-semibold">tradelab/studio</span>
                     </div>
                     <div>

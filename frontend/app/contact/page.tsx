@@ -215,7 +215,7 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="font-medium mb-2">Support général</h3>
                                     <p className="text-sm text-muted-foreground">
-                                        Pour toute question sur l'utilisation de TradeLab Studio
+                                        Pour toute question sur l'utilisation de Tradelab Studio
                                     </p>
                                     <a
                                         href="mailto:contact@tradelab-studio.fr"
@@ -255,7 +255,7 @@ export default function ContactPage() {
                                 <div className="border rounded-lg p-3">
                                     <h4 className="font-medium text-sm mb-1">L'argent est-il réel ?</h4>
                                     <p className="text-xs text-muted-foreground">
-                                        Non, TradeLab Studio utilise uniquement de l'argent virtuel à des fins éducatives.
+                                        Non, Tradelab Studio utilise uniquement de l'argent virtuel à des fins éducatives.
                                     </p>
                                 </div>
 
@@ -269,7 +269,7 @@ export default function ContactPage() {
                                 <div className="border rounded-lg p-3">
                                     <h4 className="font-medium text-sm mb-1">Le service est-il gratuit ?</h4>
                                     <p className="text-xs text-muted-foreground">
-                                        Oui, TradeLab Studio est entièrement gratuit et le restera.
+                                        Oui, Tradelab Studio est entièrement gratuit et le restera.
                                     </p>
                                 </div>
 
@@ -289,7 +289,7 @@ export default function ContactPage() {
                             </CardHeader>
                             <CardContent>
                                 <p className="text-sm text-muted-foreground mb-3">
-                                    Vous avez trouvé un bug ou rencontré un problème technique ? Aidez-nous à améliorer TradeLab
+                                    Vous avez trouvé un bug ou rencontré un problème technique ? Aidez-nous à améliorer Tradelab
                                     Studio !
                                 </p>
                                 <div className="space-y-2 text-sm">
