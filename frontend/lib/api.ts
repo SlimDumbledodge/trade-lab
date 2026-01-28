@@ -57,3 +57,15 @@ export const resetPassword = (token: string, newPassword: string): Promise<{ mes
         method: "POST",
         body: JSON.stringify({ token, newPassword }),
     })
+
+export const sendContactMessage = (data: {
+    firstName: string
+    lastName: string
+    email: string
+    subject: string
+    message: string
+}): Promise<{ message: string }> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/email/contact`, undefined, {
+        method: "POST",
+        body: JSON.stringify(data),
+    })
