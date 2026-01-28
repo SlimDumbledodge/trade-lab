@@ -18,7 +18,7 @@ export default function AccountPage() {
 
     return (
         <HomeLayout headerTitle="Mon compte">
-            <div className="max-w-2xl mx-auto">
+            <div className="w-full max-w-2xl">
                 <Card>
                     <CardHeader>
                         <CardTitle>Informations du compte</CardTitle>
