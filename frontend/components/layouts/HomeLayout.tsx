@@ -29,7 +29,7 @@ export function HomeLayout({ children, headerTitle }: HomeLayoutProps) {
                     <SiteHeader headerTitle={headerTitle} />
 
                     {/* Main content */}
-                    <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">
+                    <main className="flex-1 p-4 md:p-6 lg:p-8">
                         <div className="mx-auto w-full max-w-6xl">{children}</div>
                     </main>
                     <Footer />

@@ -20,7 +20,7 @@ export function TransactionSheet({ transaction, open, onOpenChange }: Transactio
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
-            <SheetContent position="right" size="default">
+            <SheetContent position="right" size="default" className="w-full sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/3 sm:max-w-lg">
                 <SheetHeader className="mt-8">
                     <SheetTitle>
                         {transaction.type === TransactionType.BUY ? `Vous avez investi ${total}€` : `Vous avez reçu ${total}€`}
@@ -39,7 +39,7 @@ export function TransactionSheet({ transaction, open, onOpenChange }: Transactio
                             <TableRow>
                                 <TableCell className="font-medium">Transaction</TableCell>
                                 <TableCell className="text-right font-semibold">
-                                    {Number(transaction.quantity).toFixed(6)} x {transaction.price} €
+                                    {Number(transaction.quantity).toFixed(6)} x {Number(transaction.price).toFixed(2)} €
                                 </TableCell>
                             </TableRow>
                             <TableRow>
