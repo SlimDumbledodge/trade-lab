@@ -19,6 +19,7 @@ import { registerFormSchema, RegisterFormSchema } from "@/lib/validations/regist
 import { signIn } from "next-auth/react"
 import toast from "react-hot-toast"
 import AuthBackgroundShape from "@/assets/svg/auth-background-shape"
+import DialogTermsConditions from "@/components/ui/dialog-terms-conditions"
 
 const RegisterForm = () => {
     const router = useRouter()
@@ -89,12 +90,12 @@ const RegisterForm = () => {
             <Card className="z-1 w-full border-none shadow-md sm:max-w-lg">
                 <CardHeader className="gap-6">
                     <div className="flex items-center gap-3">
-                        <Image src="/icon.png" alt="Logo TradeLab" width={35} height={35} />
+                        <Image src="/icon.png" alt="Logo Tradelab" width={35} height={35} />
                         <span className="text-xl font-semibold">tradelab/studio</span>
                     </div>
 
                     <div>
-                        <CardTitle className="mb-1.5 text-2xl">Inscription à TradeLab</CardTitle>
+                        <CardTitle className="mb-1.5 text-2xl">Inscription à Tradelab</CardTitle>
                         <CardDescription className="text-base">
                             Investissez en toute sécurité grâce à l'argent virtuelle.
                         </CardDescription>
@@ -237,12 +238,16 @@ const RegisterForm = () => {
                                                         disabled={isLoading}
                                                     />
                                                 </FormControl>
-                                                <Label htmlFor="terms" className="cursor-pointer">
-                                                    <span className="text-muted-foreground">J'accepte les</span>
-                                                    <Link href="#" className="text-foreground hover:underline">
-                                                        conditions générales
-                                                    </Link>
-                                                </Label>
+                                                <div className="flex items-center gap-1">
+                                                    <Label htmlFor="terms" className="cursor-pointer text-muted-foreground">
+                                                        J'accepte les
+                                                    </Label>
+                                                    <DialogTermsConditions onAccept={() => field.onChange(true)}>
+                                                        <span className="text-foreground hover:underline cursor-pointer">
+                                                            conditions générales
+                                                        </span>
+                                                    </DialogTermsConditions>
+                                                </div>
                                             </div>
                                             <FormMessage />
                                         </FormItem>
