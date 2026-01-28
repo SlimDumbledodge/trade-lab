@@ -3,7 +3,7 @@
 import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { PortfolioPerformanceChart, PortfolioPoint } from "@/components/charts/PortfolioPerformanceChart"
 import { Button } from "@/components/ui/button"
-import { Suspense, useCallback, useRef, useState } from "react"
+import { Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { useSession } from "next-auth/react"
 import { usePortfolio } from "@/hooks/usePortfolio"
 import { PORTFOLIO_PERFORMANCE_PERIODS } from "@/lib/constants"
@@ -15,6 +15,10 @@ import { SkeletonCard } from "@/components/ui/skeleton-card"
 import { SkeletonChart } from "@/components/ui/skeleton-chart"
 
 function Portfolio() {
+    useEffect(() => {
+        document.title = "Tradelab Studio - Portefeuille"
+    }, [])
+
     const [selectedPeriod, setSelectedPeriod] = useState<PORTFOLIO_PERFORMANCE_PERIOD>(PORTFOLIO_PERFORMANCE_PERIOD.ONE_DAY)
     const [performanceData, setPerformanceData] = useState<{ pnlEuros: number; pnlPercent: number; holdingsValue: number }>({
         pnlEuros: 0,
@@ -54,22 +58,27 @@ function Portfolio() {
         )
     if (portfolioError) return <p className="text-red-600">{portfolioError?.message}</p>
 
-    const firstUnrealizedPnl = portfolio.points[0]?.unrealizedPnl ?? 0
-    const formatPerformancePoints: PortfolioPoint[] = portfolio.points.map((point) => {
-        return {
-            holdingsValue: point.holdingsValue,
-            unrealizedPnl: point.unrealizedPnl - firstUnrealizedPnl,
-            recordedAt: point.recordedAt,
-        }
-    })
+    const hasPoints = portfolio.points && portfolio.points.length > 0
+    const firstUnrealizedPnl = hasPoints ? (portfolio.points[0]?.unrealizedPnl ?? 0) : 0
+    const formatPerformancePoints: PortfolioPoint[] = hasPoints
+        ? portfolio.points.map((point) => {
+              return {
+                  holdingsValue: point.holdingsValue,
+                  unrealizedPnl: point.unrealizedPnl - firstUnrealizedPnl,
+                  recordedAt: point.recordedAt,
+              }
+          })
+        : []
 
-    const lastSnapshot = formatPerformancePoints[formatPerformancePoints.length - 1]
+    const lastSnapshot = hasPoints
+        ? formatPerformancePoints[formatPerformancePoints.length - 1]
+        : { holdingsValue: 0, unrealizedPnl: 0, recordedAt: new Date().toISOString() }
 
     return (
         <HomeLayout headerTitle="Portefeuille">
             <div className="flex flex-col gap-6">
                 {/* En-tête avec valeur du portefeuille */}
-                <div className="flex flex-col gap-2">
+                <div className="pl-2 flex flex-col gap-2">
                     <h1 className="text-3xl font-bold">Portefeuille</h1>
                     <p className="text-4xl font-bold">
                         {Number(performanceData.holdingsValue ?? lastSnapshot.holdingsValue).toFixed(2)} €
