@@ -24,15 +24,15 @@ export const PortfolioAssetCard = () => {
                     <div
                         key={portfolioAsset.id}
                         onClick={() => router.push(`/market/${portfolioAsset.asset.symbol}`)}
-                        className="flex items-start gap-3 cursor-pointer rounded-lg p-2 -mx-2 transition-colors hover:bg-accent/50"
+                        className="flex items-center gap-3 cursor-pointer rounded-lg p-2 -mx-2 transition-colors hover:bg-accent/50"
                     >
                         <div className="flex items-center gap-3">
                             <Image
                                 className="rounded-xl shadow"
                                 src={portfolioAsset.asset.logo}
                                 alt={portfolioAsset.asset.symbol}
-                                width={28}
-                                height={28}
+                                width={35}
+                                height={35}
                             />
                         </div>
                         <div className="flex-1 space-y-0.5">
