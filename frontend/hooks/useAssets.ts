@@ -5,6 +5,7 @@ export function useAssets(token?: string) {
     return useQuery({
         queryKey: ["assets"],
         queryFn: () => getAssets(token),
+        enabled: !!token,
         refetchInterval: 60_000,
         refetchIntervalInBackground: true,
     })

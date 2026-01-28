@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { useSession } from "next-auth/react"
 import { PaginatedTransactions, Transaction, TransactionType } from "@/types/types"
@@ -54,6 +54,10 @@ function getPaginationPages(current: number, total: number, delta: number = 2) {
 }
 
 const Page = () => {
+    useEffect(() => {
+        document.title = "Tradelab Studio - Transactions"
+    }, [])
+
     const [currentPage, setCurrentPage] = useState(1)
     const limit = 8
 

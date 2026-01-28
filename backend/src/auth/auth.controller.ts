@@ -12,7 +12,7 @@ import { Throttle } from "@nestjs/throttler"
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Throttle({ default: { ttl: 900000, limit: 5 } })
+    @Throttle({ default: { ttl: 900000, limit: 20 } })
     @Post("login")
     @ApiOkResponse({ type: AuthEntity })
     @ApiOperation({ summary: "Connexion utilisateur" })
