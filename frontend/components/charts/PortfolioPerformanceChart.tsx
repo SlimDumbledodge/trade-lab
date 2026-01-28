@@ -27,19 +27,31 @@ const chartConfig = {
 moment.locale("fr")
 
 export function PortfolioPerformanceChart({ points, handleHover }: PortfolioPerformanceChartProps) {
-    if (!points || points.length === 0) return <p>Pas de données</p>
+    // Si pas de données, on affiche un graphique vide avec un point à zéro
+    const emptyData: PortfolioPoint[] = [
+        {
+            recordedAt: new Date().toISOString(),
+            holdingsValue: 0,
+            unrealizedPnl: 0,
+        },
+    ]
 
-    const values = points.map((point) => point.unrealizedPnl)
+    const chartData = !points || points.length === 0 ? emptyData : points
+    const hasData = points && points.length > 0
+
+    const values = chartData.map((point) => point.unrealizedPnl)
     const minValue = Math.min(...values)
     const maxValue = Math.max(...values)
-    const firstPnl = Number(points[0].unrealizedPnl)
-    const lastPnl = points[points.length - 1].unrealizedPnl
-    const lastHoldingsValue = points[points.length - 1].holdingsValue
+    const firstPnl = Number(chartData[0].unrealizedPnl)
+    const lastPnl = chartData[chartData.length - 1].unrealizedPnl
+    const lastHoldingsValue = chartData[chartData.length - 1].holdingsValue
 
     React.useEffect(() => {
         // On initialise le hover sur le dernier point du graphique
-        handleHover(lastPnl, lastHoldingsValue)
-    }, [lastPnl, lastHoldingsValue, handleHover])
+        if (hasData) {
+            handleHover(lastPnl, lastHoldingsValue)
+        }
+    }, [lastPnl, lastHoldingsValue, handleHover, hasData])
 
     const handleMouseLeave = () => {
         // On revient au dernier point quand la souris quitte le graphique
@@ -49,8 +61,8 @@ export function PortfolioPerformanceChart({ points, handleHover }: PortfolioPerf
     return (
         <Card className="pt-0">
             <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-                <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
-                    <AreaChart data={points} onMouseLeave={handleMouseLeave}>
+                <ChartContainer config={chartConfig} className="aspect-auto h-[400px] w-full">
+                    <AreaChart data={chartData} onMouseLeave={handleMouseLeave}>
                         <CartesianGrid vertical={false} />
 
                         <XAxis dataKey="recordedAt" tickLine={false} axisLine={false} tick={false} />
