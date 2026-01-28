@@ -119,7 +119,13 @@ const Page = () => {
                                                 <div className="flex flex-col">
                                                     <span className="font-medium">{transaction.asset.name}</span>
                                                     <span className="text-sm text-muted-foreground">
-                                                        {moment(transaction.createdAt).format("DD MMMM YYYY [à] HH:mm:ss")} -{" "}
+                                                        <span className="hidden sm:inline">
+                                                            {moment(transaction.createdAt).format("DD MMMM YYYY [à] HH:mm:ss")}{" "}
+                                                            -{" "}
+                                                        </span>
+                                                        <span className="sm:hidden">
+                                                            {moment(transaction.createdAt).format("DD/MM/YY")} -{" "}
+                                                        </span>
                                                         {transaction.type === TransactionType.BUY
                                                             ? "Ordre d'achat"
                                                             : "Ordre de vente"}

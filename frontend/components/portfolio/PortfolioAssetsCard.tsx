@@ -15,7 +15,7 @@ export const PortfolioAssetCard = () => {
     if (errorPortfolioAssets) return <p className="text-red-600">{errorPortfolioAssets?.message}</p>
     if (!portfolioAssets) return <p>Erreur : aucun actif trouvé.</p>
     return (
-        <Card className="w-full max-w-xs">
+        <Card className="w-full lg:max-w-xs">
             <CardHeader>
                 <CardTitle>Investissements</CardTitle>
             </CardHeader>

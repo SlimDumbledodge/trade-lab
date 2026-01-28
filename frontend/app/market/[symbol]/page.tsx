@@ -93,7 +93,7 @@ export default function MarketProductDetails() {
                     </div>
 
                     {/* Boutons de période */}
-                    <div className="flex self-end gap-2">
+                    <div className="flex  gap-2">
                         {ASSET_PRICE_PERIODS.map((period) => (
                             <Button
                                 variant={selectedPeriod === period.value ? "link" : "ghost"}

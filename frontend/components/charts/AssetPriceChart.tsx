@@ -46,7 +46,7 @@ export function AssetPriceChart({ data, handlePerformanceData }: ChartAreaIntera
     return (
         <Card className="pt-0">
             <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-                <ChartContainer config={chartConfig} className="aspect-auto h-[307px] w-full">
+                <ChartContainer config={chartConfig} className="aspect-auto h-[345px] w-full">
                     <AreaChart data={data} onMouseLeave={handleMouseLeave}>
                         <CartesianGrid vertical={false} />
 

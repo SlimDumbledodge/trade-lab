@@ -8,6 +8,7 @@ import { NavUser } from "@/components/header/nav/NavUser"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar"
 import Image from "next/image"
 import { Separator } from "../../ui/separator"
+import Link from "next/link"
 
 const data = {
     user: {
@@ -88,11 +89,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <a href="#" className="flex items-center ">
-                            <Image src="/icon.png" alt="Logo" width={35} height={35} />
-
-                            <span className="text-2xl font-semibold text-primary ml-5">TradeLab</span>
-                        </a>
+                        <Link
+                            href="/portfolio"
+                            className="flex justify-center items-center gap-2 text-xs md:text-sm hover:cursor-pointer"
+                        >
+                            <Image src="/icon.png" alt="Logo Tradelab" width={35} height={35} />
+                            <span className="font-semibold text-lg">tradelab/studio</span>
+                        </Link>
                     </SidebarMenuItem>
                     <Separator className="mb-1 mt-4" />
                 </SidebarMenu>
