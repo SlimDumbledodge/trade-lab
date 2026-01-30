@@ -1,96 +1,278 @@
-# 🧠 Tradelab
+# 📈 TradeLab
 
-Trading simulation platform for buying/selling financial assets (full‑stack: NestJS + Prisma backend, Next.js + React frontend).
+<div align="center">
 
-## Quick structure
+![Next.js](https://img.shields.io/badge/Next.js-15.4-black?style=for-the-badge&logo=next.js)
+![NestJS](https://img.shields.io/badge/NestJS-11-E0234E?style=for-the-badge&logo=nestjs)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)
+![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?style=for-the-badge&logo=prisma)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
 
-- backend/ — NestJS API, Prisma, cron jobs
-- frontend/ — Next.js App Router, React components, pages
+**A trading simulation platform to practice investing without financial risk.**
 
-## Key files & modules
+[Features](#-features) • [Tech Stack](#-tech-stack) • [Installation](#-installation) • [API](#-api-endpoints) • [Roadmap](#-roadmap)
 
-- Backend main: [`AppModule`](backend/src/app.module.ts) — [backend/src/app.module.ts](backend/src/app.module.ts)
-- Controllers / services:
-  - Assets: [`ActifsController`](backend/src/actifs/actifs.controller.ts) — [backend/src/actifs/actifs.controller.ts](backend/src/actifs/actifs.controller.ts)
-  - Assets logic: [`ActifsService`](backend/src/actifs/actifs.service.ts) — [backend/src/actifs/actifs.service.ts](backend/src/actifs/actifs.service.ts)
-  - Finnhub client: [`FinnhubService`](backend/src/common/finnhub/finnhub.service.ts) — [backend/src/common/finnhub/finnhub.service.ts](backend/src/common/finnhub/finnhub.service.ts)
-  - Portfolios: [`PortfoliosService`](backend/src/portfolios/portfolios.service.ts) — [backend/src/portfolios/portfolios.service.ts](backend/src/portfolios/portfolios.service.ts)
-  - Users: [`UsersService`](backend/src/users/users.service.ts) — [backend/src/users/users.service.ts](backend/src/users/users.service.ts)
-  - Market status: [`MarketStatusController`](backend/src/market-status/market-status.controller.ts) — [backend/src/market-status/market-status.controller.ts](backend/src/market-status/market-status.controller.ts)
-- Frontend:
-  - Signup form: [`SignupForm`](frontend/components/auth/register-form.tsx) — [frontend/components/auth/register-form.tsx](frontend/components/auth/register-form.tsx)
-  - Login form: [`LoginForm`](frontend/components/auth/login-form.tsx) — [frontend/components/auth/login-form.tsx](frontend/components/auth/login-form.tsx)
-  - NextAuth handler / options: [`authOptions` / handler](frontend/app/api/auth/[...nextauth]/route.ts) — [frontend/app/api/auth/[...nextauth]/route.ts](frontend/app/api/auth/[...nextauth]/route.ts)
-  - Shared types: [frontend/types/types.ts](frontend/types/types.ts)
-  - Sidebar & UI primitives: [frontend/components/ui/sidebar.tsx](frontend/components/ui/sidebar.tsx) — [`NavMain`](frontend/components/nav-main.tsx) — [frontend/components/nav-main.tsx](frontend/components/nav-main.tsx)
-  - Market pages: [frontend/app/market/page.tsx](frontend/app/market/page.tsx) and [frontend/app/market/[symbol]/page.tsx](frontend/app/market/[symbol]/page.tsx)
-- DB / seed:
-  - Prisma seed script: [backend/prisma/seed.ts](backend/prisma/seed.ts)
-  - Initial assets: [backend/src/utils/seed-actifs.ts](backend/src/utils/seed-actifs.ts)
-- Cron jobs:
-  - Assets updater: [`ActifsCron`](backend/src/actifs/actifs.cron.ts) — [backend/src/actifs/actifs.cron.ts](backend/src/actifs/actifs.cron.ts)
+</div>
 
-## Local setup
+---
 
-1. Clone and install dependencies
-   - Backend:
-     - cd backend
-     - npm install
-   - Frontend:
-     - cd frontend
-     - npm install
+## 🎯 About
 
-2. Environment files
-   - Copy `backend/.env.example` → `backend/.env` and set DATABASE_URL, FINNHUB_API_KEY (or FINNHUB_TOKEN), NEXTAUTH_SECRET, JWT_SECRET, etc. — see [backend/.env.example](backend/.env.example)
-   - Frontend: create `frontend/.env` with NEXT_PUBLIC_NEST_API_URL (e.g. `http://localhost:3001`)
+**TradeLab** is a full-stack application that allows users to simulate buying and selling financial assets with real-time market data. Each user starts with a virtual portfolio of **10,000€** and can practice trading in realistic conditions.
 
-3. Database
-   - cd backend
-   - npx prisma migrate dev
-   - npx prisma db seed (or run [backend/prisma/seed.ts](backend/prisma/seed.ts) via ts-node)
+> ⚠️ **MVP** - This project is under active development. New features are coming regularly!
 
-4. Start services
-   - Backend (default port 3001):
-     - cd backend
-     - npm run start:dev
-   - Frontend (Next.js, port 3000):
-     - cd frontend
-     - npm run dev
+---
 
-## Useful endpoints (examples)
+## ✨ Features
 
-- GET /actifs — protected by JWT — implemented in [`ActifsController.findAll`](backend/src/actifs/actifs.controller.ts) — [backend/src/actifs/actifs.controller.ts](backend/src/actifs/actifs.controller.ts)
-- GET /actifs/:symbol — get single asset — [backend/src/actifs/actifs.controller.ts](backend/src/actifs/actifs.controller.ts)
-- GET /actifs/:symbol/profile — company profile — [backend/src/actifs/actifs.controller.ts](backend/src/actifs/actifs.controller.ts)
-- POST /portfolios/:id/buy or /sell — handled by [`PortfoliosService.buy`](backend/src/portfolios/portfolios.service.ts) / [`PortfoliosService.sell`](backend/src/portfolios/portfolios.service.ts) — [backend/src/portfolios/portfolios.service.ts](backend/src/portfolios/portfolios.service.ts)
-- GET /market-status — [`MarketStatusController.getMarketStatus`](backend/src/market-status/market-status.controller.ts) — [backend/src/market-status/market-status.controller.ts](backend/src/market-status/market-status.controller.ts)
+### 📊 Portfolio Management
 
-## Authentication
+- Complete dashboard with performance visualization
+- Track total value and portfolio evolution
+- Asset allocation with automatic weighting
+- Portfolio snapshots history
 
-- Frontend uses NextAuth with a Credentials provider — see [frontend/app/api/auth/[...nextauth]/route.ts](frontend/app/api/auth/[...nextauth]/route.ts)
-- Signup posts to `${process.env.NEXT_PUBLIC_NEST_API_URL}/users` via [`SignupForm`](frontend/components/auth/register-form.tsx) — [frontend/components/auth/register-form.tsx](frontend/components/auth/register-form.tsx)
+### 💹 Trading
 
-## Background jobs
+- Buy/Sell stocks with real-time **bid/ask** prices
+- Market data powered by **Alpaca** & **Finnhub**
+- Automatic unrealized P&L calculation
+- Complete transaction history
 
-- Asset price sync runs on a cron: [`ActifsCron.updateActifsPrices`](backend/src/actifs/actifs.cron.ts) → calls [`ActifsService.updateAllActifs`](backend/src/actifs/actifs.service.ts) — [backend/src/actifs/actifs.cron.ts](backend/src/actifs/actifs.cron.ts) — [backend/src/actifs/actifs.service.ts](backend/src/actifs/actifs.service.ts)
+### 📈 Visualization
 
-## Tests
+- Price evolution charts (OHLC)
+- Portfolio performance charts
+- Modern interface with dark/light theme
 
-- Backend (from /backend):
-  - npm run test (unit)
-  - npm run test:e2e (e2e)
-  - Many example specs exist under [backend/src/_/_.spec.ts](backend/src)
+### 🔐 Authentication
 
-## Deployment
+- Secure sign up / sign in
+- JWT management with NextAuth.js
+- Password reset via email
 
-- Backend: build Node/Nest app. Required env vars: DATABASE_URL, FINNHUB_API_KEY, NEXTAUTH_SECRET, JWT_SECRET, PORT — main config in [backend/src/main.ts](backend/src/main.ts) and [backend/src/app.module.ts](backend/src/app.module.ts)
-- Frontend: deploy Next.js app (Vercel or equivalent). See [frontend/next.config.ts](frontend/next.config.ts) for image config.
+### ⏰ Real-Time
 
-## References in the repo
+- Automatic price updates via cron jobs
+- Real-time market status (open/closed)
+- Trading days calendar
 
-- Types: [frontend/types/types.ts](frontend/types/types.ts)
-- Utils: [frontend/lib/utils.ts](frontend/lib/utils.ts)
-- UI components: [frontend/components/ui](frontend/components/ui)
-- Prisma schema: [backend/prisma/schema.prisma](backend/prisma/schema.prisma)
+---
 
-Contributions welcome — open clear PRs and follow the repo conventions.
+## 🛠 Tech Stack
+
+### Backend
+
+| Technology       | Usage               |
+| ---------------- | ------------------- |
+| **NestJS 11**    | REST API Framework  |
+| **Prisma 7**     | ORM & migrations    |
+| **PostgreSQL**   | Database            |
+| **Passport JWT** | Authentication      |
+| **Swagger**      | API Documentation   |
+| **Sentry**       | Monitoring & errors |
+
+### Frontend
+
+| Technology                | Usage                        |
+| ------------------------- | ---------------------------- |
+| **Next.js 15**            | React Framework (App Router) |
+| **React 19**              | UI Library                   |
+| **TypeScript**            | Static typing                |
+| **Tailwind CSS 4**        | Styling                      |
+| **Radix UI**              | Accessible components        |
+| **TanStack Query**        | Server state management      |
+| **Recharts**              | Charts                       |
+| **React Hook Form + Zod** | Forms & validation           |
+
+### External APIs
+
+- **Alpaca Markets** - Real-time market data
+- **Finnhub** - Company information & prices
+
+---
+
+## 📁 Project Structure
+
+```
+trade-lab/
+├── backend/                 # NestJS API
+│   ├── src/
+│   │   ├── alpaca/         # Alpaca API integration
+│   │   ├── assets/         # Assets management
+│   │   ├── assets-price/   # Price history
+│   │   ├── auth/           # JWT authentication
+│   │   ├── email/          # Email service
+│   │   ├── finnhub/        # Finnhub integration
+│   │   ├── market-status/  # Market status
+│   │   ├── portfolios/     # Portfolio management
+│   │   ├── transactions/   # Transaction history
+│   │   └── users/          # User management
+│   └── prisma/             # Schema & migrations
+│
+├── frontend/               # Next.js Application
+│   ├── app/               # Pages (App Router)
+│   │   ├── market/        # Market pages
+│   │   ├── portfolio/     # Portfolio pages
+│   │   ├── transactions/  # History
+│   │   └── ...
+│   ├── components/        # React components
+│   │   ├── charts/        # Charts
+│   │   ├── portfolio/     # Portfolio components
+│   │   └── ui/            # UI components (shadcn)
+│   ├── hooks/             # Custom hooks
+│   ├── mutations/         # TanStack Query mutations
+│   └── lib/               # Utilities
+│
+└── conception/            # Diagrams (ERD)
+```
+
+---
+
+## 🚀 Installation
+
+### Prerequisites
+
+- Node.js 20+
+- PostgreSQL 16+
+- pnpm (recommended) or npm
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/trade-lab.git
+cd trade-lab
+```
+
+### 2. Backend
+
+```bash
+cd backend
+npm install
+
+# Configure environment variables
+cp .env.example .env
+# Edit .env with your API keys and DATABASE_URL
+
+# Migrations & seed
+npx prisma migrate dev
+npx prisma db seed
+
+# Start the server (port 3001)
+npm run start:dev
+```
+
+### 3. Frontend
+
+```bash
+cd frontend
+pnpm install
+
+# Configure environment variables
+# Create .env.local with:
+# NEXT_PUBLIC_NEST_API_URL=http://localhost:3001
+# NEXTAUTH_SECRET=your-secret
+# NEXTAUTH_URL=http://localhost:3000
+
+# Start the application (port 3000)
+pnpm dev
+```
+
+---
+
+## 🔌 API Endpoints
+
+### Authentication
+
+| Method | Endpoint                | Description            |
+| ------ | ----------------------- | ---------------------- |
+| POST   | `/auth/login`           | Login                  |
+| POST   | `/users`                | Sign up                |
+| POST   | `/auth/forgot-password` | Request password reset |
+| POST   | `/auth/reset-password`  | Reset password         |
+
+### Assets
+
+| Method | Endpoint                 | Description     |
+| ------ | ------------------------ | --------------- |
+| GET    | `/assets`                | List all assets |
+| GET    | `/assets/:symbol`        | Asset details   |
+| GET    | `/assets/:symbol/prices` | Price history   |
+
+### Portfolio
+
+| Method | Endpoint                    | Description       |
+| ------ | --------------------------- | ----------------- |
+| GET    | `/portfolios/:id`           | Portfolio details |
+| POST   | `/portfolios/:id/buy`       | Buy an asset      |
+| POST   | `/portfolios/:id/sell`      | Sell an asset     |
+| GET    | `/portfolios/:id/assets`    | Portfolio assets  |
+| GET    | `/portfolios/:id/snapshots` | Value history     |
+
+### Transactions
+
+| Method | Endpoint        | Description         |
+| ------ | --------------- | ------------------- |
+| GET    | `/transactions` | Transaction history |
+
+### Market
+
+| Method | Endpoint         | Description   |
+| ------ | ---------------- | ------------- |
+| GET    | `/market-status` | Market status |
+
+---
+
+## 🧪 Tests
+
+```bash
+# Backend - Unit tests
+cd backend
+npm run test
+
+# Backend - E2E tests
+npm run test:e2e
+
+# Backend - Coverage
+npm run test:cov
+```
+
+---
+
+## 🔮 Roadmap
+
+### In Progress
+
+- [ ] Advanced performance statistics
+- [ ] Optimized mobile responsive
+
+### Coming Soon
+
+- [ ] 🏆 User leaderboard
+- [ ] 🔔 Custom price alerts
+- [ ] 📰 Financial news integration
+- [ ] 🎯 Trading goals & gamification
+- [ ] 📊 Technical indicators (RSI, MACD, etc.)
+- [ ] 💱 Cryptocurrency support
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👤 Author
+
+Built with ❤️ as a personal project to learn and demonstrate my full-stack development skills.
+
+---
+
+<div align="center">
+
+**⭐ If you like this project, feel free to give it a star!**
+
+</div>
