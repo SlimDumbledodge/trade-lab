@@ -7,7 +7,7 @@ Sentry.init({
     integrations: [nodeProfilingIntegration()],
     environment: process.env.NODE_ENV || "development",
     // Tracing
-    tracesSampleRate: 1.0, //  Capture 100% of the transactions
+    tracesSampleRate: 0.2, //  Capture 100% of the transactions
     // Set sampling rate for profiling - this is evaluated only once per SDK.init call
     profileSessionSampleRate: 1.0,
     // Trace lifecycle automatically enables profiling during active traces
