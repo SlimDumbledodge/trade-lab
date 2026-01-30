@@ -10,7 +10,7 @@ export class MarketStatusService {
     async isMarketOpen(): Promise<boolean> {
         const now = moment()
 
-        const findToday = await this.prisma.marketCalendar.findUnique({
+        const findToday = await this.prisma.marketCalendar.findFirst({
             where: {
                 date: now.format("YYYY-MM-DD"),
             },
