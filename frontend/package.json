@@ -6,7 +6,9 @@
         "dev": "next dev --turbopack",
         "build": "next build",
         "start": "next start",
-        "lint": "eslint \"{app,components,hooks,lib,types}/**/*.{ts,tsx}\" --fix"
+        "lint": "eslint \"{app,components,hooks,lib,types}/**/*.{ts,tsx}\" --fix",
+        "test": "vitest run",
+        "test:watch": "vitest"
     },
     "dependencies": {
         "@dnd-kit/core": "^6.3.1",
@@ -64,6 +66,7 @@
         "prettier": "^3.6.2",
         "tailwindcss": "^4",
         "tw-animate-css": "^1.3.6",
-        "typescript": "^5"
+        "typescript": "^5",
+        "vitest": "^4.0.18"
     }
 }
