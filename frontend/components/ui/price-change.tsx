@@ -2,11 +2,12 @@ import { TrendingUp, TrendingDown } from "lucide-react"
 
 interface PriceChangeProps {
     value: number | string
+    unit?: "€" | "%"
 }
 
-export function PriceChange({ value }: PriceChangeProps) {
+export function PriceChange({ value, unit = "€" }: PriceChangeProps) {
     if (!value) {
-        return <span className="">0.00 €</span>
+        return <span className="">0.00 {unit}</span>
     }
 
     const numValue = Number(value)
@@ -19,7 +20,7 @@ export function PriceChange({ value }: PriceChangeProps) {
         <span className={`font-semibold text-s flex items-center gap-1 ${colorClass}`}>
             {isPositive && <TrendingUp size={16} />}
             {isNegative && <TrendingDown size={16} />}
-            {numValue.toFixed(2)} €
+            {numValue.toFixed(2)} {unit}
         </span>
     )
 }
