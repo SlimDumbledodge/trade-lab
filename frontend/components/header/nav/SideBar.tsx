@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { IconCamera, IconChartBar, IconChartLine, IconFileAi, IconFileDescription, IconWallet } from "@tabler/icons-react"
+import { IconChartBar, IconChartLine, IconChartPie, IconWallet } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/header/nav/NavMain"
 import { NavUser } from "@/components/header/nav/NavUser"
@@ -23,6 +23,11 @@ const data = {
             icon: IconWallet,
         },
         {
+            title: "Statistiques",
+            url: "statistics",
+            icon: IconChartPie,
+        },
+        {
             title: "Transactions",
             url: "transactions",
             icon: IconChartBar,
@@ -31,54 +36,6 @@ const data = {
             title: "Marché",
             url: "market",
             icon: IconChartLine,
-        },
-    ],
-    navClouds: [
-        {
-            title: "Capture",
-            icon: IconCamera,
-            isActive: true,
-            url: "#",
-            items: [
-                {
-                    title: "Active Proposals",
-                    url: "#",
-                },
-                {
-                    title: "Archived",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Proposal",
-            icon: IconFileDescription,
-            url: "#",
-            items: [
-                {
-                    title: "Active Proposals",
-                    url: "#",
-                },
-                {
-                    title: "Archived",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Prompts",
-            icon: IconFileAi,
-            url: "#",
-            items: [
-                {
-                    title: "Active Proposals",
-                    url: "#",
-                },
-                {
-                    title: "Archived",
-                    url: "#",
-                },
-            ],
         },
     ],
 }
