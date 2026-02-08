@@ -40,6 +40,10 @@ export type Portfolio = {
     assets: PortfolioAsset[]
     history: PortfolioHistory[]
     transactions: Transaction[]
+    // Performance totale du portefeuille
+    totalValue: string
+    totalPnl: string
+    totalPnlPercent: string
 }
 
 // -------------------------------------------
