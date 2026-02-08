@@ -7,6 +7,8 @@ import { PrismaService } from "src/prisma/prisma.service"
 
 @Injectable()
 export class PortfoliosService {
+    private readonly INITIAL_BALANCE = new Prisma.Decimal(10000)
+
     constructor(
         private readonly prisma: PrismaService,
         private readonly portfoliosAssetsService: PortfoliosAssetsService,
@@ -20,9 +22,18 @@ export class PortfoliosService {
         if (!portfolio) throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
 
         const points = await this.portfoliosSnapshotsService.getPortfolioPerformance(portfolioId, period)
+        
+        // Calcul de la performance totale
+        const totalValue = portfolio.cashBalance.add(portfolio.holdingsValue)
+        const totalPnl = totalValue.sub(this.INITIAL_BALANCE)
+        const totalPnlPercent = totalPnl.div(this.INITIAL_BALANCE).mul(100)
+        
         return {
             ...portfolio,
             points,
+            totalValue,
+            totalPnl,
+            totalPnlPercent,
         }
     }
 
