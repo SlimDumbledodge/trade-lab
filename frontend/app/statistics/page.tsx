@@ -28,11 +28,11 @@ function Statistics() {
                     <h1 className="text-2xl sm:text-3xl font-bold">Statistiques</h1>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:items-stretch">
+                <div className="flex flex-col min-[1200px]:flex-row gap-4 sm:gap-6 min-[1200px]:items-stretch">
                     {/* Graphique à gauche */}
                     <div className="flex-1 min-w-0 flex">
                         <Suspense fallback={<SkeletonChart />}>
-                            <Card className="flex flex-col w-full h-full min-h-[400px] lg:min-h-[500px]">
+                            <Card className="flex flex-col w-full h-full min-h-[400px] min-[1200px]:min-h-[500px]">
                                 <CardHeader className="items-center pb-2 sm:pb-0">
                                     <Tabs
                                         className="w-[400px]"
@@ -72,7 +72,7 @@ function Statistics() {
                     </div>
 
                     {/* Cards à droite */}
-                    <div className="flex flex-col gap-4 sm:gap-6 w-full lg:w-[380px] shrink-0">
+                    <div className="flex flex-col gap-4 sm:gap-6 w-full min-[1200px]:w-[380px] shrink-0">
                         <PerformanceCard />
                         <PortfolioAssetCard />
                     </div>

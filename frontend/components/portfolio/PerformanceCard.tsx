@@ -17,7 +17,7 @@ export function PerformanceCard() {
     const pnlColor = isPositive ? "text-green-500" : "text-red-500"
 
     return (
-        <Card className="w-full lg:max-w-xs">
+        <Card className="w-full min-[1200px]:max-w-xs">
             <CardHeader>
                 <CardTitle>Performance</CardTitle>
             </CardHeader>

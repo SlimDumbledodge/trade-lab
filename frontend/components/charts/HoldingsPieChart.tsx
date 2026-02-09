@@ -68,7 +68,7 @@ export function HoldingsPieChart() {
               }
             : {
                   value: `${Number(portfolio?.holdingsValue ?? 0).toFixed(2)} €`,
-                  label: "Valeur Totale",
+                  label: "Total",
                   percentage: null,
               }
 
@@ -150,65 +150,22 @@ export function HoldingsPieChart() {
                             content={({ viewBox }) => {
                                 if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                                     return (
-                                        <g>
-                                            {/* Cercle de fond avec effet glassmorphism */}
-                                            <circle
-                                                cx={viewBox.cx}
-                                                cy={viewBox.cy}
-                                                r={80}
-                                                fill="hsl(var(--background))"
-                                                fillOpacity={0.5}
-                                                style={{
-                                                    filter: "blur(1px)",
-                                                }}
-                                            />
-                                            <circle
-                                                cx={viewBox.cx}
-                                                cy={viewBox.cy}
-                                                r={78}
-                                                fill="none"
-                                                stroke="hsl(var(--border))"
-                                                strokeWidth={1}
-                                                strokeOpacity={0.2}
-                                            />
-
-                                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                                                {/* Label supérieur */}
-                                                <tspan
-                                                    x={viewBox.cx}
-                                                    y={(viewBox.cy || 0) - 28}
-                                                    className="fill-muted-foreground text-xs sm:text-sm font-medium tracking-wide"
-                                                    style={{ textTransform: "uppercase", letterSpacing: "0.1em" }}
-                                                >
-                                                    {centerLabel.label}
-                                                </tspan>
-
-                                                {/* Ligne de séparation */}
-                                                <tspan x={viewBox.cx} y={(viewBox.cy || 0) - 10} className="fill-border text-lg">
-                                                    ―
-                                                </tspan>
-
-                                                {/* Valeur principale */}
-                                                <tspan
-                                                    x={viewBox.cx}
-                                                    y={(viewBox.cy || 0) + 18}
-                                                    className="fill-foreground text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight"
-                                                >
-                                                    {centerLabel.value}
-                                                </tspan>
-
-                                                {/* Pourcentage si actif */}
-                                                {centerLabel.percentage && (
-                                                    <tspan
-                                                        x={viewBox.cx}
-                                                        y={(viewBox.cy || 0) + 42}
-                                                        className="fill-muted-foreground text-sm font-semibold"
-                                                    >
-                                                        {centerLabel.percentage}
-                                                    </tspan>
-                                                )}
-                                            </text>
-                                        </g>
+                                        <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                                            <tspan
+                                                x={viewBox.cx}
+                                                y={viewBox.cy}
+                                                className="fill-foreground text-xl sm:text-2xl md:text-3xl font-bold"
+                                            >
+                                                {centerLabel.value}
+                                            </tspan>
+                                            <tspan
+                                                x={viewBox.cx}
+                                                y={(viewBox.cy || 0) + 25}
+                                                className="fill-muted-foreground text-xs sm:text-sm"
+                                            >
+                                                {centerLabel.label}
+                                            </tspan>
+                                        </text>
                                     )
                                 }
                             }}
@@ -216,7 +173,7 @@ export function HoldingsPieChart() {
                     </Pie>
                     <ChartLegend
                         content={<ChartLegendContent nameKey="asset" />}
-                        className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+                        className=" flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
                     />
                 </PieChart>
             </ChartContainer>
