@@ -42,7 +42,6 @@ import { MarketStatusModule } from "./market-status/market-status.module"
             ],
         }),
         ScheduleModule.forRoot(),
-        TransactionsModule,
         PortfoliosAssetsModule,
         PortfoliosSnapshotsModule,
         AlpacaModule,
