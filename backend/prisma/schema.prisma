@@ -23,6 +23,9 @@ model Portfolio {
   userId          Int                @unique
   cashBalance     Decimal            @default(10000.00)
   holdingsValue   Decimal            @default(0)
+  totalValue      Decimal            @default(10000.00)
+  totalPnl        Decimal            @default(0)
+  totalPnlPercent Decimal            @default(0)
   createdAt       DateTime           @default(now())
   user            User               @relation(fields: [userId], references: [id])
   portfolioAssets PortfolioAsset[]
