@@ -24,9 +24,9 @@ export function PerformanceCard() {
             <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                     Votre portefeuille est {trendWord} de{" "}
-                    <span className={`font-semibold ${pnlColor}`}>{Number(portfolio?.totalPnlPercent).toFixed(2)} %</span> depuis
-                    le début avec {isPositive ? "un profit" : "Une perte"} de{" "}
-                    <span className={`font-semibold ${pnlColor}`}>{Number(portfolio?.totalPnl).toFixed(2)} €</span>.
+                    <span className={`font-semibold ${pnlColor}`}>{Number(portfolio?.totalPnlPercent).toFixed(2)}%</span> depuis
+                    le début avec {isPositive ? "un profit" : "une perte"} de{" "}
+                    <span className={`font-semibold ${pnlColor}`}>{Number(portfolio?.totalPnl).toFixed(2)}€</span>.
                 </p>
             </CardContent>
         </Card>

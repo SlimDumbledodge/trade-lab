@@ -58,6 +58,9 @@ export class PortfoliosAssetsService {
             include: {
                 asset: true,
             },
+            orderBy: {
+                holdingValue: "desc",
+            },
         })
     }
 

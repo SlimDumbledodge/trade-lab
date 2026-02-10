@@ -22,19 +22,8 @@ export class PortfoliosService {
         if (!portfolio) throw new NotFoundException(`Portfolio ID ${portfolioId} not found`)
 
         const points = await this.portfoliosSnapshotsService.getPortfolioPerformance(portfolioId, period)
-        
-        // Calcul de la performance totale
-        const totalValue = portfolio.cashBalance.add(portfolio.holdingsValue)
-        const totalPnl = totalValue.sub(this.INITIAL_BALANCE)
-        const totalPnlPercent = totalPnl.div(this.INITIAL_BALANCE).mul(100)
-        
-        return {
-            ...portfolio,
-            points,
-            totalValue,
-            totalPnl,
-            totalPnlPercent,
-        }
+
+        return { ...portfolio, points }
     }
 
     create(userId: number) {
@@ -58,6 +47,7 @@ export class PortfoliosService {
             transactionType === TransactionType.buy ? portfolio.cashBalance.sub(amount) : portfolio.cashBalance.add(amount)
 
         await this.prisma.portfolio.update({ where: { id: portfolioId }, data: { cashBalance: newCashBalance } })
+        await this.updatePortfolioMetrics(portfolioId)
     }
 
     async calculatePortfolioAssetsValue(portfolioId: number) {
@@ -79,6 +69,7 @@ export class PortfoliosService {
         }, new Prisma.Decimal(0))
 
         await this.prisma.portfolio.update({ where: { id: portfolioId }, data: { holdingsValue } })
+        await this.updatePortfolioMetrics(portfolioId)
 
         // Recalculer les weights de tous les assets avec le nouveau holdingsValue
         if (holdingsValue.greaterThan(0)) {
@@ -93,5 +84,19 @@ export class PortfoliosService {
                 }),
             )
         }
+    }
+
+    private async updatePortfolioMetrics(portfolioId: number) {
+        const portfolio = await this.prisma.portfolio.findUnique({ where: { id: portfolioId } })
+        if (!portfolio) throw new NotFoundException("Portfolio introuvable")
+
+        const totalValue = portfolio.cashBalance.add(portfolio.holdingsValue)
+        const totalPnl = totalValue.sub(this.INITIAL_BALANCE)
+        const totalPnlPercent = totalPnl.div(this.INITIAL_BALANCE).mul(100)
+
+        await this.prisma.portfolio.update({
+            where: { id: portfolioId },
+            data: { totalValue, totalPnl, totalPnlPercent },
+        })
     }
 }
