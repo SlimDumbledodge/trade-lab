@@ -6,6 +6,7 @@ declare module "next-auth" {
         subscription?: string
         portfolioId?: string | null
         accessToken?: string
+        createdAt?: string
     }
 
     interface Session extends DefaultSession {
