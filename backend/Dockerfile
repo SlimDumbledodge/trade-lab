@@ -3,7 +3,9 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 ARG DATABASE_URL
+ARG SENTRY_AUTH_TOKEN
 ENV DATABASE_URL=$DATABASE_URL
+ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
 # Installer build tools pour Prisma
 RUN apk add --no-cache python3 make g++ bash
