@@ -12,7 +12,10 @@ services:
       - "5432:5432"
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        DATABASE_URL: ${DATABASE_URL}
     container_name: backend
     depends_on:
       - postgres
