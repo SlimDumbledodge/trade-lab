@@ -14,10 +14,13 @@ RUN apk add --no-cache python3 make g++ bash
 COPY package*.json ./
 
 # Installer les dépendances
-RUN npm install
+RUN npm ci
 
-# Copier le reste du projet
-COPY . .
+# Copier uniquement ce qui est nécessaire pour le build
+COPY prisma ./prisma
+COPY tsconfig*.json nest-cli.json ./
+COPY src ./src
+COPY prisma.config.ts ./
 
 # Générer le client Prisma
 RUN npx prisma generate
@@ -25,21 +28,29 @@ RUN npx prisma generate
 # Build backend (NestJS)
 RUN npm run build
 
-# === Étape 2 : Runtime ===
-FROM node:22-alpine
+# === Étape 2 : Runtime minimal ===
+FROM node:22-alpine AS production
 WORKDIR /app
+
+# Créer un utilisateur non-root
+RUN addgroup -g 1001 -S appgroup && \
+    adduser -S appuser -u 1001 -G appgroup
 
 ENV NODE_ENV=production
 ENV PORT=3001
 
-# Copier depuis le builder
-COPY --from=builder /app ./
+# Copier uniquement les fichiers nécessaires au runtime
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma.config.ts ./
 
-# Installer Prisma runtime (pour db push/migrate)
-RUN npm install --production
+# Passer à l'utilisateur non-root
+USER appuser
 
 # Exposer le port backend
 EXPOSE 3001
 
-# Étape initialisation base + start
-CMD npx prisma db push && npm run start:prod
+# Utiliser prisma migrate deploy (pas db push) + démarrage
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
