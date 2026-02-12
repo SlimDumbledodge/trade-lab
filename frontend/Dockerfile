@@ -1,12 +1,12 @@
 # Étape 1 : Build
-FROM node:22-alpine AS builder
+FROM node:22-slim AS builder
 WORKDIR /app
 
 # Installer pnpm (le projet utilise pnpm-lock.yaml)
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Installer build tools pour certains packages natifs
-RUN apk add --no-cache python3 make g++
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 # Copier les fichiers de dépendances
 COPY package.json pnpm-lock.yaml ./
@@ -21,12 +21,12 @@ COPY . .
 RUN pnpm run build
 
 # Étape 2 : Runtime minimal
-FROM node:22-alpine AS production
+FROM node:22-slim AS production
 WORKDIR /app
 
 # Créer un utilisateur non-root
-RUN addgroup -g 1001 -S appgroup && \
-    adduser -S appuser -u 1001 -G appgroup
+RUN groupadd -g 1001 appgroup && \
+    useradd -u 1001 -g appgroup -s /bin/false appuser
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
