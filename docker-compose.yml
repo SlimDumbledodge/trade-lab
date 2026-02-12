@@ -38,7 +38,6 @@ services:
     build:
       context: ./backend
       args:
-        DATABASE_URL: ${DATABASE_URL}
         SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
     container_name: tradelab-backend
     restart: unless-stopped

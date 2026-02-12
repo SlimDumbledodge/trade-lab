@@ -2,10 +2,10 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-ARG DATABASE_URL
 ARG SENTRY_AUTH_TOKEN
-ENV DATABASE_URL=$DATABASE_URL
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
+# URL factice uniquement pour prisma generate (pas de connexion réelle au build)
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 
 # Installer build tools pour Prisma
 RUN apk add --no-cache python3 make g++ bash
@@ -22,7 +22,7 @@ COPY tsconfig*.json nest-cli.json ./
 COPY src ./src
 COPY prisma.config.ts ./
 
-# Générer le client Prisma
+# Générer le client Prisma (n'a pas besoin d'une vraie BDD)
 RUN npx prisma generate
 
 # Build backend (NestJS)
