@@ -56,4 +56,4 @@ USER appuser
 EXPOSE 3001
 
 # Utiliser prisma migrate deploy (pas db push) + démarrage
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start:prod"]
