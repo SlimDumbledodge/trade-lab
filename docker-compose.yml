@@ -102,7 +102,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
-      - certbot-webroot:/var/www/certbot:ro
+      - /var/www/certbot:/var/www/certbot:ro
     ports:
       - "80:80"
       - "443:443"
@@ -121,8 +121,6 @@ services:
 # ============================================
 volumes:
   postgres-data:
-    driver: local
-  certbot-webroot:
     driver: local
 
 # ============================================
