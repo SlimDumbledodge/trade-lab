@@ -1,50 +1,102 @@
-version: "3.8"
-
 services:
+  # ============================================
+  # PostgreSQL — réseau interne UNIQUEMENT
+  # ============================================
   postgres:
-    image: postgres:15
-    container_name: postgres
-    restart: always
+    image: postgres:15-alpine
+    container_name: tradelab-postgres
+    restart: unless-stopped
     env_file:
       - ./backend/.env.production
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - postgres-data:/var/lib/postgresql/data
+    # PAS de "ports:" → PostgreSQL n'est accessible que depuis le réseau Docker interne
+    expose:
+      - "5432"
     networks:
-      - app-network
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
+      - /run
 
+  # ============================================
+  # Backend NestJS — réseau interne UNIQUEMENT
+  # ============================================
   backend:
     build:
       context: ./backend
       args:
         DATABASE_URL: ${DATABASE_URL}
         SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
-    container_name: backend
+    container_name: tradelab-backend
+    restart: unless-stopped
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     env_file:
       - ./backend/.env.production
-    ports:
-      - "3001:3001"
+    # PAS de "ports:" → accessible uniquement via Nginx
+    expose:
+      - "3001"
     networks:
-      - app-network
+      - internal
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/.cache
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
+  # ============================================
+  # Frontend Next.js — réseau interne UNIQUEMENT
+  # ============================================
   frontend:
     build: ./frontend
-    container_name: frontend
+    container_name: tradelab-frontend
+    restart: unless-stopped
     depends_on:
       - backend
     env_file:
       - ./frontend/.env.production
-    ports:
-      - "3000:3000"
+    # PAS de "ports:" → accessible uniquement via Nginx
+    expose:
+      - "3000"
     networks:
-      - app-network
+      - internal
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/.next/cache
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
+  # ============================================
+  # Nginx — seul point d'entrée public
+  # ============================================
   nginx:
     image: nginx:alpine
-    container_name: nginx
+    container_name: tradelab-nginx
+    restart: unless-stopped
     depends_on:
       - frontend
       - backend
@@ -52,13 +104,33 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - /etc/letsencrypt/live/tradelab-studio.fr/fullchain.pem:/etc/letsencrypt/live/tradelab-studio.fr/fullchain.pem:ro
       - /etc/letsencrypt/live/tradelab-studio.fr/privkey.pem:/etc/letsencrypt/live/tradelab-studio.fr/privkey.pem:ro
+      - certbot-webroot:/var/www/certbot:ro
     ports:
       - "80:80"
       - "443:443"
     networks:
-      - app-network
-    restart: always
+      - internal
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /run
 
+# ============================================
+# Volumes nommés (persistants, isolés)
+# ============================================
+volumes:
+  postgres-data:
+    driver: local
+  certbot-webroot:
+    driver: local
+
+# ============================================
+# Réseau interne isolé
+# ============================================
 networks:
-  app-network:
+  internal:
     driver: bridge
+    internal: false # false car nginx doit accéder à Internet pour les clients
