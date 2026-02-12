@@ -25,8 +25,11 @@ COPY prisma.config.ts ./
 # Générer le client Prisma (n'a pas besoin d'une vraie BDD)
 RUN npx prisma generate
 
-# Build backend (NestJS)
-RUN npm run build
+# Build backend (NestJS) sans Sentry sourcemaps
+RUN npx nest build
+
+# Upload Sentry sourcemaps uniquement si le token est fourni
+RUN if [ -n "$SENTRY_AUTH_TOKEN" ]; then npm run sentry:sourcemaps; else echo "SENTRY_AUTH_TOKEN absent, skip sourcemaps upload"; fi
 
 # === Étape 2 : Runtime minimal ===
 FROM node:22-alpine AS production
