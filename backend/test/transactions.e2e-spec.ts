@@ -21,6 +21,8 @@ import { PrismaService } from "../src/prisma/prisma.service"
 import { Prisma } from "prisma/generated/client"
 import * as bcrypt from "bcrypt"
 
+import { MarketStatusGuard } from "../src/market-status/market-status.guard"
+
 describe("Transactions (E2E)", () => {
     let app: INestApplication
     let prisma: PrismaService
@@ -44,7 +46,10 @@ describe("Transactions (E2E)", () => {
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
-        }).compile()
+        })
+            .overrideGuard(MarketStatusGuard)
+            .useValue({ canActivate: () => true })
+            .compile()
 
         app = moduleFixture.createNestApplication()
         await app.init()
