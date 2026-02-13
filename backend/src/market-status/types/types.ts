@@ -1,5 +1,3 @@
-import { MarketCalendar } from "prisma/generated/client"
-
 export type MarketStatusType = {
     isOpen: boolean
     todayMarketInfos: PublicMarketCalendarInfo | null
