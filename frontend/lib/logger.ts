@@ -23,7 +23,7 @@ class Logger {
         }
     }
 
-    private sendToServer(entry: LogEntry) {
+    private sendToServer(_entry: LogEntry) {
         // En production, envoyer à un service de logging
         // TODO: Implémenter l'envoi à Sentry, LogRocket, ou votre backend
         if (!this.isDevelopment) {

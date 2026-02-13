@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { useSession } from "next-auth/react"
-import { PaginatedTransactions, Transaction, TransactionType } from "@/types/types"
+import { Transaction, TransactionType } from "@/types/types"
 
 import {
     Pagination,

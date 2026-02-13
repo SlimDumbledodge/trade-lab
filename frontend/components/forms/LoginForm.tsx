@@ -54,7 +54,7 @@ const LoginForm = () => {
                 // Redirection réussie
                 window.location.href = result.url || "/portfolio"
             }
-        } catch (error) {
+        } catch (_error) {
             toast.error("Une erreur est survenue lors de la connexion")
             setIsLoading(false)
         }

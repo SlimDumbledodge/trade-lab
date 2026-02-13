@@ -24,7 +24,7 @@ export const TradeExecutionContent: React.FC<TradeExecutionContentProps> = ({
     const params = useParams()
     const symbol = params?.symbol as string
     const { data: session } = useSession()
-    const { data: asset, error: errorAsset } = useAsset(symbol, session?.accessToken) // Suspense active ici
+    const { data: asset, error: _errorAsset } = useAsset(symbol, session?.accessToken) // Suspense active ici
     const { mutateAsync: processTradeExecution, isPending: isTradeExecutionLoading } = useTradeExecution()
 
     if (!asset) {

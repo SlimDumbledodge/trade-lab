@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { usePortfolio } from "@/hooks/usePortfolio"
-import { usePortfolioAssets } from "@/hooks/usePortfolioAssets"
 import { PORTFOLIO_PERFORMANCE_PERIOD } from "@/types/types"
 import { useSession } from "next-auth/react"
 

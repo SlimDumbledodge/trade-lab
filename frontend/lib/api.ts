@@ -1,7 +1,6 @@
 import {
     Asset,
     ASSET_PRICE_PERIOD,
-    AssetPrice,
     MarketStatusType,
     PaginatedTransactions,
     Portfolio,
