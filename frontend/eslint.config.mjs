@@ -22,7 +22,9 @@ export default [
             },
             globals: {
                 ...globals.node,
+                ...globals.browser,
                 ...globals.jest,
+                React: "readonly",
             },
         },
         plugins: {
@@ -31,6 +33,18 @@ export default [
         rules: {
             "@typescript-eslint/no-unsafe-assignment": "off",
             "@typescript-eslint/no-unsafe-member-access": "off",
+            // Utiliser la version TS qui comprend les enums, types, etc.
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": [
+                "error",
+                {
+                    argsIgnorePattern: "^_",
+                    varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^_",
+                    destructuredArrayIgnorePattern: "^_",
+                    ignoreRestSiblings: true,
+                },
+            ],
         },
     },
 

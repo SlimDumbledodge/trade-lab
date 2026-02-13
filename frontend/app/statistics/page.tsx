@@ -1,9 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
-import { IconBell, IconFolderCode } from "@tabler/icons-react"
-import { ArrowUpRightIcon, Clock, RefreshCcwIcon, Watch } from "lucide-react"
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
+import { Clock } from "lucide-react"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { Suspense, useEffect, useState } from "react"
 import { HoldingsPieChart } from "@/components/charts/HoldingsPieChart"

@@ -270,7 +270,7 @@ describe("Auth E2E Tests", () => {
     })
 
     describe("Protected Routes", () => {
-        let accessToken: string
+        let _accessToken: string
 
         beforeEach(async () => {
             await cleanDatabase()
@@ -282,7 +282,7 @@ describe("Auth E2E Tests", () => {
                 password: testUser.password,
             })
 
-            accessToken = loginResponse.body.accessToken
+            _accessToken = loginResponse.body.accessToken
         })
 
         it("devrait bloquer l'accès à /portfolio sans token", async () => {

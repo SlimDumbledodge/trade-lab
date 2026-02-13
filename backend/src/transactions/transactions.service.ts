@@ -53,7 +53,7 @@ export class TransactionsService {
 
         // Toutes les opérations de modification sont exécutées dans une transaction atomique
         // Si une opération échoue, toutes les précédentes sont rollback automatiquement
-        return await this.prisma.$transaction(async (prisma) => {
+        return await this.prisma.$transaction(async (_prisma) => {
             await this.portfoliosAssetsService.createPortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity), asset.lastPrice)
             await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalCost, TransactionType.buy)
             await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
@@ -76,7 +76,7 @@ export class TransactionsService {
 
         // Toutes les opérations de modification sont exécutées dans une transaction atomique
         // Si une opération échoue, toutes les précédentes sont rollback automatiquement
-        return await this.prisma.$transaction(async (prisma) => {
+        return await this.prisma.$transaction(async (_prisma) => {
             // Utilisation du service pour gérer la logique métier (weight, PnL, etc.)
             await this.portfoliosAssetsService.reducePortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity))
 

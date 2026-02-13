@@ -5,7 +5,7 @@ import { MarketStatusService } from "./market-status.service"
 export class MarketStatusGuard implements CanActivate {
     constructor(private readonly marketService: MarketStatusService) {}
 
-    async canActivate(context: ExecutionContext): Promise<boolean> {
+    async canActivate(_context: ExecutionContext): Promise<boolean> {
         // Vérifie si le marché est ouvert
         const isOpen = await this.marketService.isMarketOpen()
 

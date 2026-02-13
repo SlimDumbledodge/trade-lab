@@ -75,7 +75,7 @@ const RegisterForm = () => {
                 toast.success("Compte créé avec succès !")
                 router.push("/portfolio")
             }
-        } catch (error) {
+        } catch (_error) {
             toast.error("Une erreur est survenue lors de l'inscription")
             setIsLoading(false)
         }

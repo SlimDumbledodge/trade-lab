@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common"
-import { MarketCalendar } from "prisma/generated/client"
 import { PrismaService } from "src/prisma/prisma.service"
 import { MarketStatusType, PublicMarketCalendarInfo } from "./types/types"
 const moment = require("moment-timezone")
