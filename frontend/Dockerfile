@@ -5,6 +5,10 @@ WORKDIR /app
 # Installer pnpm (le projet utilise pnpm-lock.yaml)
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
+# Variables d'environnement NEXT_PUBLIC_* nécessaires au build Next.js
+ARG NEXT_PUBLIC_NEST_API_URL
+ENV NEXT_PUBLIC_NEST_API_URL=$NEXT_PUBLIC_NEST_API_URL
+
 # Installer build tools pour certains packages natifs
 RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
 

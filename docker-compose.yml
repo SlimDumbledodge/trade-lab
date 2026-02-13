@@ -66,7 +66,10 @@ services:
   # Frontend Next.js — réseau interne UNIQUEMENT
   # ============================================
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_NEST_API_URL: ${NEXT_PUBLIC_NEST_API_URL}
     container_name: tradelab-frontend
     restart: unless-stopped
     depends_on:
