@@ -53,21 +53,24 @@ export class TransactionsService {
 
         // Toutes les opérations de modification sont exécutées dans une transaction atomique
         // Si une opération échoue, toutes les précédentes sont rollback automatiquement
-        return await this.prisma.$transaction(async (_prisma) => {
-            await this.portfoliosAssetsService.createPortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity), asset.lastPrice)
-            await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalCost, TransactionType.buy)
-            await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
-            await this.portfoliosSnapshotsService.capturePortfolioSnapshot(portfolioId)
+        return await this.prisma.$transaction(
+            async (_prisma) => {
+                await this.portfoliosAssetsService.createPortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity), asset.lastPrice)
+                await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalCost, TransactionType.buy)
+                await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
+                await this.portfoliosSnapshotsService.capturePortfolioSnapshot(portfolioId)
 
-            const transaction: TransactionPublic = {
-                portfolioId,
-                assetId: asset.id,
-                price: asset.lastPrice,
-                quantity: new Prisma.Decimal(quantity),
-                type: TransactionType.buy,
-            }
-            return this.createTransaction(transaction)
-        })
+                const transaction: TransactionPublic = {
+                    portfolioId,
+                    assetId: asset.id,
+                    price: asset.lastPrice,
+                    quantity: new Prisma.Decimal(quantity),
+                    type: TransactionType.buy,
+                }
+                return this.createTransaction(transaction)
+            },
+            { timeout: 15000 },
+        )
     }
     async sellAsset(portfolioId: number, sellAssetDto: AssetOperationDto) {
         const { assetId, quantity } = sellAssetDto
@@ -76,24 +79,27 @@ export class TransactionsService {
 
         // Toutes les opérations de modification sont exécutées dans une transaction atomique
         // Si une opération échoue, toutes les précédentes sont rollback automatiquement
-        return await this.prisma.$transaction(async (_prisma) => {
-            // Utilisation du service pour gérer la logique métier (weight, PnL, etc.)
-            await this.portfoliosAssetsService.reducePortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity))
+        return await this.prisma.$transaction(
+            async (_prisma) => {
+                // Utilisation du service pour gérer la logique métier (weight, PnL, etc.)
+                await this.portfoliosAssetsService.reducePortfolioAsset(portfolioId, assetId, new Prisma.Decimal(quantity))
 
-            const totalProceeds = asset.lastPrice.mul(quantity)
-            await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalProceeds, TransactionType.sell)
-            await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
-            await this.portfoliosSnapshotsService.capturePortfolioSnapshot(portfolioId)
+                const totalProceeds = asset.lastPrice.mul(quantity)
+                await this.portfoliosService.updatePortfolioCashBalance(portfolioId, totalProceeds, TransactionType.sell)
+                await this.portfoliosService.calculatePortfolioAssetsValue(portfolioId)
+                await this.portfoliosSnapshotsService.capturePortfolioSnapshot(portfolioId)
 
-            const transaction: TransactionPublic = {
-                portfolioId,
-                assetId: asset.id,
-                price: asset.lastPrice,
-                quantity: new Prisma.Decimal(quantity),
-                type: TransactionType.sell,
-            }
-            return this.createTransaction(transaction)
-        })
+                const transaction: TransactionPublic = {
+                    portfolioId,
+                    assetId: asset.id,
+                    price: asset.lastPrice,
+                    quantity: new Prisma.Decimal(quantity),
+                    type: TransactionType.sell,
+                }
+                return this.createTransaction(transaction)
+            },
+            { timeout: 15000 },
+        )
     }
 
     createTransaction(transaction: TransactionPublic) {
