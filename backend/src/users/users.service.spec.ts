@@ -2,7 +2,6 @@ import { Test, TestingModule } from "@nestjs/testing"
 import { NotFoundException } from "@nestjs/common"
 import { UsersService } from "./users.service"
 import { PrismaService } from "../prisma/prisma.service"
-import * as bcrypt from "bcrypt"
 
 describe("UsersService", () => {
     let service: UsersService
