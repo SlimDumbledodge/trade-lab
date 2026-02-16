@@ -72,6 +72,14 @@ export class UsersService {
         })
     }
 
+    async completeOnboarding(userId: number) {
+        return this.prisma.user.update({
+            where: { id: userId },
+            data: { hasCompletedOnboarding: true },
+            select: { id: true, hasCompletedOnboarding: true },
+        })
+    }
+
     async updateAvatarPath(userId: number, avatarPath: string) {
         const user = await this.prisma.user.findUnique({
             where: { id: userId },

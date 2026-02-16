@@ -78,3 +78,8 @@ export const uploadAvatar = (file: File, token?: string): Promise<{ avatarPath: 
         body: formData,
     })
 }
+
+export const completeOnboarding = (token?: string): Promise<{ id: number; hasCompletedOnboarding: boolean }> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/users/complete-onboarding`, token, {
+        method: "PATCH",
+    })

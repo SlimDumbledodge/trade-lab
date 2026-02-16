@@ -42,6 +42,12 @@ export class UsersController {
         return this.usersService.findAll()
     }
 
+    @Patch("complete-onboarding")
+    @UseGuards(JwtAuthGuard)
+    completeOnboarding(@GetUser("id") userId: number) {
+        return this.usersService.completeOnboarding(userId)
+    }
+
     @Get(":id")
     @UseGuards(JwtAuthGuard)
     findOne(@Param("id", ParseIntPipe) id: number) {

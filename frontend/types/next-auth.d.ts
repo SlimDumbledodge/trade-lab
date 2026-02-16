@@ -9,6 +9,7 @@ declare module "next-auth" {
         accessToken?: string
         avatarPath?: string | null
         createdAt?: string
+        hasCompletedOnboarding?: boolean
     }
 
     interface Session extends DefaultSession {
