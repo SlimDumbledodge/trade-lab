@@ -39,6 +39,7 @@ export const authOptions: NextAuthOptions = {
                             accessToken: data.data.accessToken,
                             avatarPath: user.avatarPath,
                             createdAt: user.createdAt,
+                            hasCompletedOnboarding: user.hasCompletedOnboarding,
                         }
                     }
 
