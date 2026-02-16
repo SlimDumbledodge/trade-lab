@@ -6,8 +6,6 @@ const createFile = (size: number, type: string, name = "avatar.jpg") => {
     return new File([buffer], name, { type })
 }
 
-const validFile = createFile(1024, "image/jpeg")
-
 describe("avatarFormSchema", () => {
     describe("cas valides", () => {
         it("accepte un fichier JPEG valide", () => {
