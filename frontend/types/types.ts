@@ -22,6 +22,7 @@ export type User = {
     id: number
     username: string
     email: string
+    avatarPath?: string | null
     createdAt: string // DateTime en ISO côté frontend
     portfolio?: Portfolio | null
 }

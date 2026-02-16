@@ -1,12 +1,15 @@
-import { Injectable, NotFoundException } from "@nestjs/common"
+import { Injectable, Logger, NotFoundException } from "@nestjs/common"
 import { CreateUserDto } from "./dto/create-user.dto"
 import { UpdateUserDto } from "./dto/update-user.dto"
 import { PrismaService } from "src/prisma/prisma.service"
 import * as bcrypt from "bcrypt"
 import { roundsOfHashing } from "src/utils/constant"
+import * as fs from "node:fs"
 
 @Injectable()
 export class UsersService {
+    private readonly logger = new Logger(UsersService.name)
+
     constructor(private prisma: PrismaService) {}
 
     async create(createUserDto: CreateUserDto) {
@@ -66,6 +69,26 @@ export class UsersService {
     remove(id: number) {
         return this.prisma.user.delete({
             where: { id },
+        })
+    }
+
+    async updateAvatarPath(userId: number, avatarPath: string) {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { avatarPath: true },
+        })
+
+        if (user?.avatarPath) {
+            try {
+                await fs.promises.unlink(user.avatarPath)
+            } catch (error) {
+                this.logger.warn(`Impossible de supprimer l'ancien avatar : ${user.avatarPath}`, error)
+            }
+        }
+
+        return this.prisma.user.update({
+            where: { id: userId },
+            data: { avatarPath },
         })
     }
 }

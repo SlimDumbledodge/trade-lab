@@ -26,6 +26,8 @@ async function bootstrap() {
                           imgSrc: ["'self'", "data:", "https:"],
                       },
                   },
+            // Permet le chargement cross-origin des ressources statiques (avatars)
+            crossOriginResourcePolicy: { policy: "cross-origin" },
             // Force HTTPS en production
             hsts: isDevelopment
                 ? false

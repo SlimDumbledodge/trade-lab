@@ -2,10 +2,12 @@ import { logger } from "./logger"
 
 export async function fetcher<T>(url: string, token?: string, options?: RequestInit): Promise<T> {
     try {
+        const isFormData = options?.body instanceof FormData
+
         const res = await fetch(url, {
             ...options,
             headers: {
-                "Content-Type": "application/json",
+                ...(!isFormData ? { "Content-Type": "application/json" } : {}),
                 ...(token ? { Authorization: `Bearer ${token}` } : {}),
                 ...options?.headers,
             },
