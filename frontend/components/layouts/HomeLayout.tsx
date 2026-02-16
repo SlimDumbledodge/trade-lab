@@ -3,6 +3,7 @@ import { AppSidebar } from "@/components/header/nav/SideBar"
 import { SiteHeader } from "@/components/header/Header"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { Footer } from "@/components/footer/Footer"
+import { OnboardingWrapper } from "../onboarding/OnboardingWrapper"
 
 interface HomeLayoutProps {
     children: ReactNode
@@ -35,6 +36,9 @@ export function HomeLayout({ children, headerTitle }: HomeLayoutProps) {
                     <Footer />
                 </div>
             </div>
+
+            {/* Onboarding modal pour les nouveaux utilisateurs */}
+            <OnboardingWrapper />
         </SidebarProvider>
     )
 }
