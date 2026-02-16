@@ -12,4 +12,7 @@ export class UserDto {
 
     @ApiProperty()
     portfolioId: number | null
+
+    @ApiProperty()
+    hasCompletedOnboarding: boolean
 }
