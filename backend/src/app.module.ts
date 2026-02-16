@@ -17,6 +17,8 @@ import { ThrottlerModule, ThrottlerGuard } from "@nestjs/throttler"
 import { APP_GUARD } from "@nestjs/core"
 import { EmailModule } from "./email/email.module"
 import { MarketStatusModule } from "./market-status/market-status.module"
+import { ServeStaticModule } from "@nestjs/serve-static"
+import { join } from "path"
 
 @Module({
     imports: [
@@ -30,6 +32,13 @@ import { MarketStatusModule } from "./market-status/market-status.module"
         ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: ".env",
+        }),
+        ServeStaticModule.forRoot({
+            rootPath: join(process.cwd(), "uploads"),
+            serveRoot: "/uploads",
+            serveStaticOptions: {
+                index: false,
+            },
         }),
         ThrottlerModule.forRootAsync({
             imports: [ConfigModule],
