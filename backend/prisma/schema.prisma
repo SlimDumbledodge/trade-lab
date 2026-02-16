@@ -15,6 +15,7 @@ model User {
   passwordHash            String
   resetPasswordToken      String?
   resetPasswordExpires    DateTime?
+  hasCompletedOnboarding  Boolean    @default(false)
   createdAt               DateTime   @default(now())
   portfolio               Portfolio?
 }

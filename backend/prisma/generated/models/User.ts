@@ -42,6 +42,7 @@ export type UserMinAggregateOutputType = {
   passwordHash: string | null
   resetPasswordToken: string | null
   resetPasswordExpires: Date | null
+  hasCompletedOnboarding: boolean | null
   createdAt: Date | null
 }
 
@@ -53,6 +54,7 @@ export type UserMaxAggregateOutputType = {
   passwordHash: string | null
   resetPasswordToken: string | null
   resetPasswordExpires: Date | null
+  hasCompletedOnboarding: boolean | null
   createdAt: Date | null
 }
 
@@ -64,6 +66,7 @@ export type UserCountAggregateOutputType = {
   passwordHash: number
   resetPasswordToken: number
   resetPasswordExpires: number
+  hasCompletedOnboarding: number
   createdAt: number
   _all: number
 }
@@ -85,6 +88,7 @@ export type UserMinAggregateInputType = {
   passwordHash?: true
   resetPasswordToken?: true
   resetPasswordExpires?: true
+  hasCompletedOnboarding?: true
   createdAt?: true
 }
 
@@ -96,6 +100,7 @@ export type UserMaxAggregateInputType = {
   passwordHash?: true
   resetPasswordToken?: true
   resetPasswordExpires?: true
+  hasCompletedOnboarding?: true
   createdAt?: true
 }
 
@@ -107,6 +112,7 @@ export type UserCountAggregateInputType = {
   passwordHash?: true
   resetPasswordToken?: true
   resetPasswordExpires?: true
+  hasCompletedOnboarding?: true
   createdAt?: true
   _all?: true
 }
@@ -205,6 +211,7 @@ export type UserGroupByOutputType = {
   passwordHash: string
   resetPasswordToken: string | null
   resetPasswordExpires: Date | null
+  hasCompletedOnboarding: boolean
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -239,6 +246,7 @@ export type UserWhereInput = {
   passwordHash?: Prisma.StringFilter<"User"> | string
   resetPasswordToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetPasswordExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   portfolio?: Prisma.XOR<Prisma.PortfolioNullableScalarRelationFilter, Prisma.PortfolioWhereInput> | null
 }
@@ -251,6 +259,7 @@ export type UserOrderByWithRelationInput = {
   passwordHash?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasCompletedOnboarding?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   portfolio?: Prisma.PortfolioOrderByWithRelationInput
 }
@@ -266,6 +275,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   passwordHash?: Prisma.StringFilter<"User"> | string
   resetPasswordToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetPasswordExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   portfolio?: Prisma.XOR<Prisma.PortfolioNullableScalarRelationFilter, Prisma.PortfolioWhereInput> | null
 }, "id" | "email" | "username" | "avatarPath">
@@ -278,6 +288,7 @@ export type UserOrderByWithAggregationInput = {
   passwordHash?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasCompletedOnboarding?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -297,6 +308,7 @@ export type UserScalarWhereWithAggregatesInput = {
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   resetPasswordToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetPasswordExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -307,6 +319,7 @@ export type UserCreateInput = {
   passwordHash: string
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
+  hasCompletedOnboarding?: boolean
   createdAt?: Date | string
   portfolio?: Prisma.PortfolioCreateNestedOneWithoutUserInput
 }
@@ -319,6 +332,7 @@ export type UserUncheckedCreateInput = {
   passwordHash: string
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
+  hasCompletedOnboarding?: boolean
   createdAt?: Date | string
   portfolio?: Prisma.PortfolioUncheckedCreateNestedOneWithoutUserInput
 }
@@ -330,6 +344,7 @@ export type UserUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolio?: Prisma.PortfolioUpdateOneWithoutUserNestedInput
 }
@@ -342,6 +357,7 @@ export type UserUncheckedUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolio?: Prisma.PortfolioUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -354,6 +370,7 @@ export type UserCreateManyInput = {
   passwordHash: string
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
+  hasCompletedOnboarding?: boolean
   createdAt?: Date | string
 }
 
@@ -364,6 +381,7 @@ export type UserUpdateManyMutationInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -375,6 +393,7 @@ export type UserUncheckedUpdateManyInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -386,6 +405,7 @@ export type UserCountOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrder
+  hasCompletedOnboarding?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -401,6 +421,7 @@ export type UserMaxOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrder
+  hasCompletedOnboarding?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -412,6 +433,7 @@ export type UserMinOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrder
+  hasCompletedOnboarding?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -434,6 +456,10 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -469,6 +495,7 @@ export type UserCreateWithoutPortfolioInput = {
   passwordHash: string
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
+  hasCompletedOnboarding?: boolean
   createdAt?: Date | string
 }
 
@@ -480,6 +507,7 @@ export type UserUncheckedCreateWithoutPortfolioInput = {
   passwordHash: string
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
+  hasCompletedOnboarding?: boolean
   createdAt?: Date | string
 }
 
@@ -506,6 +534,7 @@ export type UserUpdateWithoutPortfolioInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -517,6 +546,7 @@ export type UserUncheckedUpdateWithoutPortfolioInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -530,6 +560,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   passwordHash?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
+  hasCompletedOnboarding?: boolean
   createdAt?: boolean
   portfolio?: boolean | Prisma.User$portfolioArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -542,6 +573,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
+  hasCompletedOnboarding?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -553,6 +585,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
+  hasCompletedOnboarding?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -564,10 +597,11 @@ export type UserSelectScalar = {
   passwordHash?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
+  hasCompletedOnboarding?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "avatarPath" | "passwordHash" | "resetPasswordToken" | "resetPasswordExpires" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "avatarPath" | "passwordHash" | "resetPasswordToken" | "resetPasswordExpires" | "hasCompletedOnboarding" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   portfolio?: boolean | Prisma.User$portfolioArgs<ExtArgs>
 }
@@ -587,6 +621,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     passwordHash: string
     resetPasswordToken: string | null
     resetPasswordExpires: Date | null
+    hasCompletedOnboarding: boolean
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1019,6 +1054,7 @@ export interface UserFieldRefs {
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly resetPasswordToken: Prisma.FieldRef<"User", 'String'>
   readonly resetPasswordExpires: Prisma.FieldRef<"User", 'DateTime'>
+  readonly hasCompletedOnboarding: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
