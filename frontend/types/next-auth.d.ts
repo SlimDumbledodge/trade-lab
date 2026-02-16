@@ -7,6 +7,7 @@ declare module "next-auth" {
         subscription?: string
         portfolioId?: string | null
         accessToken?: string
+        avatarPath?: string | null
         createdAt?: string
     }
 
