@@ -68,3 +68,13 @@ export const sendContactMessage = (data: {
         method: "POST",
         body: JSON.stringify(data),
     })
+
+export const uploadAvatar = (file: File, token?: string): Promise<{ avatarPath: string }> => {
+    const formData = new FormData()
+    formData.append("file", file)
+
+    return fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/users/upload-avatar`, token, {
+        method: "POST",
+        body: formData,
+    })
+}
