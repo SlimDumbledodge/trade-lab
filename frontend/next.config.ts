@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
                 hostname: "static2.finnhub.io",
                 pathname: "/file/publicdatany/finnhubimage/**",
             },
+            {
+                protocol: "http",
+                hostname: "localhost",
+                port: "3001",
+                pathname: "/uploads/**",
+            },
+            {
+                protocol: "https",
+                hostname: "api.tradelab-studio.fr",
+                pathname: "/uploads/**",
+            },
         ],
     },
     eslint: {
