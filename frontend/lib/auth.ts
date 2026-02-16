@@ -37,6 +37,8 @@ export const authOptions: NextAuthOptions = {
                             subscription: user.subscription,
                             portfolioId: user.portfolioId,
                             accessToken: data.data.accessToken,
+                            avatarPath: user.avatarPath,
+                            createdAt: user.createdAt,
                         }
                     }
 
@@ -50,10 +52,13 @@ export const authOptions: NextAuthOptions = {
     ],
 
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session: updatedSession }) {
             if (user) {
                 token.accessToken = user.accessToken
                 token.user = user
+            }
+            if (trigger === "update" && updatedSession?.user) {
+                token.user = { ...token.user, ...updatedSession.user }
             }
             return token
         },
