@@ -57,6 +57,8 @@ services:
     tmpfs:
       - /tmp
       - /app/.cache
+    volumes:
+      - uploads-data:/app/uploads
     deploy:
       resources:
         limits:
@@ -124,6 +126,8 @@ services:
 # ============================================
 volumes:
   postgres-data:
+    driver: local
+  uploads-data:
     driver: local
 
 # ============================================

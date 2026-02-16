@@ -51,6 +51,9 @@ COPY --from=builder /app/prisma.config.ts ./
 COPY --from=builder /app/tsconfig*.json ./
 COPY --from=builder /app/src ./src
 
+# Créer le dossier uploads et donner les permissions
+RUN mkdir -p /app/uploads/avatars && chown -R appuser:appgroup /app/uploads
+
 # Passer à l'utilisateur non-root
 USER appuser
 
