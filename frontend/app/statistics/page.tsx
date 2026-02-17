@@ -3,6 +3,7 @@
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 import { Clock } from "lucide-react"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
+import { StatsKpiCards } from "@/components/statistics/StatsKpiCards"
 import { Suspense, useEffect, useState } from "react"
 import { HoldingsPieChart } from "@/components/charts/HoldingsPieChart"
 import { PerformanceCard } from "@/components/portfolio/PerformanceCard"
@@ -25,6 +26,9 @@ function Statistics() {
                 <div className="px-2 sm:px-0">
                     <h1 className="text-2xl sm:text-3xl font-bold">Statistiques</h1>
                 </div>
+
+                {/* KPI Cards */}
+                <StatsKpiCards />
 
                 <div className="flex flex-col min-[1200px]:flex-row gap-4 sm:gap-6 min-[1200px]:items-stretch">
                     {/* Graphique à gauche */}
@@ -70,7 +74,7 @@ function Statistics() {
                     </div>
 
                     {/* Cards à droite */}
-                    <div className="flex flex-col gap-4 sm:gap-6 w-full min-[1200px]:w-[380px] shrink-0">
+                    <div className="flex flex-col gap-4 sm:gap-6 w-full min-[1200px]:w-[320px] shrink-0">
                         <PerformanceCard />
                         <PortfolioAssetCard />
                     </div>
