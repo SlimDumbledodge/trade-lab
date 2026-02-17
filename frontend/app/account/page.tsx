@@ -10,12 +10,16 @@ import { PORTFOLIO_PERFORMANCE_PERIOD } from "@/types/types"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { Input } from "@/components/ui/input"
+import { ButtonLoader } from "@/components/ui/ButtonLoader"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { useUploadAvatar } from "@/mutations/useUploadAvatar"
+import { useEditProfile } from "@/mutations/useEditProfile"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { avatarFormSchema, AvatarFormSchema } from "@/lib/validations/avatar-form.schema"
+import { editProfileFormSchema, EditProfileFormSchema } from "@/lib/validations/edit-profile-form.schema"
 import toast from "react-hot-toast"
 
 function getInitials(name?: string | null) {
@@ -45,6 +49,7 @@ export default function AccountPage() {
     const { data: session, update: updateSession } = useSession()
     const { data: portfolio, isLoading } = usePortfolio(PORTFOLIO_PERFORMANCE_PERIOD.ONE_DAY, session?.accessToken)
     const uploadAvatarMutation = useUploadAvatar()
+    const editProfileMutation = useEditProfile()
     const fileInputRef = useRef<HTMLInputElement>(null)
 
     const avatarUrl = session?.user?.avatarPath
@@ -54,6 +59,25 @@ export default function AccountPage() {
     const form = useForm<AvatarFormSchema>({
         resolver: zodResolver(avatarFormSchema),
     })
+
+    const editProfileForm = useForm<EditProfileFormSchema>({
+        resolver: zodResolver(editProfileFormSchema),
+        mode: "onChange",
+        defaultValues: {
+            username: session?.user?.name || "",
+            email: session?.user?.email || "",
+        },
+    })
+
+    // Resync form defaults when session loads
+    useEffect(() => {
+        if (session?.user) {
+            editProfileForm.reset({
+                username: session.user.name || "",
+                email: session.user.email || "",
+            })
+        }
+    }, [session?.user, editProfileForm])
 
     const onSubmit = (values: AvatarFormSchema) => {
         uploadAvatarMutation.mutate(
@@ -189,33 +213,96 @@ export default function AccountPage() {
                     </Card>
                 </div>
 
-                {/* ── Personal Info Card (lecture seule) ── */}
+                {/* ── Personal Info Card ── */}
                 <Card>
                     <CardContent className="p-6">
                         <h3 className="text-base font-semibold">Informations personnelles</h3>
-                        <p className="mb-5 text-sm text-muted-foreground">Vos données personnelles et votre identité.</p>
+                        <p className="text-sm text-muted-foreground">
+                            Modifiez votre nom d&apos;utilisateur ou votre adresse email.
+                        </p>
 
-                        <Separator className="mb-5" />
+                        <Separator className="my-5" />
 
-                        <div className="space-y-5">
-                            {/* Nom d'utilisateur */}
-                            <div className="grid grid-cols-1 items-center gap-1 sm:grid-cols-[180px_1fr]">
-                                <Label className="flex items-center gap-2 text-muted-foreground">
-                                    <User className="size-4" />
-                                    Nom d&apos;utilisateur
-                                </Label>
-                                <p className="text-sm font-medium">{session?.user?.name || "Non disponible"}</p>
-                            </div>
+                        <Form {...editProfileForm}>
+                            <form
+                                onSubmit={editProfileForm.handleSubmit((values) => {
+                                    editProfileMutation.mutate(
+                                        { data: values, token: session?.accessToken },
+                                        {
+                                            onSuccess: async (data) => {
+                                                await updateSession({
+                                                    ...session,
+                                                    user: {
+                                                        ...session?.user,
+                                                        name: data.username,
+                                                        email: data.email,
+                                                    },
+                                                })
+                                                editProfileForm.reset({
+                                                    username: data.username,
+                                                    email: data.email,
+                                                })
+                                                toast.success("Profil mis à jour avec succès")
+                                            },
+                                            onError: () => {
+                                                toast.error("Erreur lors de la mise à jour du profil")
+                                            },
+                                        },
+                                    )
+                                })}
+                                className="space-y-5"
+                            >
+                                <FormField
+                                    control={editProfileForm.control}
+                                    name="username"
+                                    render={({ field }) => (
+                                        <FormItem className="grid grid-cols-1 items-start gap-1 sm:grid-cols-[180px_1fr]">
+                                            <FormLabel className="flex items-center gap-2 pt-2.5 text-muted-foreground">
+                                                <User className="size-4" />
+                                                Nom d&apos;utilisateur
+                                            </FormLabel>
+                                            <div className="space-y-1">
+                                                <FormControl>
+                                                    <Input placeholder="Votre nom d'utilisateur" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
 
-                            {/* Email */}
-                            <div className="grid grid-cols-1 items-center gap-1 sm:grid-cols-[180px_1fr]">
-                                <Label className="flex items-center gap-2 text-muted-foreground">
-                                    <Mail className="size-4" />
-                                    Adresse email
-                                </Label>
-                                <p className="text-sm font-medium">{session?.user?.email || "Non disponible"}</p>
-                            </div>
-                        </div>
+                                <FormField
+                                    control={editProfileForm.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem className="grid grid-cols-1 items-start gap-1 sm:grid-cols-[180px_1fr]">
+                                            <FormLabel className="flex items-center gap-2 pt-2.5 text-muted-foreground">
+                                                <Mail className="size-4" />
+                                                Adresse email
+                                            </FormLabel>
+                                            <div className="space-y-1">
+                                                <FormControl>
+                                                    <Input type="email" placeholder="Votre adresse email" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <div className="flex justify-end pt-2">
+                                    <ButtonLoader
+                                        variant="default"
+                                        type="submit"
+                                        className="h-8 px-3 text-sm"
+                                        disabled={!editProfileForm.formState.isDirty || !editProfileForm.formState.isValid}
+                                        isLoading={editProfileMutation.isPending}
+                                    >
+                                        Enregistrer
+                                    </ButtonLoader>
+                                </div>
+                            </form>
+                        </Form>
                     </CardContent>
                 </Card>
             </div>
