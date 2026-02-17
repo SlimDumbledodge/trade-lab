@@ -121,6 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend-ci, frontend-ci]
     if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    timeout-minutes: 120
 
     steps:
       - name: Deploy via SSH
