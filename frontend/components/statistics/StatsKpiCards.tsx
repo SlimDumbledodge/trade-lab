@@ -87,16 +87,18 @@ export function StatsKpiCards() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
             {kpis.map((kpi) => (
                 <Card key={kpi.label} className="relative overflow-hidden">
-                    <CardContent className="px-3">
-                        <div className="flex flex-col gap-1.5">
+                    <CardContent className="px-3 sm:px-4">
+                        <div className="flex flex-col gap-1.5 sm:gap-2">
                             <div className="flex items-center justify-between">
-                                <p className="text-[13px] text-muted-foreground leading-none">{kpi.label}</p>
-                                <div className={`rounded-md p-1.5 ${kpi.bg}`}>
-                                    <kpi.icon className={`size-3.5 ${kpi.color}`} />
+                                <p className="text-xs sm:text-[13px] text-muted-foreground leading-none">{kpi.label}</p>
+                                <div className={`rounded-md p-1 sm:p-1.5 ${kpi.bg}`}>
+                                    <kpi.icon className={`size-3.5 sm:size-4 ${kpi.color}`} />
                                 </div>
                             </div>
-                            <p className="text-base font-bold leading-tight">{kpi.value}</p>
-                            {kpi.subtitle && <p className={`text-[11px] leading-none ${kpi.subtitleColor}`}>{kpi.subtitle}</p>}
+                            <p className="text-sm sm:text-base font-bold leading-tight">{kpi.value}</p>
+                            {kpi.subtitle && (
+                                <p className={`text-[11px] sm:text-xs leading-none ${kpi.subtitleColor}`}>{kpi.subtitle}</p>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
