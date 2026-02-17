@@ -1,6 +1,7 @@
-import { Injectable, Logger, NotFoundException } from "@nestjs/common"
+import { ConflictException, Injectable, Logger, NotFoundException } from "@nestjs/common"
 import { CreateUserDto } from "./dto/create-user.dto"
 import { UpdateUserDto } from "./dto/update-user.dto"
+import { UpdateProfileDto } from "./dto/update-profile.dto"
 import { PrismaService } from "src/prisma/prisma.service"
 import * as bcrypt from "bcrypt"
 import { roundsOfHashing } from "src/utils/constant"
@@ -77,6 +78,44 @@ export class UsersService {
             where: { id: userId },
             data: { hasCompletedOnboarding: true },
             select: { id: true, hasCompletedOnboarding: true },
+        })
+    }
+
+    async updateProfile(userId: number, updateProfileDto: UpdateProfileDto) {
+        const user = await this.prisma.user.findUnique({ where: { id: userId } })
+        if (!user) {
+            throw new NotFoundException(`Utilisateur avec l'ID ${userId} introuvable`)
+        }
+
+        if (updateProfileDto.username && updateProfileDto.username !== user.username) {
+            const existingUsername = await this.prisma.user.findUnique({
+                where: { username: updateProfileDto.username },
+            })
+            if (existingUsername) {
+                throw new ConflictException("Ce nom d'utilisateur est déjà pris")
+            }
+        }
+
+        if (updateProfileDto.email && updateProfileDto.email !== user.email) {
+            const existingEmail = await this.prisma.user.findUnique({
+                where: { email: updateProfileDto.email },
+            })
+            if (existingEmail) {
+                throw new ConflictException("Cet email est déjà utilisé")
+            }
+        }
+
+        return this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                ...(updateProfileDto.username && { username: updateProfileDto.username }),
+                ...(updateProfileDto.email && { email: updateProfileDto.email }),
+            },
+            select: {
+                id: true,
+                username: true,
+                email: true,
+            },
         })
     }
 
