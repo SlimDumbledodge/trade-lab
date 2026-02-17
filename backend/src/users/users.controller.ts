@@ -16,6 +16,7 @@ import {
 import { UsersService } from "./users.service"
 import { CreateUserDto } from "./dto/create-user.dto"
 import { UpdateUserDto } from "./dto/update-user.dto"
+import { UpdateProfileDto } from "./dto/update-profile.dto"
 import { ApiTags } from "@nestjs/swagger"
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard"
 import { Throttle } from "@nestjs/throttler"
@@ -40,6 +41,12 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     findAll() {
         return this.usersService.findAll()
+    }
+
+    @Patch()
+    @UseGuards(JwtAuthGuard)
+    updateProfile(@GetUser("id") userId: number, @Body() updateProfileDto: UpdateProfileDto) {
+        return this.usersService.updateProfile(userId, updateProfileDto)
     }
 
     @Patch("complete-onboarding")
