@@ -74,10 +74,7 @@ export function HoldingsPieChart() {
 
     return (
         <div className="relative w-full h-full flex flex-col">
-            <ChartContainer
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-[350px] sm:max-h-[400px] lg:max-h-[450px] w-full"
-            >
+            <ChartContainer config={chartConfig} className="mx-auto aspect-square sm:max-h-[400px] lg:max-h-[450px] w-full">
                 <PieChart>
                     <defs>
                         {COLORS.map((color, index) => (
@@ -121,7 +118,7 @@ export function HoldingsPieChart() {
                         data={chartData}
                         dataKey="weight"
                         nameKey="name"
-                        innerRadius="60%"
+                        innerRadius="55%"
                         outerRadius="80%"
                         paddingAngle={2}
                         activeIndex={activeIndex}
@@ -154,13 +151,13 @@ export function HoldingsPieChart() {
                                             <tspan
                                                 x={viewBox.cx}
                                                 y={viewBox.cy}
-                                                className="fill-foreground text-xl sm:text-2xl md:text-3xl font-bold"
+                                                className="fill-foreground text-lg sm:text-xl md:text-2xl font-bold"
                                             >
                                                 {centerLabel.value}
                                             </tspan>
                                             <tspan
                                                 x={viewBox.cx}
-                                                y={(viewBox.cy || 0) + 25}
+                                                y={(viewBox.cy || 0) + 22}
                                                 className="fill-muted-foreground text-xs sm:text-sm"
                                             >
                                                 {centerLabel.label}
