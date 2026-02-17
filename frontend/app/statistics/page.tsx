@@ -37,7 +37,7 @@ function Statistics() {
                             <Card className="flex flex-col w-full h-full min-h-[400px] min-[1200px]:min-h-[500px]">
                                 <CardHeader className="items-center pb-2 sm:pb-0">
                                     <Tabs
-                                        className="w-[400px]"
+                                        className="w-full max-w-[400px]"
                                         value={statsType}
                                         onValueChange={(value) => setStatsType(value as StatsType)}
                                     >

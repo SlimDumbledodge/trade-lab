@@ -74,7 +74,7 @@ export function HoldingsPieChart() {
 
     return (
         <div className="relative w-full h-full flex flex-col">
-            <ChartContainer config={chartConfig} className="mx-auto aspect-square sm:max-h-[400px] lg:max-h-[450px] w-full">
+            <ChartContainer config={chartConfig} className="mx-auto w-full aspect-square sm:max-h-[400px] lg:max-h-[450px]">
                 <PieChart>
                     <defs>
                         {COLORS.map((color, index) => (
@@ -138,7 +138,7 @@ export function HoldingsPieChart() {
                         onClick={(_, index) => {
                             setActiveIndex((prev) => (prev === index ? undefined : index))
                         }}
-                        className="cursor-pointer"
+                        className="cursor-pointer border-4 border-amber-800"
                         style={{
                             transition: "all 0.3s ease-in-out",
                         }}
