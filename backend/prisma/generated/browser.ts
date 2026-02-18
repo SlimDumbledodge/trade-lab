@@ -57,3 +57,8 @@ export type PortfolioSnapshots = Prisma.PortfolioSnapshotsModel
  * 
  */
 export type MarketCalendar = Prisma.MarketCalendarModel
+/**
+ * Model Favorite
+ * 
+ */
+export type Favorite = Prisma.FavoriteModel
