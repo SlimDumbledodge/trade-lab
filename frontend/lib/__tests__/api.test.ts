@@ -12,6 +12,9 @@ import {
     forgotPassword,
     resetPassword,
     sendContactMessage,
+    getFavorites,
+    processAddFavorite,
+    processRemoveFavorite,
 } from "@/lib/api"
 import { ASSET_PRICE_PERIOD, PORTFOLIO_PERFORMANCE_PERIOD, TransactionType } from "@/types/types"
 
@@ -272,6 +275,84 @@ describe("api.ts", () => {
                 method: "POST",
                 body: JSON.stringify(contactData),
             })
+        })
+    })
+
+    // ─── getFavorites ──────────────────────────────────────────────────────────
+
+    describe("getFavorites", () => {
+        it("appelle fetcher avec la bonne URL et le token", async () => {
+            await getFavorites(TOKEN)
+
+            expect(mockFetcher).toHaveBeenCalledWith(`${API_URL}/favorites`, TOKEN)
+        })
+
+        it("fonctionne sans token", async () => {
+            await getFavorites()
+
+            expect(mockFetcher).toHaveBeenCalledWith(`${API_URL}/favorites`, undefined)
+        })
+    })
+
+    // ─── processAddFavorite ────────────────────────────────────────────────────
+
+    describe("processAddFavorite", () => {
+        it("appelle fetcher en POST avec l'assetId dans le body", async () => {
+            await processAddFavorite(42, TOKEN)
+
+            expect(mockFetcher).toHaveBeenCalledWith(`${API_URL}/favorites`, TOKEN, {
+                method: "POST",
+                body: JSON.stringify({ assetId: 42 }),
+            })
+        })
+
+        it("fonctionne sans token", async () => {
+            await processAddFavorite(10)
+
+            expect(mockFetcher).toHaveBeenCalledWith(`${API_URL}/favorites`, undefined, {
+                method: "POST",
+                body: JSON.stringify({ assetId: 10 }),
+            })
+        })
+
+        it("sérialise correctement l'assetId dans le body", async () => {
+            await processAddFavorite(123, TOKEN)
+
+            const callArgs = mockFetcher.mock.calls[0]
+            const body = JSON.parse(callArgs[2].body as string)
+
+            expect(body).toEqual({ assetId: 123 })
+        })
+    })
+
+    // ─── processRemoveFavorite ─────────────────────────────────────────────────
+
+    describe("processRemoveFavorite", () => {
+        it("appelle fetcher en DELETE avec l'assetId dans le body", async () => {
+            await processRemoveFavorite(42, TOKEN)
+
+            expect(mockFetcher).toHaveBeenCalledWith(`${API_URL}/favorites`, TOKEN, {
+                method: "DELETE",
+                body: JSON.stringify({ assetId: 42 }),
+            })
+        })
+
+        it("fonctionne sans token", async () => {
+            await processRemoveFavorite(10)
+
+            expect(mockFetcher).toHaveBeenCalledWith(`${API_URL}/favorites`, undefined, {
+                method: "DELETE",
+                body: JSON.stringify({ assetId: 10 }),
+            })
+        })
+
+        it("sérialise correctement l'assetId dans le body", async () => {
+            await processRemoveFavorite(99, TOKEN)
+
+            const callArgs = mockFetcher.mock.calls[0]
+            const body = JSON.parse(callArgs[2].body as string)
+
+            expect(body).toEqual({ assetId: 99 })
         })
     })
 

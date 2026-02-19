@@ -48,6 +48,18 @@ export type Portfolio = {
 }
 
 // -------------------------------------------
+// Favorite model
+// -------------------------------------------
+
+export type Favorite = {
+    id: number
+    userId: number
+    assetId: number
+    createdAt: string
+    asset: Asset
+}
+
+// -------------------------------------------
 // Actif (Asset) model
 // -------------------------------------------
 

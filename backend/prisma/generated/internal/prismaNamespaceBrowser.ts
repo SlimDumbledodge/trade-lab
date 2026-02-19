@@ -58,7 +58,8 @@ export const ModelName = {
   PortfolioAsset: 'PortfolioAsset',
   AssetPrice: 'AssetPrice',
   PortfolioSnapshots: 'PortfolioSnapshots',
-  MarketCalendar: 'MarketCalendar'
+  MarketCalendar: 'MarketCalendar',
+  Favorite: 'Favorite'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -190,6 +191,16 @@ export const MarketCalendarScalarFieldEnum = {
 } as const
 
 export type MarketCalendarScalarFieldEnum = (typeof MarketCalendarScalarFieldEnum)[keyof typeof MarketCalendarScalarFieldEnum]
+
+
+export const FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  assetId: 'assetId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
 
 
 export const SortOrder = {

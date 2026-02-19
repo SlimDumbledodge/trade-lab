@@ -1,6 +1,7 @@
 import {
     Asset,
     ASSET_PRICE_PERIOD,
+    Favorite,
     MarketStatusType,
     PaginatedTransactions,
     Portfolio,
@@ -55,6 +56,21 @@ export const resetPassword = (token: string, newPassword: string): Promise<{ mes
     fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/auth/reset-password`, undefined, {
         method: "POST",
         body: JSON.stringify({ token, newPassword }),
+    })
+
+export const getFavorites = (token?: string): Promise<Favorite[]> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/favorites`, token)
+
+export const processAddFavorite = (assetId: number, token?: string) =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/favorites`, token, {
+        method: "POST",
+        body: JSON.stringify({ assetId }),
+    })
+
+export const processRemoveFavorite = (assetId: number, token?: string) =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/favorites`, token, {
+        method: "DELETE",
+        body: JSON.stringify({ assetId }),
     })
 
 export const sendContactMessage = (data: {

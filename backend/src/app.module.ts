@@ -19,6 +19,7 @@ import { EmailModule } from "./email/email.module"
 import { MarketStatusModule } from "./market-status/market-status.module"
 import { ServeStaticModule } from "@nestjs/serve-static"
 import { join } from "path"
+import { FavoritesModule } from "./favorites/favorites.module"
 
 @Module({
     imports: [
@@ -58,6 +59,7 @@ import { join } from "path"
         FinnhubModule,
         EmailModule,
         MarketStatusModule,
+        FavoritesModule,
     ],
     providers: [
         {

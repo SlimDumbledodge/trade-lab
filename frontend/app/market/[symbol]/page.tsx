@@ -9,6 +9,7 @@ import Image from "next/image"
 import { useState, useRef, useCallback, Suspense, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { PriceChange } from "@/components/ui/price-change"
+import { Star } from "lucide-react"
 import TradeExecutionForm from "@/components/market/TradeExecutionForm"
 import { useAssetPrices } from "@/hooks/useAssetPrices"
 import { useAsset } from "@/hooks/useAsset"
@@ -18,6 +19,9 @@ import { usePortfolioAsset } from "@/hooks/usePortfolioAsset"
 import { SkeletonCard } from "@/components/ui/skeleton-card"
 import { SkeletonChart } from "@/components/ui/skeleton-chart"
 import { SkeletonMarketDetails } from "@/components/ui/skeleton-market-details"
+import { useAddFavorite, useRemoveFavorite } from "@/mutations/useFavorite"
+import { useFavorites } from "@/hooks/useFavorites"
+import toast from "react-hot-toast"
 
 export default function MarketProductDetails() {
     const { data: session } = useSession()
@@ -29,6 +33,18 @@ export default function MarketProductDetails() {
         valueEur: 0,
         valuePercent: 0,
     })
+
+    const { data: asset, isLoading: assetLoading, error: assetError } = useAsset(symbol, session?.accessToken)
+    const { data: portfolioAsset, isLoading: isPortfolioAssetLoading } = usePortfolioAsset(symbol, session?.accessToken)
+    const { data: favorites } = useFavorites(session?.accessToken)
+    const {
+        data: assetPrices,
+        isLoading: assetPricesLoading,
+        error: assetPricesError,
+    } = useAssetPrices(symbol, selectedPeriod, session?.accessToken ?? undefined)
+    const processAddFavorite = useAddFavorite()
+    const processRemoveFavorite = useRemoveFavorite()
+
     const lastValueRef = useRef<number | null>(null)
 
     const handlePerformanceData = useCallback((currentPrice: number, openingPrice: number) => {
@@ -41,9 +57,6 @@ export default function MarketProductDetails() {
         }
     }, [])
 
-    const { data: asset, isLoading: assetLoading, error: assetError } = useAsset(symbol, session?.accessToken)
-    const { data: portfolioAsset, isLoading: isPortfolioAssetLoading } = usePortfolioAsset(symbol, session?.accessToken)
-
     // Mettre à jour le titre de la page dynamiquement
     useEffect(() => {
         if (asset?.name) {
@@ -51,11 +64,7 @@ export default function MarketProductDetails() {
         }
     }, [asset])
 
-    const {
-        data: assetPrices,
-        isLoading: assetPricesLoading,
-        error: assetPricesError,
-    } = useAssetPrices(symbol, selectedPeriod, session?.accessToken ?? undefined)
+    const isFavorite = favorites?.some((fav) => fav.assetId === asset?.id) ?? false
 
     if (assetLoading || assetPricesLoading || isPortfolioAssetLoading)
         return (
@@ -82,7 +91,7 @@ export default function MarketProductDetails() {
                     {/* En-tête avec logo et informations */}
                     <div className="flex items-start gap-4">
                         <Image className="rounded-xl shadow" src={asset.logo} alt={asset.symbol} width={48} height={48} />
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 flex-1">
                             <h1 className="text-3xl font-bold">{asset.name}</h1>
                             <p className="text-2xl font-bold">
                                 {Number(performanceData.totalValue ?? lastClosingPrice.closingPrice).toFixed(2)} €
@@ -97,6 +106,27 @@ export default function MarketProductDetails() {
                                 </span>
                             </div>
                         </div>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 text-yellow-500 hover:text-yellow-400"
+                            onClick={() => {
+                                const action = isFavorite ? processRemoveFavorite : processAddFavorite
+                                action.mutate(
+                                    { assetId: asset.id, token: session?.accessToken },
+                                    {
+                                        onSuccess: () => {
+                                            !isFavorite && toast.success("Actif ajouté aux favoris ! ;)")
+                                        },
+                                        onError: () => {
+                                            toast.error(`Erreur lors de ${isFavorite ? "la supression" : "l'ajout"} du favoris`)
+                                        },
+                                    },
+                                )
+                            }}
+                        >
+                            <Star className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
+                        </Button>
                     </div>
 
                     {/* Boutons de période */}

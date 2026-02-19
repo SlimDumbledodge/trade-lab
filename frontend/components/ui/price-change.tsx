@@ -12,15 +12,17 @@ export function PriceChange({ value, unit = "€" }: PriceChangeProps) {
 
     const numValue = Number(value)
     const isPositive = numValue > 0
-    const isNegative = numValue < 0
-
-    const colorClass = isPositive ? "text-green-500" : isNegative ? "text-red-500" : ""
 
     return (
-        <span className={`font-semibold text-s flex items-center gap-1 ${colorClass}`}>
-            {isPositive && <TrendingUp size={16} />}
-            {isNegative && <TrendingDown size={16} />}
-            {numValue.toFixed(2)} {unit}
-        </span>
+        <div
+            className={`flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold ${
+                isPositive ? "bg-green-500/10 text-green-600 dark:text-green-400" : "bg-red-500/10 text-red-600 dark:text-red-400"
+            }`}
+        >
+            {isPositive ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+            {isPositive ? "+" : ""}
+            {numValue.toFixed(2)}
+            {unit}
+        </div>
     )
 }
