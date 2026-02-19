@@ -119,7 +119,7 @@ export default function MarketProductDetails() {
                                             !isFavorite && toast.success("Actif ajouté aux favoris ! ;)")
                                         },
                                         onError: () => {
-                                            toast.error(`Erreur lors de ${isFavorite ? "la supression" : "l\'ajout"} du favoris`)
+                                            toast.error(`Erreur lors de ${isFavorite ? "la supression" : "l'ajout"} du favoris`)
                                         },
                                     },
                                 )
