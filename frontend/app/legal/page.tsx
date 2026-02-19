@@ -1,6 +1,12 @@
+import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+    title: "Mentions légales",
+    description: "Mentions légales de Tradelab Studio : éditeur, hébergement, propriété intellectuelle et responsabilités.",
+}
 
 export default function LegalPage() {
     return (

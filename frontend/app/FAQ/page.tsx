@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+
+export const metadata: Metadata = {
+    title: "FAQ",
+    description:
+        "Retrouvez les réponses aux questions les plus fréquentes sur Tradelab Studio : fonctionnement, données de marché, sécurité et trading virtuel.",
+}
 
 const faqItems = [
     {

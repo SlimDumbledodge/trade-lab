@@ -1,6 +1,13 @@
+import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+    title: "Conditions générales d'utilisation",
+    description:
+        "Consultez les conditions générales d'utilisation de Tradelab Studio : règles du service, responsabilités et droits des utilisateurs.",
+}
 
 export default function TermsPage() {
     return (

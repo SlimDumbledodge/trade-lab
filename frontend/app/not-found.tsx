@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
+
+export const metadata: Metadata = {
+    title: "Page introuvable",
+    description: "La page que vous recherchez n'existe pas ou a été déplacée.",
+    robots: { index: false, follow: false },
+}
 
 const ErrorPage = () => {
     return (

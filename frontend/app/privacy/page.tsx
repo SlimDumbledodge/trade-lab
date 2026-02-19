@@ -1,6 +1,12 @@
+import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+    title: "Politique de confidentialité",
+    description: "Découvrez comment Tradelab Studio collecte, utilise et protège vos données personnelles conformément au RGPD.",
+}
 
 export default function PrivacyPage() {
     return (
