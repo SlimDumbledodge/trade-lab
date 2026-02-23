@@ -82,3 +82,13 @@ export type MarketCalendar = Prisma.MarketCalendarModel
  * 
  */
 export type Favorite = Prisma.FavoriteModel
+/**
+ * Model Alert
+ * 
+ */
+export type Alert = Prisma.AlertModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
