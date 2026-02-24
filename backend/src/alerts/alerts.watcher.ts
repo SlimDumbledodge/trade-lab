@@ -114,6 +114,6 @@ export class AlertsWatcher {
             data: config,
         })
 
-        this.logger.log(`Alerte #${alert.id} déclenchée : ${config.symbol} ${config.direction} ${config.targetPrice}$`)
+        this.logger.log(`Alerte #${alert.id} déclenchée : ${config.symbol} ${config.direction} ${config.targetPrice}€`)
     }
 }
