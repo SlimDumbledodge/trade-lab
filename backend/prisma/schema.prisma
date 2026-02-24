@@ -19,6 +19,8 @@ model User {
   createdAt               DateTime   @default(now())
   portfolio               Portfolio?
   favorites               Favorite[]
+  alerts                  Alert[]
+  notifications           Notification[]
 }
 
 model Portfolio {
@@ -123,7 +125,6 @@ model MarketCalendar {
   closeTime       DateTime
   createdAt       DateTime @default(now())
 }
-
 model Favorite {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -133,6 +134,53 @@ model Favorite {
   asset Asset @relation(fields: [assetId], references: [id])
 
   @@unique([userId, assetId])
+}
+
+model Alert {
+  id            Int           @id @default(autoincrement())
+  userId        Int
+  type          AlertType
+  status        AlertStatus   @default(ACTIVE)
+  config        Json
+  triggeredAt   DateTime?
+  createdAt     DateTime      @default(now())
+
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notifications Notification[]
+
+  @@index([userId, status])
+  @@index([type, status])       // Pour le cron qui batch par type
+}
+
+enum AlertType {
+  PRICE
+}
+
+enum AlertStatus {
+  ACTIVE
+  TRIGGERED
+  DISABLED
+}
+
+model Notification {
+  id          Int              @id @default(autoincrement())
+  userId      Int
+  alertId     Int?
+  type        NotificationType
+  title       String
+  message     String
+  data        Json?
+  readAt      DateTime?
+  createdAt   DateTime         @default(now())
+
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  alert       Alert?           @relation(fields: [alertId], references: [id], onDelete: SetNull)
+
+  @@index([userId, readAt])
+}
+
+enum NotificationType {
+  ALERT
 }
 
 

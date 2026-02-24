@@ -168,6 +168,61 @@ export type PublicMarketCalendarInfo = {
 }
 
 // -------------------------------------------
+// Alert model
+// -------------------------------------------
+export enum AlertType {
+    PRICE = "PRICE",
+}
+
+export enum AlertStatus {
+    ACTIVE = "ACTIVE",
+    TRIGGERED = "TRIGGERED",
+    DISABLED = "DISABLED",
+}
+
+export type PriceAlertConfig = {
+    symbol: string
+    targetPrice: number
+    direction: "ABOVE" | "BELOW"
+}
+
+export type Alert = {
+    id: number
+    userId: number
+    type: AlertType
+    status: AlertStatus
+    config: PriceAlertConfig
+    triggeredAt: string | null
+    createdAt: string
+}
+
+// -------------------------------------------
+// Notification model
+// -------------------------------------------
+
+export enum NotificationType {
+    ALERT = "ALERT",
+}
+
+export type Notification = {
+    id: number
+    userId: number
+    alertId: number | null
+    type: NotificationType
+    title: string
+    message: string
+    data: Record<string, unknown> | null
+    readAt: string | null
+    createdAt: string
+    alert?: {
+        id: number
+        type: AlertType
+        status: AlertStatus
+        config: PriceAlertConfig
+    } | null
+}
+
+// -------------------------------------------
 // Pagination
 // -------------------------------------------
 
