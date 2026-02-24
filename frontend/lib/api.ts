@@ -1,8 +1,10 @@
 import {
+    Alert,
     Asset,
     ASSET_PRICE_PERIOD,
     Favorite,
     MarketStatusType,
+    Notification,
     PaginatedTransactions,
     Portfolio,
     PORTFOLIO_PERFORMANCE_PERIOD,
@@ -106,5 +108,53 @@ export const updateProfile = (
 
 export const completeOnboarding = (token?: string): Promise<{ id: number; hasCompletedOnboarding: boolean }> =>
     fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/users/complete-onboarding`, token, {
+        method: "PATCH",
+    })
+
+// -------------------------------------------
+// Alerts
+// -------------------------------------------
+export const getAlerts = (token?: string): Promise<Alert[]> => fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/alerts`, token)
+
+export const createAlert = (
+    data: { type: "PRICE"; config: { symbol: string; targetPrice: number; direction: "ABOVE" | "BELOW" } },
+    token?: string,
+): Promise<Alert> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/alerts`, token, {
+        method: "POST",
+        body: JSON.stringify(data),
+    })
+
+export const updateAlert = (
+    alertId: number,
+    data: {
+        status?: "ACTIVE" | "DISABLED"
+        config?: { symbol?: string; targetPrice?: number; direction?: "ABOVE" | "BELOW" }
+    },
+    token?: string,
+): Promise<Alert> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/alerts/${alertId}`, token, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+    })
+
+export const deleteAlert = (alertId: number, token?: string): Promise<void> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/alerts/${alertId}`, token, {
+        method: "DELETE",
+    })
+
+// -------------------------------------------
+// Notifications
+// -------------------------------------------
+export const getNotifications = (token?: string): Promise<Notification[]> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/notifications`, token)
+
+export const markNotificationAsRead = (notificationId: number, token?: string): Promise<void> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/notifications/${notificationId}/read`, token, {
+        method: "PATCH",
+    })
+
+export const markAllNotificationsAsRead = (token?: string): Promise<void> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/notifications/read-all`, token, {
         method: "PATCH",
     })
