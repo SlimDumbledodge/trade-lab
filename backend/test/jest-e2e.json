@@ -9,6 +9,7 @@
     },
     "moduleNameMapper": {
         "^src/(.*)$": "<rootDir>/../src/$1",
-        "^prisma/generated/client$": "<rootDir>/../prisma/generated/client"
+        "^prisma/generated/client$": "<rootDir>/../prisma/generated/client",
+        "^prisma/generated/enums$": "<rootDir>/../prisma/generated/enums"
     }
 }

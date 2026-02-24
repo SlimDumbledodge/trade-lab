@@ -4,7 +4,7 @@ import { FavoritesService } from "./favorites.service"
 
 describe("FavoritesController", () => {
     let controller: FavoritesController
-    let favoritesService: FavoritesService
+    let _favoritesService: FavoritesService
 
     const mockFavoritesService = {
         findAll: jest.fn(),
@@ -26,7 +26,7 @@ describe("FavoritesController", () => {
         }).compile()
 
         controller = module.get<FavoritesController>(FavoritesController)
-        favoritesService = module.get<FavoritesService>(FavoritesService)
+        _favoritesService = module.get<FavoritesService>(FavoritesService)
     })
 
     it("should be defined", () => {

@@ -9,6 +9,29 @@
 * 🟢 You can import this file directly.
 */
 
+export const AlertType = {
+  PRICE: 'PRICE'
+} as const
+
+export type AlertType = (typeof AlertType)[keyof typeof AlertType]
+
+
+export const AlertStatus = {
+  ACTIVE: 'ACTIVE',
+  TRIGGERED: 'TRIGGERED',
+  DISABLED: 'DISABLED'
+} as const
+
+export type AlertStatus = (typeof AlertStatus)[keyof typeof AlertStatus]
+
+
+export const NotificationType = {
+  ALERT: 'ALERT'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
 export const TransactionType = {
   buy: 'buy',
   sell: 'sell'
