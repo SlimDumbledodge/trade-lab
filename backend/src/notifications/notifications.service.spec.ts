@@ -1,18 +1,28 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { NotificationsService } from './notifications.service';
+import { Test, TestingModule } from "@nestjs/testing"
+import { NotificationsService } from "./notifications.service"
+import { PrismaService } from "../prisma/prisma.service"
 
-describe('NotificationsService', () => {
-  let service: NotificationsService;
+describe("NotificationsService", () => {
+    let service: NotificationsService
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [NotificationsService],
-    }).compile();
+    const mockPrismaService = {
+        notification: {
+            findMany: jest.fn(),
+            update: jest.fn(),
+            updateMany: jest.fn(),
+            create: jest.fn(),
+        },
+    }
 
-    service = module.get<NotificationsService>(NotificationsService);
-  });
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [NotificationsService, { provide: PrismaService, useValue: mockPrismaService }],
+        }).compile()
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+        service = module.get<NotificationsService>(NotificationsService)
+    })
+
+    it("should be defined", () => {
+        expect(service).toBeDefined()
+    })
+})
