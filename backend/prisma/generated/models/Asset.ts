@@ -308,6 +308,7 @@ export type AssetWhereInput = {
   portfolioAssets?: Prisma.PortfolioAssetListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   favorites?: Prisma.FavoriteListRelationFilter
+  investmentPlans?: Prisma.InvestmentPlansListRelationFilter
 }
 
 export type AssetOrderByWithRelationInput = {
@@ -328,6 +329,7 @@ export type AssetOrderByWithRelationInput = {
   portfolioAssets?: Prisma.PortfolioAssetOrderByRelationAggregateInput
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
   favorites?: Prisma.FavoriteOrderByRelationAggregateInput
+  investmentPlans?: Prisma.InvestmentPlansOrderByRelationAggregateInput
 }
 
 export type AssetWhereUniqueInput = Prisma.AtLeast<{
@@ -351,6 +353,7 @@ export type AssetWhereUniqueInput = Prisma.AtLeast<{
   portfolioAssets?: Prisma.PortfolioAssetListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   favorites?: Prisma.FavoriteListRelationFilter
+  investmentPlans?: Prisma.InvestmentPlansListRelationFilter
 }, "id" | "symbol">
 
 export type AssetOrderByWithAggregationInput = {
@@ -410,6 +413,7 @@ export type AssetCreateInput = {
   portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUncheckedCreateInput = {
@@ -430,6 +434,7 @@ export type AssetUncheckedCreateInput = {
   portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUpdateInput = {
@@ -449,6 +454,7 @@ export type AssetUpdateInput = {
   portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateInput = {
@@ -469,6 +475,7 @@ export type AssetUncheckedUpdateInput = {
   portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetCreateManyInput = {
@@ -655,6 +662,20 @@ export type AssetUpdateOneRequiredWithoutFavoritesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutFavoritesInput, Prisma.AssetUpdateWithoutFavoritesInput>, Prisma.AssetUncheckedUpdateWithoutFavoritesInput>
 }
 
+export type AssetCreateNestedOneWithoutInvestmentPlansInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutInvestmentPlansInput, Prisma.AssetUncheckedCreateWithoutInvestmentPlansInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutInvestmentPlansInput
+  connect?: Prisma.AssetWhereUniqueInput
+}
+
+export type AssetUpdateOneRequiredWithoutInvestmentPlansNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetCreateWithoutInvestmentPlansInput, Prisma.AssetUncheckedCreateWithoutInvestmentPlansInput>
+  connectOrCreate?: Prisma.AssetCreateOrConnectWithoutInvestmentPlansInput
+  upsert?: Prisma.AssetUpsertWithoutInvestmentPlansInput
+  connect?: Prisma.AssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AssetUpdateToOneWithWhereWithoutInvestmentPlansInput, Prisma.AssetUpdateWithoutInvestmentPlansInput>, Prisma.AssetUncheckedUpdateWithoutInvestmentPlansInput>
+}
+
 export type AssetCreateWithoutTransactionsInput = {
   symbol: string
   name: string
@@ -671,6 +692,7 @@ export type AssetCreateWithoutTransactionsInput = {
   prices?: Prisma.AssetPriceCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUncheckedCreateWithoutTransactionsInput = {
@@ -690,6 +712,7 @@ export type AssetUncheckedCreateWithoutTransactionsInput = {
   prices?: Prisma.AssetPriceUncheckedCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutAssetInput
 }
 
 export type AssetCreateOrConnectWithoutTransactionsInput = {
@@ -724,6 +747,7 @@ export type AssetUpdateWithoutTransactionsInput = {
   prices?: Prisma.AssetPriceUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateWithoutTransactionsInput = {
@@ -743,6 +767,7 @@ export type AssetUncheckedUpdateWithoutTransactionsInput = {
   prices?: Prisma.AssetPriceUncheckedUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetCreateWithoutPortfolioAssetsInput = {
@@ -761,6 +786,7 @@ export type AssetCreateWithoutPortfolioAssetsInput = {
   prices?: Prisma.AssetPriceCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUncheckedCreateWithoutPortfolioAssetsInput = {
@@ -780,6 +806,7 @@ export type AssetUncheckedCreateWithoutPortfolioAssetsInput = {
   prices?: Prisma.AssetPriceUncheckedCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutAssetInput
 }
 
 export type AssetCreateOrConnectWithoutPortfolioAssetsInput = {
@@ -814,6 +841,7 @@ export type AssetUpdateWithoutPortfolioAssetsInput = {
   prices?: Prisma.AssetPriceUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateWithoutPortfolioAssetsInput = {
@@ -833,6 +861,7 @@ export type AssetUncheckedUpdateWithoutPortfolioAssetsInput = {
   prices?: Prisma.AssetPriceUncheckedUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetCreateWithoutPricesInput = {
@@ -851,6 +880,7 @@ export type AssetCreateWithoutPricesInput = {
   portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUncheckedCreateWithoutPricesInput = {
@@ -870,6 +900,7 @@ export type AssetUncheckedCreateWithoutPricesInput = {
   portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAssetInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutAssetInput
 }
 
 export type AssetCreateOrConnectWithoutPricesInput = {
@@ -904,6 +935,7 @@ export type AssetUpdateWithoutPricesInput = {
   portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateWithoutPricesInput = {
@@ -923,6 +955,7 @@ export type AssetUncheckedUpdateWithoutPricesInput = {
   portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAssetNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetCreateWithoutFavoritesInput = {
@@ -941,6 +974,7 @@ export type AssetCreateWithoutFavoritesInput = {
   prices?: Prisma.AssetPriceCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutAssetInput
 }
 
 export type AssetUncheckedCreateWithoutFavoritesInput = {
@@ -960,6 +994,7 @@ export type AssetUncheckedCreateWithoutFavoritesInput = {
   prices?: Prisma.AssetPriceUncheckedCreateNestedManyWithoutAssetInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAssetInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutAssetInput
 }
 
 export type AssetCreateOrConnectWithoutFavoritesInput = {
@@ -994,6 +1029,7 @@ export type AssetUpdateWithoutFavoritesInput = {
   prices?: Prisma.AssetPriceUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutAssetNestedInput
 }
 
 export type AssetUncheckedUpdateWithoutFavoritesInput = {
@@ -1013,6 +1049,101 @@ export type AssetUncheckedUpdateWithoutFavoritesInput = {
   prices?: Prisma.AssetPriceUncheckedUpdateManyWithoutAssetNestedInput
   portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAssetNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetCreateWithoutInvestmentPlansInput = {
+  symbol: string
+  name: string
+  lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
+  updatedAt?: Date | string
+  prices?: Prisma.AssetPriceCreateNestedManyWithoutAssetInput
+  portfolioAssets?: Prisma.PortfolioAssetCreateNestedManyWithoutAssetInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutAssetInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutAssetInput
+}
+
+export type AssetUncheckedCreateWithoutInvestmentPlansInput = {
+  id?: number
+  symbol: string
+  name: string
+  lastPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Date | string
+  quoteVolume?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: string
+  category?: string
+  updatedAt?: Date | string
+  prices?: Prisma.AssetPriceUncheckedCreateNestedManyWithoutAssetInput
+  portfolioAssets?: Prisma.PortfolioAssetUncheckedCreateNestedManyWithoutAssetInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAssetInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutAssetInput
+}
+
+export type AssetCreateOrConnectWithoutInvestmentPlansInput = {
+  where: Prisma.AssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssetCreateWithoutInvestmentPlansInput, Prisma.AssetUncheckedCreateWithoutInvestmentPlansInput>
+}
+
+export type AssetUpsertWithoutInvestmentPlansInput = {
+  update: Prisma.XOR<Prisma.AssetUpdateWithoutInvestmentPlansInput, Prisma.AssetUncheckedUpdateWithoutInvestmentPlansInput>
+  create: Prisma.XOR<Prisma.AssetCreateWithoutInvestmentPlansInput, Prisma.AssetUncheckedCreateWithoutInvestmentPlansInput>
+  where?: Prisma.AssetWhereInput
+}
+
+export type AssetUpdateToOneWithWhereWithoutInvestmentPlansInput = {
+  where?: Prisma.AssetWhereInput
+  data: Prisma.XOR<Prisma.AssetUpdateWithoutInvestmentPlansInput, Prisma.AssetUncheckedUpdateWithoutInvestmentPlansInput>
+}
+
+export type AssetUpdateWithoutInvestmentPlansInput = {
+  symbol?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  prices?: Prisma.AssetPriceUpdateManyWithoutAssetNestedInput
+  portfolioAssets?: Prisma.PortfolioAssetUpdateManyWithoutAssetNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutAssetNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutAssetNestedInput
+}
+
+export type AssetUncheckedUpdateWithoutInvestmentPlansInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  symbol?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  midPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bidPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  askPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quoteTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteVolume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  todayPerformance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  prices?: Prisma.AssetPriceUncheckedUpdateManyWithoutAssetNestedInput
+  portfolioAssets?: Prisma.PortfolioAssetUncheckedUpdateManyWithoutAssetNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAssetNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutAssetNestedInput
 }
 
 
@@ -1025,6 +1156,7 @@ export type AssetCountOutputType = {
   portfolioAssets: number
   transactions: number
   favorites: number
+  investmentPlans: number
 }
 
 export type AssetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1032,6 +1164,7 @@ export type AssetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   portfolioAssets?: boolean | AssetCountOutputTypeCountPortfolioAssetsArgs
   transactions?: boolean | AssetCountOutputTypeCountTransactionsArgs
   favorites?: boolean | AssetCountOutputTypeCountFavoritesArgs
+  investmentPlans?: boolean | AssetCountOutputTypeCountInvestmentPlansArgs
 }
 
 /**
@@ -1072,6 +1205,13 @@ export type AssetCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types
   where?: Prisma.FavoriteWhereInput
 }
 
+/**
+ * AssetCountOutputType without action
+ */
+export type AssetCountOutputTypeCountInvestmentPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvestmentPlansWhereInput
+}
+
 
 export type AssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1091,6 +1231,7 @@ export type AssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   portfolioAssets?: boolean | Prisma.Asset$portfolioAssetsArgs<ExtArgs>
   transactions?: boolean | Prisma.Asset$transactionsArgs<ExtArgs>
   favorites?: boolean | Prisma.Asset$favoritesArgs<ExtArgs>
+  investmentPlans?: boolean | Prisma.Asset$investmentPlansArgs<ExtArgs>
   _count?: boolean | Prisma.AssetCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["asset"]>
 
@@ -1148,6 +1289,7 @@ export type AssetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   portfolioAssets?: boolean | Prisma.Asset$portfolioAssetsArgs<ExtArgs>
   transactions?: boolean | Prisma.Asset$transactionsArgs<ExtArgs>
   favorites?: boolean | Prisma.Asset$favoritesArgs<ExtArgs>
+  investmentPlans?: boolean | Prisma.Asset$investmentPlansArgs<ExtArgs>
   _count?: boolean | Prisma.AssetCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AssetIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1160,6 +1302,7 @@ export type $AssetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     portfolioAssets: Prisma.$PortfolioAssetPayload<ExtArgs>[]
     transactions: Prisma.$TransactionPayload<ExtArgs>[]
     favorites: Prisma.$FavoritePayload<ExtArgs>[]
+    investmentPlans: Prisma.$InvestmentPlansPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1573,6 +1716,7 @@ export interface Prisma__AssetClient<T, Null = never, ExtArgs extends runtime.Ty
   portfolioAssets<T extends Prisma.Asset$portfolioAssetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$portfolioAssetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transactions<T extends Prisma.Asset$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   favorites<T extends Prisma.Asset$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  investmentPlans<T extends Prisma.Asset$investmentPlansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Asset$investmentPlansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvestmentPlansPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2096,6 +2240,30 @@ export type Asset$favoritesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.FavoriteScalarFieldEnum | Prisma.FavoriteScalarFieldEnum[]
+}
+
+/**
+ * Asset.investmentPlans
+ */
+export type Asset$investmentPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvestmentPlans
+   */
+  select?: Prisma.InvestmentPlansSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvestmentPlans
+   */
+  omit?: Prisma.InvestmentPlansOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentPlansInclude<ExtArgs> | null
+  where?: Prisma.InvestmentPlansWhereInput
+  orderBy?: Prisma.InvestmentPlansOrderByWithRelationInput | Prisma.InvestmentPlansOrderByWithRelationInput[]
+  cursor?: Prisma.InvestmentPlansWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvestmentPlansScalarFieldEnum | Prisma.InvestmentPlansScalarFieldEnum[]
 }
 
 /**

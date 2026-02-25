@@ -21,6 +21,7 @@ model User {
   favorites               Favorite[]
   alerts                  Alert[]
   notifications           Notification[]
+  investmentPlans         InvestmentPlans[]
 }
 
 model Portfolio {
@@ -59,6 +60,7 @@ model Asset {
   portfolioAssets PortfolioAsset[]
   transactions    Transaction[]
   favorites       Favorite[]
+  investmentPlans InvestmentPlans[]
 }
 
 model Transaction {
@@ -183,8 +185,34 @@ enum NotificationType {
   ALERT
 }
 
-
 enum TransactionType {
   buy
   sell
+}
+
+model InvestmentPlans {
+  id                Int              @id @default(autoincrement())
+  userId            Int
+  assetId           Int
+  frequency         FrequencyType
+  firstExecution    FirstExecutionType
+  isFirstExecution  Boolean
+  nextExecutionAt   DateTime?
+  amount            Decimal
+  asset             Asset    @relation(fields: [assetId], references: [id])
+  user              User     @relation(fields: [userId], references: [id])
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @default(now())
+}
+
+enum FirstExecutionType {
+  MONTH_START
+  MID_MONTH
+}
+
+enum FrequencyType {
+  WEEKLY
+  TWICE_BY_MONTH
+  MONTHLY
+  QUARTERLY
 }
