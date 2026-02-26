@@ -15,7 +15,7 @@ import {
     PaginationEllipsis,
 } from "@/components/ui/pagination"
 import { EmptyState } from "@/components/ui/empty-state"
-import { Search } from "lucide-react"
+import { Search, ArrowLeftRight } from "lucide-react"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Image from "next/image"
 import moment from "moment"
@@ -81,18 +81,30 @@ const Page = () => {
 
     return (
         <HomeLayout headerTitle="Transactions">
+            {/* Page Header */}
+            <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400/20 to-amber-500/20 ring-1 ring-orange-500/20">
+                    <ArrowLeftRight className="h-5 w-5 text-orange-500" />
+                </div>
+                <div>
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Transactions</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                        Consultez l&apos;historique complet de vos achats et ventes
+                    </p>
+                </div>
+            </div>
+
             {!hasTransactions ? (
                 <div className="flex flex-col items-center justify-center min-h-[50vh]">
                     <EmptyState
                         title="Aucune transaction !"
-                        description="Vous les verrez apparaître lorsque vous ferez un achat ou une vente d’un ordre."
+                        description="Vous les verrez apparaître lorsque vous ferez un achat ou une vente d'un ordre."
                         icons={[Search]}
                     />
                 </div>
             ) : (
                 <>
                     <div className="flex flex-col gap-4">
-                        <h2 className="text-xl font-semibold">Transactions</h2>
                         <Table>
                             <TableCaption>Liste complète de vos transactions.</TableCaption>
                             <TableHeader>
