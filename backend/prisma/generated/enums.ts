@@ -26,7 +26,9 @@ export type AlertStatus = (typeof AlertStatus)[keyof typeof AlertStatus]
 
 
 export const NotificationType = {
-  ALERT: 'ALERT'
+  ALERT: 'ALERT',
+  INVESTMENT_PLAN: 'INVESTMENT_PLAN',
+  SYSTEM: 'SYSTEM'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -38,3 +40,21 @@ export const TransactionType = {
 } as const
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
+
+
+export const FirstExecutionType = {
+  MONTH_START: 'MONTH_START',
+  MID_MONTH: 'MID_MONTH'
+} as const
+
+export type FirstExecutionType = (typeof FirstExecutionType)[keyof typeof FirstExecutionType]
+
+
+export const FrequencyType = {
+  WEEKLY: 'WEEKLY',
+  TWICE_BY_MONTH: 'TWICE_BY_MONTH',
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY'
+} as const
+
+export type FrequencyType = (typeof FrequencyType)[keyof typeof FrequencyType]

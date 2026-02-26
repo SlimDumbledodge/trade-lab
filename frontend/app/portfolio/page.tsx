@@ -13,6 +13,7 @@ import { PortfolioAssetCard } from "@/components/portfolio/PortfolioAssetsCard"
 import { usePortfolioAssets } from "@/hooks/usePortfolioAssets"
 import { SkeletonCard } from "@/components/ui/skeleton-card"
 import { SkeletonChart } from "@/components/ui/skeleton-chart"
+import { Briefcase } from "lucide-react"
 
 function Portfolio() {
     useEffect(() => {
@@ -77,9 +78,21 @@ function Portfolio() {
     return (
         <HomeLayout headerTitle="Portefeuille">
             <div className="flex flex-col gap-6">
-                {/* En-tête avec valeur du portefeuille */}
+                {/* Page Header */}
+                <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400/20 to-green-500/20 ring-1 ring-emerald-500/20">
+                        <Briefcase className="h-5 w-5 text-emerald-500" />
+                    </div>
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Portefeuille</h1>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                            Suivez la performance et la répartition de vos investissements
+                        </p>
+                    </div>
+                </div>
+
+                {/* Valeur du portefeuille */}
                 <div className="pl-2 flex flex-col gap-2">
-                    <h1 className="text-3xl font-bold">Portefeuille</h1>
                     <p className="text-4xl font-bold">
                         {Number(performanceData.holdingsValue ?? lastSnapshot.holdingsValue).toFixed(2)} €
                     </p>

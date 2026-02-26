@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createAlert } from "@/lib/api"
-import { AlertFormSchema } from "@/lib/validations/create-alert-form.schema"
+import { AlertFormSchema } from "@/lib/validations/alert-form.schema"
 import { Alert } from "@/types/types"
 
 export const useCreateAlert = () => {

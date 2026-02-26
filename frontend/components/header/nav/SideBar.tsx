@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { IconBell, IconChartBar, IconChartLine, IconChartPie, IconStar, IconWallet } from "@tabler/icons-react"
+import { IconBell, IconChartBar, IconChartLine, IconChartPie, IconClipboardList, IconStar, IconWallet } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/header/nav/NavMain"
 import { NavUser } from "@/components/header/nav/NavUser"
@@ -46,6 +46,11 @@ const data = {
             title: "Alertes",
             url: "alerts",
             icon: IconBell,
+        },
+        {
+            title: "Ordres",
+            url: "orders",
+            icon: IconClipboardList,
         },
     ],
 }

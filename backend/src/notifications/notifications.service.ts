@@ -65,4 +65,22 @@ export class NotificationsService {
 
         return notification
     }
+
+    async broadcastToAll(params: { title: string; message: string; data?: object }) {
+        const users = await this.prisma.user.findMany({ select: { id: true } })
+
+        const notifications = await this.prisma.notification.createMany({
+            data: users.map((user) => ({
+                userId: user.id,
+                type: NotificationType.SYSTEM,
+                title: params.title,
+                message: params.message,
+                data: params.data ?? undefined,
+            })),
+        })
+
+        this.logger.log(`Broadcast: ${notifications.count} notifications SYSTEM créées — "${params.title}"`)
+
+        return notifications
+    }
 }
