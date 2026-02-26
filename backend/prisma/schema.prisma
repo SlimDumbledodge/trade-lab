@@ -183,6 +183,8 @@ model Notification {
 
 enum NotificationType {
   ALERT
+  INVESTMENT_PLAN
+  SYSTEM
 }
 
 enum TransactionType {

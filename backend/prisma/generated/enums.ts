@@ -26,7 +26,9 @@ export type AlertStatus = (typeof AlertStatus)[keyof typeof AlertStatus]
 
 
 export const NotificationType = {
-  ALERT: 'ALERT'
+  ALERT: 'ALERT',
+  INVESTMENT_PLAN: 'INVESTMENT_PLAN',
+  SYSTEM: 'SYSTEM'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
