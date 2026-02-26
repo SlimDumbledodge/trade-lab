@@ -28,7 +28,6 @@ export default function OrdersPage() {
     }
 
     const items = plans ?? []
-    const totalAmount = items.reduce((sum, p) => sum + Number(p.amount), 0)
 
     return (
         <HomeLayout headerTitle="Ordres">

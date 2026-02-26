@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { Badge } from "@/components/ui/badge"
 import { CountdownCircle, getDaysUntil, getDaysUntilFirstExecution } from "@/components/orders/CountdownCircle"
-import { FrequencyType, FirstExecutionType, InvestmentPlan } from "@/types/types"
+import { FrequencyType, InvestmentPlan } from "@/types/types"
 import { InvestmentPlanDialog } from "@/components/orders/InvestmentPlanDialog"
 import { Button } from "../ui/button"
 import { Trash2 } from "lucide-react"
@@ -22,14 +22,12 @@ export const frequencyLabels: Record<FrequencyType, string> = {
 interface InvestmentPlanCardProps {
     plan?: InvestmentPlan | null
     assetId?: number
-    assetName?: string
     variant?: "market" | "orders"
     style?: React.CSSProperties
 }
 
-export function InvestmentPlanCard({ plan, assetId, assetName, variant = "market", style }: InvestmentPlanCardProps) {
+export function InvestmentPlanCard({ plan, assetId, variant = "market", style }: InvestmentPlanCardProps) {
     const [editOpen, setEditOpen] = useState(false)
-    const router = useRouter()
     const { data: session } = useSession()
     const deletePlan = useDeleteInvestmentPlan()
 
