@@ -3,6 +3,7 @@ import {
     Asset,
     ASSET_PRICE_PERIOD,
     Favorite,
+    InvestmentPlan,
     MarketStatusType,
     Notification,
     PaginatedTransactions,
@@ -140,6 +141,36 @@ export const updateAlert = (
 
 export const deleteAlert = (alertId: number, token?: string): Promise<void> =>
     fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/alerts/${alertId}`, token, {
+        method: "DELETE",
+    })
+
+// -------------------------------------------
+// Investment Plans
+// -------------------------------------------
+export const getInvestmentPlans = (token?: string): Promise<InvestmentPlan[]> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/investment-plans`, token)
+
+export const createInvestmentPlan = (
+    data: { assetId: number; frequency: string; firstExecution: string; amount: number },
+    token?: string,
+): Promise<InvestmentPlan> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/investment-plans`, token, {
+        method: "POST",
+        body: JSON.stringify(data),
+    })
+
+export const updateInvestmentPlan = (
+    planId: number,
+    data: { frequency: string; firstExecution: string; amount: number },
+    token?: string,
+): Promise<InvestmentPlan> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/investment-plans/${planId}`, token, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+    })
+
+export const deleteInvestmentPlan = (planId: number, token?: string): Promise<InvestmentPlan> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/investment-plans/${planId}`, token, {
         method: "DELETE",
     })
 
