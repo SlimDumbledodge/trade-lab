@@ -22,7 +22,7 @@ export class InvestmentPlansCron {
 
     @Cron(CronExpression.EVERY_DAY_AT_5PM)
     async executeInvestmentPlans() {
-        if (!this.marketStatusService.isMarketOpen()) {
+        if (!(await this.marketStatusService.isMarketOpen())) {
             this.logger.debug("Marché fermé :  report de l'exécution des plans d'investissements")
             return
         }
