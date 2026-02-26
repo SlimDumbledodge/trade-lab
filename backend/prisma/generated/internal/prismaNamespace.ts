@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.3.0
- * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
+ * Prisma Client JS version: 7.4.1
+ * Query Engine version: 55ae170b1ced7fc6ed07a15f110549408c501bb3
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.3.0",
-  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
+  client: "7.4.1",
+  engine: "55ae170b1ced7fc6ed07a15f110549408c501bb3"
 }
 
 /**
@@ -394,7 +394,8 @@ export const ModelName = {
   MarketCalendar: 'MarketCalendar',
   Favorite: 'Favorite',
   Alert: 'Alert',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  InvestmentPlans: 'InvestmentPlans'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "portfolio" | "asset" | "transaction" | "portfolioAsset" | "assetPrice" | "portfolioSnapshots" | "marketCalendar" | "favorite" | "alert" | "notification"
+    modelProps: "user" | "portfolio" | "asset" | "transaction" | "portfolioAsset" | "assetPrice" | "portfolioSnapshots" | "marketCalendar" | "favorite" | "alert" | "notification" | "investmentPlans"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1228,6 +1229,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    InvestmentPlans: {
+      payload: Prisma.$InvestmentPlansPayload<ExtArgs>
+      fields: Prisma.InvestmentPlansFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvestmentPlansFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvestmentPlansFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>
+        }
+        findFirst: {
+          args: Prisma.InvestmentPlansFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvestmentPlansFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>
+        }
+        findMany: {
+          args: Prisma.InvestmentPlansFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>[]
+        }
+        create: {
+          args: Prisma.InvestmentPlansCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>
+        }
+        createMany: {
+          args: Prisma.InvestmentPlansCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvestmentPlansCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>[]
+        }
+        delete: {
+          args: Prisma.InvestmentPlansDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>
+        }
+        update: {
+          args: Prisma.InvestmentPlansUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>
+        }
+        deleteMany: {
+          args: Prisma.InvestmentPlansDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvestmentPlansUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvestmentPlansUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>[]
+        }
+        upsert: {
+          args: Prisma.InvestmentPlansUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentPlansPayload>
+        }
+        aggregate: {
+          args: Prisma.InvestmentPlansAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvestmentPlans>
+        }
+        groupBy: {
+          args: Prisma.InvestmentPlansGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestmentPlansGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvestmentPlansCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestmentPlansCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1420,6 +1495,22 @@ export const NotificationScalarFieldEnum = {
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
+export const InvestmentPlansScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  assetId: 'assetId',
+  frequency: 'frequency',
+  firstExecution: 'firstExecution',
+  isFirstExecution: 'isFirstExecution',
+  nextExecutionAt: 'nextExecutionAt',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestmentPlansScalarFieldEnum = (typeof InvestmentPlansScalarFieldEnum)[keyof typeof InvestmentPlansScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1608,6 +1699,34 @@ export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'FrequencyType'
+ */
+export type EnumFrequencyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FrequencyType'>
+    
+
+
+/**
+ * Reference to a field of type 'FrequencyType[]'
+ */
+export type ListEnumFrequencyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FrequencyType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'FirstExecutionType'
+ */
+export type EnumFirstExecutionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FirstExecutionType'>
+    
+
+
+/**
+ * Reference to a field of type 'FirstExecutionType[]'
+ */
+export type ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FirstExecutionType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1726,6 +1845,7 @@ export type GlobalOmitConfig = {
   favorite?: Prisma.FavoriteOmit
   alert?: Prisma.AlertOmit
   notification?: Prisma.NotificationOmit
+  investmentPlans?: Prisma.InvestmentPlansOmit
 }
 
 /* Types for Logging */

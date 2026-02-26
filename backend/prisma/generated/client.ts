@@ -92,3 +92,8 @@ export type Alert = Prisma.AlertModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model InvestmentPlans
+ * 
+ */
+export type InvestmentPlans = Prisma.InvestmentPlansModel

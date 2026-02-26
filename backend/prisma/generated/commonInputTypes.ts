@@ -426,6 +426,40 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
 }
 
+export type EnumFrequencyTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FrequencyType | Prisma.EnumFrequencyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFrequencyTypeFilter<$PrismaModel> | $Enums.FrequencyType
+}
+
+export type EnumFirstExecutionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FirstExecutionType | Prisma.EnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel> | $Enums.FirstExecutionType
+}
+
+export type EnumFrequencyTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FrequencyType | Prisma.EnumFrequencyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFrequencyTypeWithAggregatesFilter<$PrismaModel> | $Enums.FrequencyType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFrequencyTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFrequencyTypeFilter<$PrismaModel>
+}
+
+export type EnumFirstExecutionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FirstExecutionType | Prisma.EnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFirstExecutionTypeWithAggregatesFilter<$PrismaModel> | $Enums.FirstExecutionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -795,6 +829,40 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumFrequencyTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FrequencyType | Prisma.EnumFrequencyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFrequencyTypeFilter<$PrismaModel> | $Enums.FrequencyType
+}
+
+export type NestedEnumFirstExecutionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FirstExecutionType | Prisma.EnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel> | $Enums.FirstExecutionType
+}
+
+export type NestedEnumFrequencyTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FrequencyType | Prisma.EnumFrequencyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FrequencyType[] | Prisma.ListEnumFrequencyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFrequencyTypeWithAggregatesFilter<$PrismaModel> | $Enums.FrequencyType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFrequencyTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFrequencyTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumFirstExecutionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FirstExecutionType | Prisma.EnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FirstExecutionType[] | Prisma.ListEnumFirstExecutionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFirstExecutionTypeWithAggregatesFilter<$PrismaModel> | $Enums.FirstExecutionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel>
 }
 
 

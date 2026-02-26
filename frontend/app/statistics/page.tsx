@@ -1,7 +1,7 @@
 "use client"
 
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
-import { Clock } from "lucide-react"
+import { Clock, BarChart3 } from "lucide-react"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
 import { StatsKpiCards } from "@/components/statistics/StatsKpiCards"
 import { Suspense, useEffect, useState } from "react"
@@ -23,8 +23,17 @@ function Statistics() {
     return (
         <HomeLayout headerTitle="Statistiques">
             <div className="flex flex-col gap-4 sm:gap-6">
-                <div className="px-2 sm:px-0">
-                    <h1 className="text-2xl sm:text-3xl font-bold">Statistiques</h1>
+                {/* Page Header */}
+                <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-pink-400/20 to-rose-500/20 ring-1 ring-pink-500/20">
+                        <BarChart3 className="h-5 w-5 text-pink-500" />
+                    </div>
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Statistiques</h1>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                            Analysez vos performances et la répartition de votre portefeuille
+                        </p>
+                    </div>
                 </div>
 
                 {/* KPI Cards */}

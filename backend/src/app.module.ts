@@ -22,6 +22,7 @@ import { join } from "path"
 import { FavoritesModule } from "./favorites/favorites.module"
 import { AlertsModule } from './alerts/alerts.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { InvestmentPlansModule } from './investment-plans/investment-plans.module';
 
 @Module({
     imports: [
@@ -64,6 +65,7 @@ import { NotificationsModule } from './notifications/notifications.module';
         FavoritesModule,
         AlertsModule,
         NotificationsModule,
+        InvestmentPlansModule,
     ],
     providers: [
         {

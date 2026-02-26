@@ -21,6 +21,8 @@ import { SkeletonChart } from "@/components/ui/skeleton-chart"
 import { SkeletonMarketDetails } from "@/components/ui/skeleton-market-details"
 import { useAddFavorite, useRemoveFavorite } from "@/mutations/useFavorite"
 import { useFavorites } from "@/hooks/useFavorites"
+import { useInvestmentPlans } from "@/hooks/useInvestmentPlans"
+import { InvestmentPlanCard } from "@/components/orders/InvestmentPlanCard"
 import toast from "react-hot-toast"
 
 export default function MarketProductDetails() {
@@ -37,6 +39,7 @@ export default function MarketProductDetails() {
     const { data: asset, isLoading: assetLoading, error: assetError } = useAsset(symbol, session?.accessToken)
     const { data: portfolioAsset, isLoading: isPortfolioAssetLoading } = usePortfolioAsset(symbol, session?.accessToken)
     const { data: favorites } = useFavorites(session?.accessToken)
+    const { data: investmentPlans } = useInvestmentPlans(session?.accessToken)
     const {
         data: assetPrices,
         isLoading: assetPricesLoading,
@@ -162,6 +165,13 @@ export default function MarketProductDetails() {
                                 <PositionDetails />
                             </Suspense>
                         )}
+                    </div>
+                    <div className="flex-1 sm:flex-1 lg:flex-none">
+                        <InvestmentPlanCard
+                            plan={investmentPlans?.find((p) => p.asset.symbol === symbol) ?? null}
+                            assetId={asset.id}
+                            assetName={asset.name}
+                        />
                     </div>
                 </div>
             </div>

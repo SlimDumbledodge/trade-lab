@@ -202,6 +202,8 @@ export type Alert = {
 
 export enum NotificationType {
     ALERT = "ALERT",
+    INVESTMENT_PLAN = "INVESTMENT_PLAN",
+    SYSTEM = "SYSTEM",
 }
 
 export type Notification = {
@@ -235,6 +237,36 @@ export type PaginationMeta = {
 export type PaginatedTransactions = {
     items: Transaction[]
     meta: PaginationMeta
+}
+
+// -------------------------------------------
+// InvestmentPlan model
+// -------------------------------------------
+
+export enum FrequencyType {
+    WEEKLY = "WEEKLY",
+    TWICE_BY_MONTH = "TWICE_BY_MONTH",
+    MONTHLY = "MONTHLY",
+    QUARTERLY = "QUARTERLY",
+}
+
+export enum FirstExecutionType {
+    MONTH_START = "MONTH_START",
+    MID_MONTH = "MID_MONTH",
+}
+
+export type InvestmentPlan = {
+    id: number
+    userId: number
+    assetId: number
+    frequency: FrequencyType
+    firstExecution: FirstExecutionType
+    isFirstExecution: boolean
+    nextExecutionAt: string | null
+    amount: number
+    asset: Asset
+    createdAt: string
+    updatedAt: string
 }
 
 export enum ASSET_PRICE_PERIOD {

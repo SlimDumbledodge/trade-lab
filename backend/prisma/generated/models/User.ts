@@ -252,6 +252,7 @@ export type UserWhereInput = {
   favorites?: Prisma.FavoriteListRelationFilter
   alerts?: Prisma.AlertListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  investmentPlans?: Prisma.InvestmentPlansListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -268,6 +269,7 @@ export type UserOrderByWithRelationInput = {
   favorites?: Prisma.FavoriteOrderByRelationAggregateInput
   alerts?: Prisma.AlertOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  investmentPlans?: Prisma.InvestmentPlansOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -287,6 +289,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   favorites?: Prisma.FavoriteListRelationFilter
   alerts?: Prisma.AlertListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  investmentPlans?: Prisma.InvestmentPlansListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -334,6 +337,7 @@ export type UserCreateInput = {
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   alerts?: Prisma.AlertCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -350,6 +354,7 @@ export type UserUncheckedCreateInput = {
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -365,6 +370,7 @@ export type UserUpdateInput = {
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   alerts?: Prisma.AlertUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -381,6 +387,7 @@ export type UserUncheckedUpdateInput = {
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -551,6 +558,20 @@ export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
+export type UserCreateNestedOneWithoutInvestmentPlansInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvestmentPlansInput, Prisma.UserUncheckedCreateWithoutInvestmentPlansInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvestmentPlansInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutInvestmentPlansNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvestmentPlansInput, Prisma.UserUncheckedCreateWithoutInvestmentPlansInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvestmentPlansInput
+  upsert?: Prisma.UserUpsertWithoutInvestmentPlansInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInvestmentPlansInput, Prisma.UserUpdateWithoutInvestmentPlansInput>, Prisma.UserUncheckedUpdateWithoutInvestmentPlansInput>
+}
+
 export type UserCreateWithoutPortfolioInput = {
   email: string
   username: string
@@ -563,6 +584,7 @@ export type UserCreateWithoutPortfolioInput = {
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   alerts?: Prisma.AlertCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPortfolioInput = {
@@ -578,6 +600,7 @@ export type UserUncheckedCreateWithoutPortfolioInput = {
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPortfolioInput = {
@@ -608,6 +631,7 @@ export type UserUpdateWithoutPortfolioInput = {
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   alerts?: Prisma.AlertUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPortfolioInput = {
@@ -623,6 +647,7 @@ export type UserUncheckedUpdateWithoutPortfolioInput = {
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFavoritesInput = {
@@ -637,6 +662,7 @@ export type UserCreateWithoutFavoritesInput = {
   portfolio?: Prisma.PortfolioCreateNestedOneWithoutUserInput
   alerts?: Prisma.AlertCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -652,6 +678,7 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   portfolio?: Prisma.PortfolioUncheckedCreateNestedOneWithoutUserInput
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -682,6 +709,7 @@ export type UserUpdateWithoutFavoritesInput = {
   portfolio?: Prisma.PortfolioUpdateOneWithoutUserNestedInput
   alerts?: Prisma.AlertUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -697,6 +725,7 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   portfolio?: Prisma.PortfolioUncheckedUpdateOneWithoutUserNestedInput
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAlertsInput = {
@@ -711,6 +740,7 @@ export type UserCreateWithoutAlertsInput = {
   portfolio?: Prisma.PortfolioCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAlertsInput = {
@@ -726,6 +756,7 @@ export type UserUncheckedCreateWithoutAlertsInput = {
   portfolio?: Prisma.PortfolioUncheckedCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAlertsInput = {
@@ -756,6 +787,7 @@ export type UserUpdateWithoutAlertsInput = {
   portfolio?: Prisma.PortfolioUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAlertsInput = {
@@ -771,6 +803,7 @@ export type UserUncheckedUpdateWithoutAlertsInput = {
   portfolio?: Prisma.PortfolioUncheckedUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -785,6 +818,7 @@ export type UserCreateWithoutNotificationsInput = {
   portfolio?: Prisma.PortfolioCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   alerts?: Prisma.AlertCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -800,6 +834,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   portfolio?: Prisma.PortfolioUncheckedCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutUserInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -830,6 +865,7 @@ export type UserUpdateWithoutNotificationsInput = {
   portfolio?: Prisma.PortfolioUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   alerts?: Prisma.AlertUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -845,6 +881,85 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   portfolio?: Prisma.PortfolioUncheckedUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutUserNestedInput
+  investmentPlans?: Prisma.InvestmentPlansUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutInvestmentPlansInput = {
+  email: string
+  username: string
+  avatarPath?: string | null
+  passwordHash: string
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  hasCompletedOnboarding?: boolean
+  createdAt?: Date | string
+  portfolio?: Prisma.PortfolioCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  alerts?: Prisma.AlertCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutInvestmentPlansInput = {
+  id?: number
+  email: string
+  username: string
+  avatarPath?: string | null
+  passwordHash: string
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  hasCompletedOnboarding?: boolean
+  createdAt?: Date | string
+  portfolio?: Prisma.PortfolioUncheckedCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutInvestmentPlansInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutInvestmentPlansInput, Prisma.UserUncheckedCreateWithoutInvestmentPlansInput>
+}
+
+export type UserUpsertWithoutInvestmentPlansInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutInvestmentPlansInput, Prisma.UserUncheckedUpdateWithoutInvestmentPlansInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutInvestmentPlansInput, Prisma.UserUncheckedCreateWithoutInvestmentPlansInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutInvestmentPlansInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutInvestmentPlansInput, Prisma.UserUncheckedUpdateWithoutInvestmentPlansInput>
+}
+
+export type UserUpdateWithoutInvestmentPlansInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  portfolio?: Prisma.PortfolioUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  alerts?: Prisma.AlertUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutInvestmentPlansInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasCompletedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  portfolio?: Prisma.PortfolioUncheckedUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  alerts?: Prisma.AlertUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -856,12 +971,14 @@ export type UserCountOutputType = {
   favorites: number
   alerts: number
   notifications: number
+  investmentPlans: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
   alerts?: boolean | UserCountOutputTypeCountAlertsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  investmentPlans?: boolean | UserCountOutputTypeCountInvestmentPlansArgs
 }
 
 /**
@@ -895,6 +1012,13 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.NotificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountInvestmentPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvestmentPlansWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -910,6 +1034,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
   alerts?: boolean | Prisma.User$alertsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  investmentPlans?: boolean | Prisma.User$investmentPlansArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -955,6 +1080,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
   alerts?: boolean | Prisma.User$alertsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  investmentPlans?: boolean | Prisma.User$investmentPlansArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -967,6 +1093,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     favorites: Prisma.$FavoritePayload<ExtArgs>[]
     alerts: Prisma.$AlertPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    investmentPlans: Prisma.$InvestmentPlansPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1376,6 +1503,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   favorites<T extends Prisma.User$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   alerts<T extends Prisma.User$alertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$alertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  investmentPlans<T extends Prisma.User$investmentPlansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$investmentPlansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvestmentPlansPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1890,6 +2018,30 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.investmentPlans
+ */
+export type User$investmentPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvestmentPlans
+   */
+  select?: Prisma.InvestmentPlansSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvestmentPlans
+   */
+  omit?: Prisma.InvestmentPlansOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentPlansInclude<ExtArgs> | null
+  where?: Prisma.InvestmentPlansWhereInput
+  orderBy?: Prisma.InvestmentPlansOrderByWithRelationInput | Prisma.InvestmentPlansOrderByWithRelationInput[]
+  cursor?: Prisma.InvestmentPlansWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvestmentPlansScalarFieldEnum | Prisma.InvestmentPlansScalarFieldEnum[]
 }
 
 /**

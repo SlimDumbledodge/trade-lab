@@ -7,7 +7,17 @@ import { markNotificationAsRead, markAllNotificationsAsRead } from "@/lib/api"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Bell, BellRing, ArrowUpRight, ArrowDownRight, Inbox, CheckCheck } from "lucide-react"
+import {
+    Bell,
+    BellRing,
+    ArrowUpRight,
+    ArrowDownRight,
+    Inbox,
+    CheckCheck,
+    CalendarCheck,
+    CalendarX,
+    Megaphone,
+} from "lucide-react"
 import { Notification, NotificationType } from "@/types/types"
 import { useMemo } from "react"
 import { useQueryClient } from "@tanstack/react-query"
@@ -43,6 +53,31 @@ function NotificationIcon({ notification }: { notification: Notification }) {
                 ) : (
                     <ArrowDownRight className="h-3.5 w-3.5 text-red-500" />
                 )}
+            </div>
+        )
+    }
+
+    if (notification.type === NotificationType.INVESTMENT_PLAN) {
+        const isSuccess = (notification.data as Record<string, unknown>)?.status === "success"
+        return (
+            <div
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
+                    isSuccess ? "bg-emerald-500/10 ring-1 ring-emerald-500/20" : "bg-red-500/10 ring-1 ring-red-500/20"
+                }`}
+            >
+                {isSuccess ? (
+                    <CalendarCheck className="h-3.5 w-3.5 text-emerald-500" />
+                ) : (
+                    <CalendarX className="h-3.5 w-3.5 text-red-500" />
+                )}
+            </div>
+        )
+    }
+
+    if (notification.type === NotificationType.SYSTEM) {
+        return (
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20">
+                <Megaphone className="h-3.5 w-3.5 text-blue-500" />
             </div>
         )
     }
@@ -99,6 +134,9 @@ export function NotificationsDropdown() {
         }
         if (notification.type === NotificationType.ALERT && notification.alert) {
             router.push(`/market/${notification.alert.config.symbol}`)
+        }
+        if (notification.type === NotificationType.INVESTMENT_PLAN) {
+            router.push("/orders")
         }
     }
 

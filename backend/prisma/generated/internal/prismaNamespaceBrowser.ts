@@ -61,7 +61,8 @@ export const ModelName = {
   MarketCalendar: 'MarketCalendar',
   Favorite: 'Favorite',
   Alert: 'Alert',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  InvestmentPlans: 'InvestmentPlans'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -231,6 +232,22 @@ export const NotificationScalarFieldEnum = {
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const InvestmentPlansScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  assetId: 'assetId',
+  frequency: 'frequency',
+  firstExecution: 'firstExecution',
+  isFirstExecution: 'isFirstExecution',
+  nextExecutionAt: 'nextExecutionAt',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestmentPlansScalarFieldEnum = (typeof InvestmentPlansScalarFieldEnum)[keyof typeof InvestmentPlansScalarFieldEnum]
 
 
 export const SortOrder = {
