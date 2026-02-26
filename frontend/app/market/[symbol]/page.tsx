@@ -170,7 +170,6 @@ export default function MarketProductDetails() {
                         <InvestmentPlanCard
                             plan={investmentPlans?.find((p) => p.asset.symbol === symbol) ?? null}
                             assetId={asset.id}
-                            assetName={asset.name}
                         />
                     </div>
                 </div>
