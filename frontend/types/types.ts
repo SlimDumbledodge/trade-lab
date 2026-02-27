@@ -203,6 +203,7 @@ export type Alert = {
 export enum NotificationType {
     ALERT = "ALERT",
     INVESTMENT_PLAN = "INVESTMENT_PLAN",
+    ORDER = "ORDER",
     SYSTEM = "SYSTEM",
 }
 
@@ -284,4 +285,47 @@ export enum PORTFOLIO_PERFORMANCE_PERIOD {
     ONE_MONTH = "1m",
     ONE_YEAR = "1y",
     MAX = "max",
+}
+
+// -------------------------------------------
+// Order model
+// -------------------------------------------
+
+export enum OrderType {
+    LIMIT = "LIMIT",
+    STOP = "STOP",
+}
+
+export enum OrderAction {
+    BUY = "BUY",
+    SELL = "SELL",
+}
+
+export enum OrderStatus {
+    ACTIVE = "ACTIVE",
+    TRIGGERED = "TRIGGERED",
+    CANCELLED = "CANCELLED",
+    EXPIRED = "EXPIRED",
+}
+
+export enum OrderExpiresType {
+    DAY = "DAY",
+    YEAR = "YEAR",
+}
+
+export type Order = {
+    id: number
+    userId: number
+    assetId: number
+    type: OrderType
+    action: OrderAction
+    status: OrderStatus
+    expiresType: OrderExpiresType
+    quantity: string
+    targetPrice: string
+    expiresAt: string
+    triggeredAt: string | null
+    createdAt: string
+    updatedAt: string
+    asset?: Asset
 }
