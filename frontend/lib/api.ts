@@ -6,6 +6,10 @@ import {
     InvestmentPlan,
     MarketStatusType,
     Notification,
+    Order,
+    OrderAction,
+    OrderExpiresType,
+    OrderType,
     PaginatedTransactions,
     Portfolio,
     PORTFOLIO_PERFORMANCE_PERIOD,
@@ -171,6 +175,33 @@ export const updateInvestmentPlan = (
 
 export const deleteInvestmentPlan = (planId: number, token?: string): Promise<InvestmentPlan> =>
     fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/investment-plans/${planId}`, token, {
+        method: "DELETE",
+    })
+
+// -------------------------------------------
+// Orders
+// -------------------------------------------
+export const getOrders = (assetId: number, token?: string): Promise<Order[]> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/orders/asset/${assetId}`, token)
+
+export const createOrder = (
+    data: {
+        assetId: number
+        type: OrderType
+        action: OrderAction
+        expiresType: OrderExpiresType
+        quantity: string
+        targetPrice: string
+    },
+    token?: string,
+): Promise<Order> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/orders`, token, {
+        method: "POST",
+        body: JSON.stringify(data),
+    })
+
+export const deleteOrder = (orderId: number, token?: string): Promise<Order> =>
+    fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/orders/${orderId}`, token, {
         method: "DELETE",
     })
 
