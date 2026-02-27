@@ -97,3 +97,8 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type InvestmentPlans = Prisma.InvestmentPlansModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel

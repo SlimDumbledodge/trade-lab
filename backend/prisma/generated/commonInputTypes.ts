@@ -460,6 +460,74 @@ export type EnumFirstExecutionTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel>
 }
 
+export type EnumOrderTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderType | Prisma.EnumOrderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderTypeFilter<$PrismaModel> | $Enums.OrderType
+}
+
+export type EnumOrderActionFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderAction | Prisma.EnumOrderActionFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderActionFilter<$PrismaModel> | $Enums.OrderAction
+}
+
+export type EnumOrderStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderStatus | Prisma.EnumOrderStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
+}
+
+export type EnumOrderExpiresTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderExpiresType | Prisma.EnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderExpiresTypeFilter<$PrismaModel> | $Enums.OrderExpiresType
+}
+
+export type EnumOrderTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderType | Prisma.EnumOrderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderTypeWithAggregatesFilter<$PrismaModel> | $Enums.OrderType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderTypeFilter<$PrismaModel>
+}
+
+export type EnumOrderActionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderAction | Prisma.EnumOrderActionFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderActionWithAggregatesFilter<$PrismaModel> | $Enums.OrderAction
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderActionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderActionFilter<$PrismaModel>
+}
+
+export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderStatus | Prisma.EnumOrderStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderStatusFilter<$PrismaModel>
+}
+
+export type EnumOrderExpiresTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderExpiresType | Prisma.EnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderExpiresTypeWithAggregatesFilter<$PrismaModel> | $Enums.OrderExpiresType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderExpiresTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderExpiresTypeFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -863,6 +931,74 @@ export type NestedEnumFirstExecutionTypeWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumFirstExecutionTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumOrderTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderType | Prisma.EnumOrderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderTypeFilter<$PrismaModel> | $Enums.OrderType
+}
+
+export type NestedEnumOrderActionFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderAction | Prisma.EnumOrderActionFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderActionFilter<$PrismaModel> | $Enums.OrderAction
+}
+
+export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderStatus | Prisma.EnumOrderStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
+}
+
+export type NestedEnumOrderExpiresTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderExpiresType | Prisma.EnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderExpiresTypeFilter<$PrismaModel> | $Enums.OrderExpiresType
+}
+
+export type NestedEnumOrderTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderType | Prisma.EnumOrderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderType[] | Prisma.ListEnumOrderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderTypeWithAggregatesFilter<$PrismaModel> | $Enums.OrderType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumOrderActionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderAction | Prisma.EnumOrderActionFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderAction[] | Prisma.ListEnumOrderActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderActionWithAggregatesFilter<$PrismaModel> | $Enums.OrderAction
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderActionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderActionFilter<$PrismaModel>
+}
+
+export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderStatus | Prisma.EnumOrderStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderStatus[] | Prisma.ListEnumOrderStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumOrderExpiresTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderExpiresType | Prisma.EnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderExpiresType[] | Prisma.ListEnumOrderExpiresTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderExpiresTypeWithAggregatesFilter<$PrismaModel> | $Enums.OrderExpiresType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderExpiresTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderExpiresTypeFilter<$PrismaModel>
 }
 
 

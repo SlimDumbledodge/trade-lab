@@ -22,6 +22,7 @@ model User {
   alerts                  Alert[]
   notifications           Notification[]
   investmentPlans         InvestmentPlans[]
+  orders                  Order[]
 }
 
 model Portfolio {
@@ -61,6 +62,7 @@ model Asset {
   transactions    Transaction[]
   favorites       Favorite[]
   investmentPlans InvestmentPlans[]
+  orders          Order[]
 }
 
 model Transaction {
@@ -184,6 +186,7 @@ model Notification {
 enum NotificationType {
   ALERT
   INVESTMENT_PLAN
+  ORDER
   SYSTEM
 }
 
@@ -218,3 +221,48 @@ enum FrequencyType {
   MONTHLY
   QUARTERLY
 }
+
+model Order {
+  id          Int              @id @default(autoincrement())
+  userId      Int
+  assetId     Int
+  type        OrderType
+  action      OrderAction
+  status      OrderStatus      @default(ACTIVE)
+  expiresType OrderExpiresType
+  quantity    Decimal
+  targetPrice Decimal
+  expiresAt   DateTime
+  triggeredAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  @@index([userId, status])
+  @@index([status, type])
+}
+
+enum OrderType {
+  LIMIT
+  STOP
+}
+
+enum OrderAction {
+  BUY
+  SELL
+}
+
+enum OrderExpiresType {
+  DAY
+  YEAR
+}
+
+enum OrderStatus {
+  ACTIVE
+  TRIGGERED
+  CANCELLED
+  EXPIRED
+}
+
