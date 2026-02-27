@@ -181,6 +181,8 @@ export const deleteInvestmentPlan = (planId: number, token?: string): Promise<In
 // -------------------------------------------
 // Orders
 // -------------------------------------------
+export const getAllOrders = (token?: string): Promise<Order[]> => fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/orders`, token)
+
 export const getOrders = (assetId: number, token?: string): Promise<Order[]> =>
     fetcher(`${process.env.NEXT_PUBLIC_NEST_API_URL}/orders/asset/${assetId}`, token)
 

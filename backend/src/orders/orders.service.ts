@@ -11,6 +11,22 @@ export class OrdersService {
 
     constructor(private readonly prisma: PrismaService) {}
 
+    async findAllActive(portfolioId: number) {
+        const portfolio = await this.prisma.portfolio.findUnique({ where: { id: portfolioId } })
+        if (!portfolio) {
+            throw new NotFoundException("Portfolio introuvable")
+        }
+
+        return this.prisma.order.findMany({
+            where: {
+                userId: portfolio.userId,
+                status: OrderStatus.ACTIVE,
+            },
+            include: { asset: true },
+            orderBy: { createdAt: "desc" },
+        })
+    }
+
     async findActiveByAsset(portfolioId: number, assetId: number) {
         const portfolio = await this.prisma.portfolio.findUnique({ where: { id: portfolioId } })
         if (!portfolio) {

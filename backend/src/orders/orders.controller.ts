@@ -9,6 +9,11 @@ import { CreateOrderDto } from "./dto/create-order.dto"
 export class OrdersController {
     constructor(private readonly ordersService: OrdersService) {}
 
+    @Get()
+    findAllActive(@GetUser("portfolioId") portfolioId: number) {
+        return this.ordersService.findAllActive(portfolioId)
+    }
+
     @Get("asset/:assetId")
     findActiveByAsset(@GetUser("portfolioId") portfolioId: number, @Param("assetId", ParseIntPipe) assetId: number) {
         return this.ordersService.findActiveByAsset(portfolioId, assetId)
