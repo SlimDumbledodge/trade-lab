@@ -23,6 +23,7 @@ import { FavoritesModule } from "./favorites/favorites.module"
 import { AlertsModule } from './alerts/alerts.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { InvestmentPlansModule } from './investment-plans/investment-plans.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
     imports: [
@@ -66,6 +67,7 @@ import { InvestmentPlansModule } from './investment-plans/investment-plans.modul
         AlertsModule,
         NotificationsModule,
         InvestmentPlansModule,
+        OrdersModule,
     ],
     providers: [
         {

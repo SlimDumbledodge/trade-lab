@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createTradeFormSchema, TradeFormSchema } from "@/lib/validations/trade-execution-form.schema"
 import { useMarketStatus } from "@/hooks/useMarketStatus"
+import OrderModeSelect, { OrderMode } from "./OrderModeSelect"
+import OrderForm from "./OrderForm"
 
 export enum FormMode {
     MONTANT,
@@ -28,6 +30,7 @@ export default function TradeExecutionForm() {
     const symbol = params?.symbol as string
     const [transactionType, setTransactionType] = useState<TransactionType>(TransactionType.BUY)
     const [formMode, setFormMode] = useState<FormMode>(FormMode.MONTANT)
+    const [orderMode, setOrderMode] = useState<OrderMode>(OrderMode.MARKET)
     const [open, setOpen] = useState<boolean>(false)
     const { data: session } = useSession()
     const { data: marketStatus, error: marketStatusError } = useMarketStatus(session?.accessToken)
@@ -67,134 +70,141 @@ export default function TradeExecutionForm() {
     return (
         <Card className="h-full">
             <CardContent>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <Tabs value={transactionType} onValueChange={(value) => setTransactionType(value as TransactionType)}>
-                            <TabsList className="w-full">
-                                <TabsTrigger value={TransactionType.BUY} className="flex-1">
-                                    Acheter
-                                </TabsTrigger>
-                                <TabsTrigger value={TransactionType.SELL} disabled={!portfolioAsset?.quantity} className="flex-1">
-                                    Vendre
-                                </TabsTrigger>
-                            </TabsList>
+                <Tabs value={transactionType} onValueChange={(value) => setTransactionType(value as TransactionType)}>
+                    <div className="flex items-center gap-2">
+                        <TabsList className="w-full">
+                            <TabsTrigger value={TransactionType.BUY} className="flex-1">
+                                Acheter
+                            </TabsTrigger>
+                            <TabsTrigger value={TransactionType.SELL} disabled={!portfolioAsset?.quantity} className="flex-1">
+                                Vendre
+                            </TabsTrigger>
+                        </TabsList>
+                        <OrderModeSelect value={orderMode} onChange={setOrderMode} />
+                    </div>
 
-                            <TabsContent value={transactionType} className="space-y-4">
-                                <p className="text-sm">
-                                    {transactionType === TransactionType.BUY
-                                        ? displayAvailableCashBalance
-                                        : displayPortfolioAssetQuantity}
-                                </p>
-
-                                <div className="flex gap-2">
-                                    <Button
-                                        variant={formMode === FormMode.MONTANT ? "default" : "secondary"}
-                                        onClick={() => {
-                                            setFormMode(FormMode.MONTANT)
-                                            form.reset({ montant: "", nbActions: "" })
-                                        }}
-                                        size="sm"
-                                    >
-                                        Montant
-                                    </Button>
-                                    <Button
-                                        variant={formMode === FormMode.AUMARCHE ? "default" : "secondary"}
-                                        onClick={() => {
-                                            setFormMode(FormMode.AUMARCHE)
-                                            form.reset({ montant: "", nbActions: "" })
-                                        }}
-                                        size="sm"
-                                    >
-                                        Au marché
-                                    </Button>
-                                </div>
-
-                                {formMode === FormMode.MONTANT && (
-                                    <FormField
-                                        control={form.control}
-                                        name="montant"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Montant (€)</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        type="number"
-                                                        placeholder="0"
-                                                        min={0}
-                                                        step="any"
-                                                        {...field}
-                                                        onChange={(e) => {
-                                                            field.onChange(e)
-                                                            form.setValue(
-                                                                "nbActions",
-                                                                (Number(e.target.value) / lastPrice).toString(),
-                                                            )
-                                                        }}
-                                                    />
-                                                </FormControl>
-                                                <div className="flex justify-between text-sm">
-                                                    <span>Au marché</span>
-                                                    <span className="font-medium">
-                                                        {(Number(form.watch("montant")) / lastPrice || 0).toFixed(6)}
-                                                    </span>
-                                                </div>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                )}
-
-                                {formMode === FormMode.AUMARCHE && (
-                                    <FormField
-                                        control={form.control}
-                                        name="nbActions"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Actions</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        type="number"
-                                                        placeholder="0"
-                                                        min={0}
-                                                        step="any"
-                                                        {...field}
-                                                        onChange={(e) => {
-                                                            field.onChange(e)
-                                                            form.setValue(
-                                                                "montant",
-                                                                (Number(e.target.value) * lastPrice).toString(),
-                                                            )
-                                                        }}
-                                                    />
-                                                </FormControl>
-                                                <div className="flex justify-between text-sm">
-                                                    <span>Prix du marché</span>
-                                                    <span className="font-medium">{lastPrice} €</span>
-                                                </div>
-                                                <div className="flex justify-between text-sm">
-                                                    <span>Montant (indicatif)</span>
-                                                    <span className="font-medium">
-                                                        {(Number(form.watch("nbActions")) * lastPrice || 0).toFixed(2)} €
-                                                    </span>
-                                                </div>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                )}
-
-                                <Button disabled={!marketStatus?.isOpen} type="submit" className="w-full">
-                                    Valider l’ordre
-                                </Button>
-                                {!marketStatus?.isOpen && (
-                                    <p className="text-sm italic text-muted-foreground text-center">
-                                        La bourse est actuellement fermé.
+                    <TabsContent value={transactionType} className="space-y-4">
+                        {orderMode === OrderMode.MARKET ? (
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                                    <p className="text-sm">
+                                        {transactionType === TransactionType.BUY
+                                            ? displayAvailableCashBalance
+                                            : displayPortfolioAssetQuantity}
                                     </p>
-                                )}
-                            </TabsContent>
-                        </Tabs>
-                    </form>
-                </Form>
+
+                                    <div className="flex gap-2">
+                                        <Button
+                                            variant={formMode === FormMode.MONTANT ? "default" : "secondary"}
+                                            onClick={() => {
+                                                setFormMode(FormMode.MONTANT)
+                                                form.reset({ montant: "", nbActions: "" })
+                                            }}
+                                            size="sm"
+                                        >
+                                            Montant
+                                        </Button>
+                                        <Button
+                                            variant={formMode === FormMode.AUMARCHE ? "default" : "secondary"}
+                                            onClick={() => {
+                                                setFormMode(FormMode.AUMARCHE)
+                                                form.reset({ montant: "", nbActions: "" })
+                                            }}
+                                            size="sm"
+                                        >
+                                            Au marché
+                                        </Button>
+                                    </div>
+
+                                    {formMode === FormMode.MONTANT && (
+                                        <FormField
+                                            control={form.control}
+                                            name="montant"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Montant (€)</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="number"
+                                                            placeholder="0"
+                                                            min={0}
+                                                            step="any"
+                                                            {...field}
+                                                            onChange={(e) => {
+                                                                field.onChange(e)
+                                                                form.setValue(
+                                                                    "nbActions",
+                                                                    (Number(e.target.value) / lastPrice).toString(),
+                                                                )
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <div className="flex justify-between text-sm">
+                                                        <span>Au marché</span>
+                                                        <span className="font-medium">
+                                                            {(Number(form.watch("montant")) / lastPrice || 0).toFixed(6)}
+                                                        </span>
+                                                    </div>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    )}
+
+                                    {formMode === FormMode.AUMARCHE && (
+                                        <FormField
+                                            control={form.control}
+                                            name="nbActions"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Actions</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="number"
+                                                            placeholder="0"
+                                                            min={0}
+                                                            step="any"
+                                                            {...field}
+                                                            onChange={(e) => {
+                                                                field.onChange(e)
+                                                                form.setValue(
+                                                                    "montant",
+                                                                    (Number(e.target.value) * lastPrice).toString(),
+                                                                )
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <div className="flex justify-between text-sm">
+                                                        <span>Prix du marché</span>
+                                                        <span className="font-medium">{lastPrice} €</span>
+                                                    </div>
+                                                    <div className="flex justify-between text-sm">
+                                                        <span>Montant (indicatif)</span>
+                                                        <span className="font-medium">
+                                                            {(Number(form.watch("nbActions")) * lastPrice || 0).toFixed(2)} €
+                                                        </span>
+                                                    </div>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    )}
+
+                                    <Button disabled={!marketStatus?.isOpen} type="submit" className="w-full">
+                                        Valider l’ordre
+                                    </Button>
+                                    {!marketStatus?.isOpen && (
+                                        <p className="text-sm italic text-muted-foreground text-center">
+                                            La bourse est actuellement fermé.
+                                        </p>
+                                    )}
+                                </form>
+                            </Form>
+                        ) : (
+                            <OrderForm orderMode={orderMode} transactionType={transactionType} />
+                        )}
+                    </TabsContent>
+                </Tabs>
 
                 <TradeExecutionConfirmation
                     transactionType={transactionType}

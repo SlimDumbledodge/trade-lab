@@ -28,6 +28,7 @@ export type AlertStatus = (typeof AlertStatus)[keyof typeof AlertStatus]
 export const NotificationType = {
   ALERT: 'ALERT',
   INVESTMENT_PLAN: 'INVESTMENT_PLAN',
+  ORDER: 'ORDER',
   SYSTEM: 'SYSTEM'
 } as const
 
@@ -58,3 +59,37 @@ export const FrequencyType = {
 } as const
 
 export type FrequencyType = (typeof FrequencyType)[keyof typeof FrequencyType]
+
+
+export const OrderType = {
+  LIMIT: 'LIMIT',
+  STOP: 'STOP'
+} as const
+
+export type OrderType = (typeof OrderType)[keyof typeof OrderType]
+
+
+export const OrderAction = {
+  BUY: 'BUY',
+  SELL: 'SELL'
+} as const
+
+export type OrderAction = (typeof OrderAction)[keyof typeof OrderAction]
+
+
+export const OrderExpiresType = {
+  DAY: 'DAY',
+  YEAR: 'YEAR'
+} as const
+
+export type OrderExpiresType = (typeof OrderExpiresType)[keyof typeof OrderExpiresType]
+
+
+export const OrderStatus = {
+  ACTIVE: 'ACTIVE',
+  TRIGGERED: 'TRIGGERED',
+  CANCELLED: 'CANCELLED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]

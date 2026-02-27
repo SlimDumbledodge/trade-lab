@@ -62,7 +62,8 @@ export const ModelName = {
   Favorite: 'Favorite',
   Alert: 'Alert',
   Notification: 'Notification',
-  InvestmentPlans: 'InvestmentPlans'
+  InvestmentPlans: 'InvestmentPlans',
+  Order: 'Order'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -248,6 +249,25 @@ export const InvestmentPlansScalarFieldEnum = {
 } as const
 
 export type InvestmentPlansScalarFieldEnum = (typeof InvestmentPlansScalarFieldEnum)[keyof typeof InvestmentPlansScalarFieldEnum]
+
+
+export const OrderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  assetId: 'assetId',
+  type: 'type',
+  action: 'action',
+  status: 'status',
+  expiresType: 'expiresType',
+  quantity: 'quantity',
+  targetPrice: 'targetPrice',
+  expiresAt: 'expiresAt',
+  triggeredAt: 'triggeredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
 
 
 export const SortOrder = {
