@@ -156,7 +156,7 @@ export function NotificationsDropdown() {
                 <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-lg overflow-visible">
                     <Bell className="h-4 w-4" />
                     {unreadCount > 0 && (
-                        <span className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 flex h-4 min-w-4 items-center justify-center rounded-full bg-violet-500 px-1 text-[10px] font-bold text-white tabular-nums ring-2 ring-background">
+                        <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-violet-500 px-1 text-[10px] font-bold text-white tabular-nums ring-2 ring-background">
                             {unreadCount > 99 ? "99+" : unreadCount}
                         </span>
                     )}
