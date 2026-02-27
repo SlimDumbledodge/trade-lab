@@ -23,6 +23,7 @@ import { useAddFavorite, useRemoveFavorite } from "@/mutations/useFavorite"
 import { useFavorites } from "@/hooks/useFavorites"
 import { useInvestmentPlans } from "@/hooks/useInvestmentPlans"
 import { InvestmentPlanCard } from "@/components/orders/InvestmentPlanCard"
+import PendingOrdersCard from "@/components/market/PendingOrdersCard"
 import toast from "react-hot-toast"
 
 export default function MarketProductDetails() {
@@ -166,6 +167,7 @@ export default function MarketProductDetails() {
                             </Suspense>
                         )}
                     </div>
+                    <PendingOrdersCard />
                     <div className="flex-1 sm:flex-1 lg:flex-none">
                         <InvestmentPlanCard
                             plan={investmentPlans?.find((p) => p.asset.symbol === symbol) ?? null}
