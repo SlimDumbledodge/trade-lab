@@ -6,6 +6,9 @@ import Link from "next/link"
 export const metadata: Metadata = {
     title: "Politique de confidentialité",
     description: "Découvrez comment Tradelab Studio collecte, utilise et protège vos données personnelles conformément au RGPD.",
+    alternates: {
+        canonical: "https://tradelab-studio.fr/privacy",
+    },
 }
 
 export default function PrivacyPage() {

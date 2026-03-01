@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     title: "Conditions générales d'utilisation",
     description:
         "Consultez les conditions générales d'utilisation de Tradelab Studio : règles du service, responsabilités et droits des utilisateurs.",
+    alternates: {
+        canonical: "https://tradelab-studio.fr/terms",
+    },
 }
 
 export default function TermsPage() {

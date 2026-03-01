@@ -6,6 +6,9 @@ import Link from "next/link"
 export const metadata: Metadata = {
     title: "Mentions légales",
     description: "Mentions légales de Tradelab Studio : éditeur, hébergement, propriété intellectuelle et responsabilités.",
+    alternates: {
+        canonical: "https://tradelab-studio.fr/legal",
+    },
 }
 
 export default function LegalPage() {

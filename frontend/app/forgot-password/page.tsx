@@ -1,7 +1,13 @@
+import type { Metadata } from "next"
 import ForgotPassword from "@/components/forms/ForgotPasswordForm"
 
-const ForgotPasswordPage = () => {
-    return <ForgotPassword />
+export const metadata: Metadata = {
+    title: "Mot de passe oublié",
+    description:
+        "Réinitialisez votre mot de passe Tradelab Studio. Entrez votre adresse email pour recevoir un lien de réinitialisation.",
+    robots: { index: false, follow: false },
 }
 
-export default ForgotPasswordPage
+export default function ForgotPasswordPage() {
+    return <ForgotPassword />
+}

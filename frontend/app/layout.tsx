@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import "./globals.css"
@@ -9,6 +9,16 @@ const geistMono = GeistMono
 
 const siteUrl = "https://tradelab-studio.fr"
 
+export const viewport: Viewport = {
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+        { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    ],
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+}
+
 export const metadata: Metadata = {
     title: {
         default: "Tradelab Studio",
@@ -17,8 +27,16 @@ export const metadata: Metadata = {
     description:
         "Simulez vos investissements boursiers avec des données réelles. Apprenez le trading, testez vos stratégies et développez vos compétences sans risque.",
     metadataBase: new URL(siteUrl),
+    applicationName: "Tradelab Studio",
+    authors: [{ name: "Tradelab Studio", url: siteUrl }],
+    generator: "Next.js",
+    referrer: "origin-when-cross-origin",
+    creator: "Tradelab Studio",
+    publisher: "Tradelab Studio",
+    category: "finance",
     icons: {
         icon: "/icon.png",
+        apple: "/icon.png",
     },
     openGraph: {
         type: "website",
@@ -33,7 +51,7 @@ export const metadata: Metadata = {
                 url: "/landing.png",
                 width: 1200,
                 height: 630,
-                alt: "Tradelab Studio",
+                alt: "Tradelab Studio — Simulateur de trading gratuit avec données réelles",
             },
         ],
     },

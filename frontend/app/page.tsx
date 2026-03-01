@@ -1,14 +1,104 @@
-"use client"
-
+import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Play } from "lucide-react"
 import Image from "next/image"
+import { JsonLd } from "@/components/seo/JsonLd"
+
+export const metadata: Metadata = {
+    title: "Tradelab Studio — Simulateur de trading gratuit avec données réelles",
+    description:
+        "Simulez vos investissements boursiers avec des données réelles du marché. Apprenez le trading, testez vos stratégies et développez vos compétences sans risque financier. 100% gratuit.",
+    keywords: [
+        "simulateur trading",
+        "trading virtuel",
+        "simulation bourse",
+        "apprendre trading",
+        "portefeuille virtuel",
+        "investissement simulé",
+        "trading gratuit",
+        "bourse en ligne",
+        "formation trading",
+        "paper trading",
+    ],
+    openGraph: {
+        title: "Tradelab Studio — Simulateur de trading gratuit",
+        description: "Simulez vos investissements boursiers avec des données réelles. Apprenez le trading sans risque financier.",
+        url: "https://tradelab-studio.fr",
+        type: "website",
+    },
+    twitter: {
+        title: "Tradelab Studio — Simulateur de trading gratuit",
+        description: "Simulez vos investissements boursiers avec des données réelles. Apprenez le trading sans risque.",
+    },
+    alternates: {
+        canonical: "https://tradelab-studio.fr",
+    },
+}
+
+const organizationJsonLd = {
+    "@context": "https://schema.org" as const,
+    "@type": "Organization" as const,
+    name: "Tradelab Studio",
+    url: "https://tradelab-studio.fr",
+    logo: "https://tradelab-studio.fr/icon.png",
+    description: "Plateforme de simulation de trading avec données réelles pour apprendre à investir sans risque.",
+    contactPoint: {
+        "@type": "ContactPoint" as const,
+        email: "contact@tradelab-studio.fr",
+        contactType: "customer service",
+        availableLanguage: "French",
+    },
+    sameAs: [],
+}
+
+const websiteJsonLd = {
+    "@context": "https://schema.org" as const,
+    "@type": "WebSite" as const,
+    name: "Tradelab Studio",
+    url: "https://tradelab-studio.fr",
+    description: "Simulateur de trading gratuit avec données réelles pour apprendre à investir en bourse.",
+    inLanguage: "fr-FR",
+    publisher: {
+        "@type": "Organization" as const,
+        name: "Tradelab Studio",
+    },
+}
+
+const webPageJsonLd = {
+    "@context": "https://schema.org" as const,
+    "@type": "WebPage" as const,
+    name: "Tradelab Studio — Simulateur de trading gratuit avec données réelles",
+    description: "Simulez vos investissements boursiers avec des données réelles. Apprenez le trading sans risque financier.",
+    url: "https://tradelab-studio.fr",
+    isPartOf: {
+        "@type": "WebSite" as const,
+        name: "Tradelab Studio",
+        url: "https://tradelab-studio.fr",
+    },
+    about: {
+        "@type": "Thing" as const,
+        name: "Trading virtuel et simulation boursière",
+    },
+    mainEntity: {
+        "@type": "SoftwareApplication" as const,
+        name: "Tradelab Studio",
+        applicationCategory: "FinanceApplication",
+        operatingSystem: "Web",
+        offers: {
+            "@type": "Offer" as const,
+            price: "0",
+            priceCurrency: "EUR",
+        },
+    },
+}
 
 export default function LandingPage() {
     return (
         <div className="relative min-h-screen overflow-hidden bg-background">
-            {/* Background gradient */}
+            <JsonLd data={organizationJsonLd as any} />
+            <JsonLd data={websiteJsonLd as any} />
+            <JsonLd data={webPageJsonLd as any} />
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute -top-[40%] left-1/2 h-[80%] w-[200%] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-primary/20 to-fuchsia-600/20 blur-3xl" />
             </div>
@@ -102,6 +192,7 @@ export default function LandingPage() {
                 {/* Features */}
                 <section className="relative border-t border-border/50 bg-muted/30">
                     <div className="mx-auto max-w-7xl px-6 py-24">
+                        <h2 className="sr-only">Fonctionnalités</h2>
                         <div className="grid gap-8 md:grid-cols-3">
                             <div className="group rounded-2xl border border-border/50 bg-background/50 p-8 backdrop-blur-sm transition-all ">
                                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">

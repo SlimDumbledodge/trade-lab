@@ -1,10 +1,19 @@
 import type { Metadata } from "next"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { JsonLd } from "@/components/seo/JsonLd"
 
 export const metadata: Metadata = {
-    title: "FAQ",
+    title: "FAQ - Questions fréquentes",
     description:
         "Retrouvez les réponses aux questions les plus fréquentes sur Tradelab Studio : fonctionnement, données de marché, sécurité et trading virtuel.",
+    keywords: ["FAQ trading", "questions trading virtuel", "aide Tradelab", "simulation bourse FAQ"],
+    openGraph: {
+        title: "FAQ — Tradelab Studio",
+        description: "Réponses aux questions fréquentes sur le trading virtuel et Tradelab Studio.",
+    },
+    alternates: {
+        canonical: "https://tradelab-studio.fr/FAQ",
+    },
 }
 
 const faqItems = [
@@ -86,13 +95,27 @@ const faqItems = [
     },
 ]
 
+const faqJsonLd = {
+    "@context": "https://schema.org" as const,
+    "@type": "FAQPage" as const,
+    mainEntity: faqItems.map((item) => ({
+        "@type": "Question" as const,
+        name: item.question,
+        acceptedAnswer: {
+            "@type": "Answer" as const,
+            text: item.answer,
+        },
+    })),
+}
+
 const FAQPage = () => {
     return (
         <section className="py-8 sm:py-16 lg:py-24">
+            <JsonLd data={faqJsonLd as any} />
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* En-tête FAQ */}
                 <div className="mb-12 space-y-4 text-center sm:mb-16 lg:mb-24">
-                    <h2 className="text-2xl font-semibold md:text-3xl lg:text-4xl">Besoin d’aide ? Nous avons les réponses</h2>
+                    <h1 className="text-2xl font-semibold md:text-3xl lg:text-4xl">Besoin d'aide ? Nous avons les réponses</h1>
                     <p className="text-muted-foreground text-xl">
                         Découvrez les questions les plus fréquentes à propos de Tradelab Studio et apprenez à mieux comprendre le
                         trading virtuel.
