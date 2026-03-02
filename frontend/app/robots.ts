@@ -20,7 +20,6 @@ export default function robots(): MetadataRoute.Robots {
                     "/alerts/",
                     "/forgot-password/",
                     "/reset-password/",
-                    "/success/",
                 ],
             },
             {
@@ -38,7 +37,6 @@ export default function robots(): MetadataRoute.Robots {
                     "/alerts/",
                     "/forgot-password/",
                     "/reset-password/",
-                    "/success/",
                 ],
             },
         ],
